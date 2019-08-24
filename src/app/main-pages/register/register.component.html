@@ -1,0 +1,43 @@
+<div class="main-container flex">
+	<div class="side-bar-register flex">
+		<div class="logo-container">
+			<span>MY COMPANYLOGO</span>
+		</div>
+		<div class="info-register">
+			<span class="info-title">Account registration</span>
+			<span class="sub-info-title">Please complete the steps aside to finish up your registration.</span>
+		</div>
+		<span class="sign-in">Deja inscrit ? <a [navigateTo]="{path:['login']}">Connecter-vous</a></span>
+		<div class="image-conatiner">
+			<img src="tva-assets/undraw_profile_data_mk6k.svg" alt="">
+		</div>
+	</div>
+	<div class="register-container flex">
+		<div class="steps-container">
+			<!-- ------------------------------------------- -->
+			<span class="back-step" (click)="stepBack()">
+				<i class="remixicon-arrow-left-line"></i>
+			</span>
+			<!-- ------------------------------------------- -->
+			<div class="steps">
+				<div [class.active-step]="step == 1" [class.step-done]="step > 1">
+					<span>1. Account Info</span>
+				</div>
+				<div [class.active-step]="step == 2" [class.step-done]="step > 2">
+					<span>2. Verification</span>
+				</div>
+				<div [class.active-step]="step == 3" [class.step-done]="step > 3">
+					<span>3. Select Plan</span>
+				</div>
+				<div [class.active-step]="step == 4" [class.step-done]="step > 4">
+					<span>4. Finish</span>
+				</div>
+			</div>
+		</div>
+		<!-- Register Steps -->
+		<app-account-info *ngIf="step == 1" (next)="nextStep()"></app-account-info>
+		<app-verification *ngIf="step == 2" (next)="nextStep()"></app-verification>
+		<app-plans *ngIf="step == 3" (next)="nextStep()"></app-plans>
+		<app-finish *ngIf="step == 4" (next)="nextStep()"></app-finish>
+	</div>
+</div>

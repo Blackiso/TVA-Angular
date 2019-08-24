@@ -1,0 +1,26 @@
+<div class="popup-container">
+	<div class="alert-popup">
+		<div class="alert-head">
+			<span>{{title}}</span>
+		</div>
+		<form class="alert-body" (submit)="submitPopup($event)">
+			<span *ngIf="error" class="popup-error">Error please try again!</span>
+			<div class="alert-content alert-with-inp">
+				<div *ngFor="let inp of config" class="input-grp" [class.h-inp-grp]="focus">
+					<input [value]="!!inp.value ? inp.value : ''" *ngIf="inp.type == null" type="text" name="{{inp.name}}" placeholder="{{inp.placeholder}}">
+					<input [value]="!!inp.value ? inp.value : ''" *ngIf="inp.type == 'password'" type="password" name="{{inp.name}}" placeholder="{{inp.placeholder}}">
+					<input [value]="!!inp.value ? inp.value : ''" *ngIf="inp.type == 'email'" name="email" type="email" name="{{inp.name}}" placeholder="{{inp.placeholder}}">
+					<div *ngIf="inp.type == 'user_email'" class="user_email flex" [class.h-inp-grp]="focus">
+						<input [value]="!!inp.value ? inp.value : ''" type="text" name="email" placeholder="{{inp.placeholder}}" (blur)="focus = false" (focus)="focus = true">
+						<span>@tva.edg</span>
+					</div>
+					<span>{{inp.title}}</span>
+				</div>
+			</div>
+			<div class="alert-buttons">
+				<button *ngIf="!loading" (click)="close()" class="white-btn" type="button">CANCEL</button>
+				<button [class.button-loading]="loading" class="highlighted-btn" type="submit">SAVE</button>
+			</div>
+		</form>
+	</div>
+</div>

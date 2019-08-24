@@ -1,0 +1,28 @@
+<div class="page-head flex">
+	<div class="title flex">
+		Company Files
+	</div>
+	<div class="flex">
+		<button class="add-new-file">+ Add New File</button>
+	</div>
+</div>
+<div class="files-main flex">
+	<div class="files-container flex">
+		<div class="titles flex">
+			<div class="check-box">
+				<input (change)="checkEvent($event)" type="checkbox">
+				<div class="box"></div>
+			</div>
+			<span>File Name</span>
+			<span>Type</span>
+			<span>Year</span>
+			<span>Last Modified</span>
+			<span class="more-options">
+				<i class="remixicon-delete-bin-2-fill" [ngClass]="checkAll ? 'red-dlt' : ''"></i>
+			</span>
+		</div>
+		<div class="files flex">
+			<app-file *ngFor="let item of [].constructor(files_number); let i = index"></app-file>
+		</div>
+	</div>
+</div>

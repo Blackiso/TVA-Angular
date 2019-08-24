@@ -1,0 +1,65 @@
+<div class="register-plans-container flex">
+	<span class="large-title">Please select your plan</span>
+	<div class="plans-container flex">
+		<div class="plan flex">
+			<div class="plan-head flex">
+				<span class="large-title">Regular</span>
+				<span class="sub-title">Calcule automatique & XML</span>
+			</div>
+			<div class="plan-body flex">
+				<span>Calcule automatique & XML</span>
+				<span>Possibility d’importe PDF</span>
+				<span>Possibilit d’importer XML</span>
+				<span>Espace de 30 fichiers</span>
+				<span>Calcule 200 facture</span>
+				<span>Ability de 20 users</span>
+			</div>
+			<div class="plan-footer flex">
+				<div class="input-grp flex">
+					<select>
+						<option value="3">3 mois</option>
+						<option value="6">6 mois</option>
+						<option value="9">9 mois</option>
+						<option value="12">12 mois</option>
+					</select>
+				</div>
+				<span><b>$29</b>/mon</span>
+			</div>
+		</div>
+		<div class="plan flex selected-plan">
+			<div class="plan-head flex">
+				<span class="large-title">Premium</span>
+				<span class="sub-title">Calcule automatique & XML</span>
+			</div>
+			<div class="plan-body flex">
+				<span>Calcule automatique & XML</span>
+				<span>Possibility d’importe PDF</span>
+				<span>Possibilit d’importer XML</span>
+				<span>Espace de 30 fichiers</span>
+				<span>Calcule 200 facture</span>
+				<span>Ability de 20 users</span>
+			</div>
+			<div class="plan-footer flex">
+				<div class="input-grp flex">
+					<select>
+						<option value="1">1 mois</option>
+						<option value="2">2 mois</option>
+						<option value="3" selected>3 mois</option>
+						<option value="4">4 mois</option>
+						<option value="5">5 mois</option>
+						<option value="6">6 mois</option>
+						<option value="7">7 mois</option>
+						<option value="8">8 mois</option>
+						<option value="9">9 mois</option>
+						<option value="10">10 mois</option>
+						<option value="11">11 mois</option>
+						<option value="12">12 mois</option>
+					</select>
+				</div>
+				<span><b>$62</b>/mon</span>
+			</div>
+		</div>
+	</div>
+	<button (click)="process()">Fill Payement Info</button>
+	<span class="note"><b>NOTE: </b>You can refund your payment within 7 days of payement !</span>
+</div>

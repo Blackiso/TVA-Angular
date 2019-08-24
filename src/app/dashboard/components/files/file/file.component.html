@@ -1,0 +1,56 @@
+<div class="files-row flex" (click)="openFile($event)" [ngClass]="{'file-checked' : check == true, 'file-opend' : open_file == true}">
+	<span class="open-file">
+		<!-- <i class="remixicon-arrow-right-s-fill"></i> -->
+	</span>
+	<div class="check-box dont-open">
+		<input type="checkbox" [checked]="check" (click)="checkFile($event)">
+		<div class="box"></div>
+	</div>
+	<span>My File Name</span>
+	<span>Monthly</span>
+	<span>2019</span>
+	<span>2019-04-27 21:14:40</span>
+	<span class="more-options">
+		<i class="remixicon-more-2-line dont-open trigger-btn" (click)="moreInfo = true"></i>
+		<div class="options-menu dont-open" [ngClass]="{'hide': moreInfo == false}" (clickAway)="moreInfo = false">
+			<span><i class="remixicon-pencil-fill"></i><span>Edit</span></span>
+			<span><i class="remixicon-delete-bin-2-fill"></i><span>Remove</span></span>
+		</div>
+	</span>
+	<form class="select-month-container dont-open" #myform="ngForm" (ngSubmit)="submitFile(myform)">
+		<div class="select-month">
+			<span>Month :</span>
+			<div class="custom-select-container">
+				<div class="custom-select trigger-btn" (click)="monthsSelect = true">
+					<span>{{monthCurrentVal.name}}</span>
+					<i class="remixicon-arrow-down-s-fill"></i>
+				</div>
+				<div class="custom-select-options" (clickAway)="monthsSelect = false" [ngClass]="{'hide': monthsSelect == false}">
+					<span>Current Months:</span>
+					<div>
+						<div (click)="setMonth($event)" data-select=1 data-number=50 data-name="January" class="selected-month">
+							January <span>(250)</span>
+						</div>
+						<div (click)="setMonth($event)" data-select=2 data-number=5056 data-name="February">
+							February <span>(50)</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<span class="bills-num">{{monthCurrentVal.number}} Factures</span>
+		<div class="download">
+			<div>
+				<i class="remixicon-file-fill"></i>
+				<span>PDF</span>
+			</div>
+			<div>
+				<i class="remixicon-file-fill"></i>
+				<span>XML</span>
+			</div>
+		</div>
+		<button type="submit" class="open">
+			<i class="remixicon-arrow-right-s-line"></i>
+		</button>
+	</form>
+</div>

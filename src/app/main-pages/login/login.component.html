@@ -1,0 +1,30 @@
+<div class="main-container flex">
+	<div class="form-container flex">
+		<div class="logo-container">
+			<span>MY COMPANYLOGO</span>
+		</div>
+		<form class="login-form flex" (submit)="loginUser($event)">
+			<div class="info-div">
+				<span class="large-title">User Login</span>
+				<span class="sub-title">Please sign in to your existing account.</span>
+			</div>
+			<span class="login-error" *ngIf="loginError">Login error please try again!</span>	
+			<div class="input-grp" [class.input-error]="emailTemplate.errors?.pattern || emailTemplate.errors?.required && emailTemplate.touched">
+				<input required name="email" [pattern]="emailPattern" [(ngModel)]="email" #emailTemplate="ngModel" placeholder="mycompany@email.com">
+				<span>Address Email</span>
+			</div>
+			<div class="input-grp" [class.input-error]="passwordTemplate.errors?.required && passwordTemplate.touched">
+				<input required name="password" [(ngModel)]="password" #passwordTemplate="ngModel" type="password" placeholder="Entrez votre mot de passe">
+				<span>Mot de passe</span>
+			</div>
+			<div class="more-login-options flex">
+				<span class="forgot-password">Forgot Password ?</span>
+			</div>
+			<button [class.button-loading]="loadingBtn" type="submit">Sign in</button>
+		</form>
+		<span class="signup">Pas encore inscrit? <a [navigateTo]="{path:['register']}">Enregistrez-vous</a> </span>
+	</div>
+	<div class="image-container flex">
+		<img src="tva-assets/undraw_all_the_data_h4ki.svg" />
+	</div>
+</div>

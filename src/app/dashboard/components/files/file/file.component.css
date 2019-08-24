@@ -1,0 +1,316 @@
+.files-main,
+.files,
+.files-container {
+	flex-direction: column;
+}
+
+.files-main > span {
+	font-size: 18px;
+	margin: 10px 0 5px 0;
+	color: #323E4E;
+}
+
+.titles {
+	padding: 10px !important;
+	background-color: transparent !important;
+	font-size: 12px;
+	color: #B7BCC2;
+	margin-left: 30px;
+}
+
+.titles > .more-options > i {
+	cursor: pointer;
+} 
+
+.files-row  > *,
+.titles > * {
+	flex: 1;
+}
+
+.files {
+	border-radius: 4px;
+}
+
+.files-row  {
+	padding: 14px 10px;
+	box-sizing: border-box;
+	border-bottom: 1px solid rgba(50, 62, 78, 0.1);
+	background-color: white;
+	font-size: 12px;
+	color: #949597;
+	cursor: pointer;
+	align-items: center;
+	position: relative;
+	box-shadow: 0px 9px 21px rgba(0, 0, 0, 0.08);
+	transition: .3s margin-bottom;
+}
+
+.open-file {
+	flex: 0 1 auto !important;
+	width: 20px;
+	margin-right: 10px;
+	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flex;
+	display: -o-flex;
+	display: flex;
+	align-items: center;
+	position: relative;
+}
+
+.open-file:before {
+	content: '\ea58';
+	font-family: 'remixicon' !important;
+	font-size: 20px;
+	color: #323E4E;
+	position: absolute;
+	top: -10px;
+	left: 0;
+	right: 0;
+	margin: auto;
+}
+
+.file-opend > .open-file:before {
+	content: '\ea3a' !important;
+}
+
+.open-file > i {
+	font-size: 20px;
+	color: #323E4E;
+}
+
+.files-row > span:first-of-type {
+	color: #292727;
+}
+
+.file-checked {
+	position: relative;
+	background-color: #F2F4FD;
+}
+
+.checked-row:before {
+	content: '';
+	height: 100%;
+	width: 2px;
+	background-color: #1C6EF7;
+	position: absolute;
+	left: 0;
+	top: 0;
+}
+
+.more-options {
+	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flex;
+	display: -o-flex;
+	display: flex;
+	position: relative;
+}
+
+.more-options > i {
+	margin-left: auto;
+	margin-right: 20px;
+}
+
+.select-month-container {
+	width: 80%;
+	height: 60px;
+	position: absolute;
+	left: 0;
+	right: 0;
+	margin: auto;
+	top: 49px;
+	background: #FFFFFF;
+	box-shadow: 0px 9px 21px rgba(0, 0, 0, 0.08);
+	border-radius: 3px;
+	display: none;
+	box-sizing: border-box;
+	align-items: center;
+	color: #323E4E;
+	cursor: default;
+}
+
+.select-month {
+	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flex;
+	display: -o-flex;
+	display: flex;
+	padding-left: 40px;
+	align-items: center;
+}
+
+.select-month > select {
+	display: none;
+}
+
+.select-month > span {
+	font-size: 12px;
+	margin-right: 20px;
+}
+
+.custom-select {
+	padding: 8px 20px;
+	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flex;
+	display: -o-flex;
+	display: flex;
+	align-items: center;
+	border-radius: 4px;
+	border: 1px solid rgba(50, 62, 78, 0.45);
+	cursor: pointer;
+	width: 160px !important;
+	box-sizing: border-box;
+}
+
+.custom-select > i {
+	margin-left: auto;
+}
+
+.bills-num {
+	margin-left: auto;
+	font-size: 12px;
+}
+
+.download {
+	margin-left: auto;
+	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flex;
+	display: -o-flex;
+	display: flex;
+	margin-right: 20px;
+}
+
+.download > div {
+	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flex;
+	display: -o-flex;
+	display: flex;
+	flex-direction: column;
+	margin-left: 15px;
+	cursor: pointer;
+}
+
+.download > div > i {
+	font-size: 20px;
+	color: rgba(50, 62, 78, .45);
+}
+
+.open {
+	width: 50px;
+	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flex;
+	display: -o-flex;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: #4688D6;
+	cursor: pointer;
+	position: relative;
+	height: 100%;
+	transition: .3s;
+	background-color: white;
+}
+
+.open:hover {
+	background-color: rgba(70, 136, 214, 0.05);
+}
+
+.custom-select-container {
+	position: relative;
+}
+
+.custom-select-options {
+	position: absolute;
+	background-color: white;
+	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flex;
+	display: -o-flex;
+	display: flex;
+	flex-wrap: wrap;
+	width: 400px;
+	top: 45px;
+	padding: 20px;
+	border-radius: 4px;
+	z-index: 2;
+	border: 1px solid rgba(50, 62, 78, 0.2);
+	box-sizing: border-box;
+	box-shadow: 0px 9px 21px rgba(0, 0, 0, 0.08);
+	flex-direction: column;
+	color: #323E4E;
+}
+
+.custom-select-options > span {
+	font-weight: 500;
+	font-size: 13px;
+	margin-bottom: 10px;
+}
+
+.custom-select-options > div {
+	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flex;
+	display: -o-flex;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.custom-select-options > div > div {
+	width: calc((100%/3) - 10px);
+	position: relative;
+	margin-bottom: 5px;
+	margin-right: 10px;
+	cursor: pointer;
+	align-items: center;
+	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flex;
+	display: -o-flex;
+	display: flex;
+	justify-content: center;
+}
+
+.custom-select-options > div > div:hover {
+	text-decoration: underline;
+}
+
+.custom-select-options > div > div:nth-of-type(3n) {
+	margin-right: 0;
+}
+
+.custom-select-options > div > div > span {
+	color: #949597;
+	margin-left: 5px;
+}
+
+.selected-month:before {
+	content: '';
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0px;
+	margin: auto;
+	display: block;
+	background-color:  #0BF551;
+	height: 5px;
+	width: 5px;
+	border-radius: 100%;
+}
+
+.file-opend {
+	margin-bottom: 100px;
+	background-color: #F2F4FD;
+}
+
+.file-opend > .select-month-container {
+	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flex;
+	display: -o-flex;
+	display: flex;
+}

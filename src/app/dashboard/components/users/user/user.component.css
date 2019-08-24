@@ -1,0 +1,79 @@
+:host {
+	padding: 13px;
+	background-color: white;
+	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flex;
+	display: -o-flex;
+	display: flex;
+	border: 1px solid rgba(0, 0, 0, 0.05);
+	box-sizing: border-box;
+	box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.04);
+	border-radius: 4px;
+	width: calc((100%/4) - 15px);
+	margin-right: 20px;
+	margin-bottom: 20px;
+}
+
+:host:nth-of-type(4n) {
+	margin-right: 0;
+}
+
+.info {
+	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flex;
+	display: -o-flex;
+	display: flex;
+	flex-direction: column;
+	font-size: 12px;
+	overflow: hidden;
+}
+
+.user-name {
+	color: #162232;
+	font-weight: 500;
+	margin-bottom: 10px;
+}
+
+.user-email {
+	color: #323E4E;
+}
+
+.user-password {
+	color: #969FAB;
+}
+
+.user-icon {
+	padding-right: 20px;
+}
+
+.user-icon > i {
+	font-size: 2vw;
+	color: #72a0ce;
+}
+
+.more-user-options {
+	padding-left: 20px;
+	margin-left: auto;
+	position: relative;
+}
+
+.more-user-options > i {
+	color: #C2BABA;
+	cursor: pointer;
+}
+
+@media only screen and (max-width: 1222px) {
+	:host {
+		width: calc((100%/3) - 13.4px);
+	}
+
+	:host:nth-of-type(4n) {
+		margin-right: 20px;
+	}
+
+	:host:nth-of-type(3n) {
+		margin-right: 0;
+	}
+}

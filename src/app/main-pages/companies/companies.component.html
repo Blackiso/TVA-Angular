@@ -1,0 +1,40 @@
+<div class="main-container flex">
+	<div class="header flex">
+		<div class="logo flex"><i class="remixicon-amazon-fill"></i></div>
+		<div class="text flex">
+			<span class="large">Welcome {{ userName }}! you're one step from your dashboard.</span>
+			<span class="small">Please select a company</span>
+		</div>
+		<div class="search-grp flex">
+			<div><i class="remixicon-search-line"></i></div>
+			<input (keyup)="search($event)" (keyup.enter)="search($event)" type="text" placeholder="Search for a company">
+		</div>
+	</div>
+	<ng-scrollbar class="app-scroll-container" [visibility]="shownType">
+		<div class="companies-container flex">
+			<div *ngFor="let company of companies" class="company flex">
+				<i *ngIf="userType !== 'user'" class="close remixicon-close-line" id="{{company.id}}" (click)="deleteAlert($event)"></i>
+				<span class="company-if">if : {{company.i_f}}</span>
+				<span class="company-name">{{company.company_name}}</span>
+				<span class="company-activity">{{company.activity}}</span>
+				<div class="company-button flex" id="{{company.id}}" (click)="dashboard($event)">
+					<i class="remixicon-arrow-right-line"></i>
+				</div>
+			</div>
+			<span *ngIf="!loading && companies.length == 0" class="empty-comapnies">
+				You have not created a company.
+			</span>
+			<div *ngIf="loading" class="loading flex">
+				<img src="/tva-assets/loading.svg" alt="">
+			</div>
+		</div>
+	</ng-scrollbar>
+	<div class="button-container">
+		<button *ngIf="userType !== 'user'" (click)="togglePopup()">+ Add new company</button>
+	</div>
+</div>
+<app-add *ngIf="addNewPopup" (closePopup)="togglePopup()" [config]="addPopupConfig" [title]="popupTiltle" (formSubmit)="addNew($event)" [error]="popupError">
+</app-add>
+<ng-container *ngIf="alertPopup">
+	<app-alert [alertType]="alertType" (answerEvent)="alertAnwser($event)"></app-alert>
+</ng-container>

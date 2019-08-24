@@ -1,0 +1,53 @@
+<section class="side-bar flex">
+	<div class="logo-container flex">
+		<span>MY COMPANY LOGO</span>
+	</div>
+	<div class="user-info flex">
+		<span class="wlcm-name">Welcome, {{userName}}</span>
+		<span class="user-type">{{companyName}}</span>
+	</div>
+	<ul class="menu flex">
+		<li [class.active-menu-item]="active == 'overview'" class="flex">
+			<div class="icon flex">
+				<i class="remixicon-pie-chart-line"></i>
+			</div>
+			<div class="name flex">
+				<span>Overview</span>
+				<span>Global Stats</span>
+			</div>
+		</li>
+		<li [class.active-menu-item]="active == 'files'" class="flex" [navigateTo]="{path:['dashboard','files'], class:activeClass}">
+			<div class="icon flex">
+				<i class="remixicon-file-line"></i>
+			</div>
+			<div class="name flex">
+				<span>My Files</span>
+				<span>File Manager</span>
+			</div>
+		</li>
+		<li [class.active-menu-item]="active == 'users'" class="flex" [navigateTo]="{path:['dashboard','users'], class:activeClass}">
+			<div class="icon flex">
+				<i class="remixicon-user-3-line"></i>
+			</div>
+			<div class="name flex">
+				<span>My Users</span>
+				<span>Users Manager</span>
+			</div>
+		</li>
+		<li [class.active-menu-item]="active == 'settings'" class="flex">
+			<div class="icon flex">
+				<i class="remixicon-settings-3-line"></i>
+			</div>
+			<div class="name flex">
+				<span>Settings</span>
+				<span>Account Settings</span>
+			</div>
+		</li>
+	</ul>
+	<div class="logout-container flex">
+		<div class="icon flex">
+			<i class="remixicon-shut-down-line"></i>
+		</div>
+		<span>Log Out</span>
+	</div>
+</section>

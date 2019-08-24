@@ -1,0 +1,182 @@
+<div class="body-home">
+	<section class="landing-section" [class.nav-scrolled]="scrolled" #home>
+		<img src="/tva-assets/home.svg">
+		<nav class="nav-container flex">
+			<div class="logo">
+				<span>Zeux.</span>
+			</div>
+			<ul class="navigation flex">
+				<li (click)="scrollTo('home')">Home</li>
+				<li (click)="scrollTo('about')">About Us</li>
+				<li (click)="scrollTo('features')">Features</li>
+				<li (click)="scrollTo('pricing')">Pricing</li>
+				<li [navigateTo]="{path:['page']}">Contact us</li>
+			</ul>
+			<div class="nav-buttons">
+				<button class="home-btn-white" [navigateTo]="{path:['login']}">Login</button>
+				<button class="home-btn-transparent" [navigateTo]="{path:['register']}">Register</button>
+			</div>
+		</nav>
+		<div class="landing-content flex">
+			<div class="landing-text-container flex">
+				<div>
+					<span class="large-title">Build a Better Company. For better Customers</span>
+					<p class="small-txt">
+						Curabitur pharetra elit quis ipsum pellentesque imperdiet. Suspendisse egestas pulvinar odio, suscipit auctor nibh hendrerit non.
+					</p>
+					<button [navigateTo]="{path:['register']}" class="home-btn-white blue-text-btn">GET STERTED NOW</button>
+				</div>
+			</div>
+			<div class="landing-img-container">
+				<img src="tva-assets/pc-img.png" alt="">
+			</div>
+		</div>
+	</section>
+	<section class="features-section flex" #features>
+		<img src="tva-assets/features-bg.svg" alt="">
+		<span class="features-title section-title">Managing your company has never been easier</span>
+		<div class="features-container flex">
+			<div class="feature flex">
+				<div class="f-icon">
+					<i class="remixicon-timer-line"></i>
+				</div>
+				<span>Save more time</span>
+				<p>A complete about-face in its core economy Amsterdams progressive</p>
+			</div>
+			<div class="feature flex">
+				<div class="f-icon">
+					<i class="remixicon-bar-chart-line"></i>
+				</div>
+				<span>Keep track on your stats</span>
+				<p>A complete about-face in its core economy Amsterdams progressive</p>
+			</div>
+			<div class="feature flex">
+				<div class="f-icon">
+					<i class="remixicon-user-smile-line"></i>
+				</div>
+				<span>Happy costumers</span>
+				<p>A complete about-face in its core economy Amsterdams progressive</p>
+			</div>
+			<div class="feature flex">
+				<div class="f-icon">
+					<i class="remixicon-thumb-up-line"></i>
+				</div>
+				<span>Manage your workers</span>
+				<p>A complete about-face in its core economy Amsterdams progressive</p>
+			</div>
+		</div>
+	</section>
+	<section class="service-section flex" #about>
+		<span class="service-title section-title">Why choose our services?</span>
+		<div class="servies-content flex">
+			<div class="services flex">
+				<div class="service">
+					<div class="s-img">
+						<img src="tva-assets/s-img-1.svg" alt="">
+					</div>
+					<div class="s-content">
+						<span>Export Ready Files</span>
+						<p>A fold ozone swims across the frog. The platform scratches without our equipped worm.</p>
+					</div>
+				</div>
+				<div class="service">
+					<div class="s-img">
+						<img src="tva-assets/s-img-2.svg" alt="">
+					</div>
+					<div class="s-content">
+						<span>Keep track on you company</span>
+						<p>A fold ozone swims across the frog. The platform scratches without our equipped worm.</p>
+					</div>
+				</div>
+				<div class="service">
+					<div class="s-img">
+						<img src="tva-assets/s-img-3.svg" alt="">
+					</div>
+					<div class="s-content">
+						<span>Access your files from everywhere</span>
+						<p>A fold ozone swims across the frog. The platform scratches without our equipped worm.</p>
+					</div>
+				</div> 
+				<div class="service">
+					<div class="s-img"></div>
+					<div class="s-content">
+						<button [navigateTo]="{path:['register']}">GET STARTED NOW</button>
+					</div>
+				</div>
+			</div>
+			<div class="services-img">
+				<img src="tva-assets/undraw_quitting_time_dm8t.svg" alt="">
+			</div>
+		</div>
+	</section>
+	<section class="payment-section flex" #pricing>
+		<img src="tva-assets/home-payment-bg.svg" alt="">
+		<span class="payment-title section-title">Fair prices for a better service</span>
+		<div class="plans-container flex">
+			<div class="plan flex">
+				<div class="plan-head flex">
+					<span class="large-title">Regular</span>
+					<span class="sub-title">Calcule automatique & XML</span>
+				</div>
+				<div class="plan-body flex">
+					<span>Calcule automatique & XML</span>
+					<span>Possibility d’importe PDF</span>
+					<span>Possibilit d’importer XML</span>
+					<span>Espace de 30 fichiers</span>
+					<span>Calcule 200 facture</span>
+					<span>Ability de 20 users</span>
+				</div>
+				<div class="plan-footer flex">
+					<div class="input-grp flex">
+						<select>
+							<option value="3">3 mois</option>
+							<option value="6">6 mois</option>
+							<option value="9">9 mois</option>
+							<option value="12">12 mois</option>
+						</select>
+					</div>
+					<span><b>$29</b>/mon</span>
+				</div>
+			</div>
+			<div class="plan flex">
+				<div class="plan-head flex">
+					<span class="large-title">Premium</span>
+					<span class="sub-title">Calcule automatique & XML</span>
+				</div>
+				<div class="plan-body flex">
+					<span>Calcule automatique & XML</span>
+					<span>Possibility d’importe PDF</span>
+					<span>Possibilit d’importer XML</span>
+					<span>Espace de 30 fichiers</span>
+					<span>Calcule 200 facture</span>
+					<span>Ability de 20 users</span>
+				</div>
+				<div class="plan-footer flex">
+					<div class="input-grp flex">
+						<select>
+							<option value="1">1 mois</option>
+							<option value="2">2 mois</option>
+							<option value="3" selected>3 mois</option>
+							<option value="4">4 mois</option>
+							<option value="5">5 mois</option>
+							<option value="6">6 mois</option>
+							<option value="7">7 mois</option>
+							<option value="8">8 mois</option>
+							<option value="9">9 mois</option>
+							<option value="10">10 mois</option>
+							<option value="11">11 mois</option>
+							<option value="12">12 mois</option>
+						</select>
+					</div>
+					<span><b>$62</b>/mon</span>
+				</div>
+			</div>
+		</div>
+		<span class="note">
+			You can select the plan and the months on registering, and you can refund your paiment within 7 days in case you didn’t like our service
+		</span>
+	</section>
+	<footer>
+		<span>Ⓒ Copyrights Perlnova 2019. All rights reserved | Privacy policy | Terms of use</span>
+	</footer>
+</div>
