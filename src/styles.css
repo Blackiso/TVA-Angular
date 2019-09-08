@@ -310,10 +310,12 @@ button:hover {
 
 .locked {
 	color: #0084FF !important;
+	cursor: pointer;
 }
 
 .unlocked {
 	color: rgba(50, 62, 78, 0.45) !important;
+	cursor: pointer;
 }
 
 .input-grp > select,
@@ -372,6 +374,14 @@ button:hover {
 .input-grp > input:focus ~ div > span,
 .input-grp > input:focus ~ span {
 	color: #56ABFB !important;
+}
+
+.input-grp > input:focus ~ .inp-suggestion > span {
+	color: #969FAB !important;
+}
+
+.h-inp-grp > select {
+	border: 1px solid #56ABFB;
 }
 
 .input-error > input {
@@ -529,9 +539,12 @@ _:-ms-fullscreen, :root .loading-input:after {
 	margin-top: 15px;
 }
 
+.alert-buttons > button {
+	margin-left: 15px;
+}
+
 .alert-buttons > button:first-of-type {
-	margin-left: auto;
-	margin-right: 15px;
+	margin-left: auto !important;
 }
 
 .highlighted-btn {
@@ -570,7 +583,7 @@ _:-ms-fullscreen, :root .loading-input:after {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	z-index: 2;
+	z-index: 100 !important;
 }
 
 .popup-error {
@@ -640,4 +653,15 @@ _:-ms-fullscreen, :root .loading-input:after {
     width: 100%;
     text-align: center;
     margin-top: 20vh;
+}
+
+.loading-body  {
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10vh;
+}
+
+.loading-body > img {
+    width: 30px;
 }

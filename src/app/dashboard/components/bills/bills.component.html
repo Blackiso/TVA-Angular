@@ -1,0 +1,39 @@
+<div class="page-head flex">
+	<div class="title flex">
+		Factures de Janvier
+	</div>
+	<div class="download-btns">
+		<div class="pdf">
+			<i class="remixicon-file-fill"></i>
+			<span>PDF</span>
+		</div>
+		<div class="xml">
+			<i class="remixicon-file-fill"></i>
+			<span>XML</span>
+		</div>
+	</div>
+	<div class="flex">
+		<button (click)="addPopup = true" class="add-new-file">+ Add New</button>
+	</div>
+</div>
+<div class="table">
+	<div class="table-row table-head">
+		<div class="check-box">
+			<input type="checkbox">
+			<div class="box"></div>
+		</div>
+		<span>Nemuro Facture</span>
+		<span>Fournisseur</span>
+		<span>Montant TVA  (MAD)</span>
+		<span>Date de facture</span>
+		<div class="expand">
+			<i class="remixicon-delete-bin-2-fill"></i>
+		</div>
+	</div>
+	<div class="rows">
+		<app-bill *ngFor="let bill of bills" [data]="bill" (copyBill)="addNewBill($event)"></app-bill>
+	</div>
+</div>
+<ng-container *ngIf="addPopup">
+	<app-add-bills (addBill)="addNewBill($event)" (close)="addPopup = false"></app-add-bills>
+</ng-container>

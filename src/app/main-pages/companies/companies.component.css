@@ -164,14 +164,3 @@
 	padding-top: 20px;
 	padding-bottom: 50px;
 }
-
-.loading  {
-    width: 100%;
-    align-items: center;
-    justify-content: center;
-    margin-top: 10vh;
-}
-
-.loading > img {
-    width: 30px;
-}

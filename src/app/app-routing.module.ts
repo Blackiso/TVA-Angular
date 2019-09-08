@@ -11,6 +11,7 @@ import { CompaniesComponent } from './main-pages/companies/companies.component';
 import { DashboardComponent } from './dashboard/dashboard/dashboard.component';
 import { FilesComponent } from './dashboard/components/files/files.component';
 import { UsersComponent } from './dashboard/components/users/users.component';
+import { BillsComponent } from './dashboard/components/bills/bills.component';
 
 import { AuthGuard } from './guards/auth.guard';
 import { ReverseAuthGuard } from './guards/reverse-auth.guard';
@@ -52,7 +53,7 @@ const routes: Routes = [
 		children : [
 			{
 				'path' : '',
-				'component' : UsersComponent
+				'component' : FilesComponent
 			},
 			{
 				'path' : 'files',
@@ -61,6 +62,10 @@ const routes: Routes = [
 			{
 				'path' : 'users',
 				'component' : UsersComponent
+			},
+			{
+				'path' : 'bills/:file/:month',
+				'component' : BillsComponent
 			}
 		],
 		canActivate : [AuthGuard]

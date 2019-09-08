@@ -13,6 +13,8 @@ export class UsersService {
 	updateUsersUrl:string = "/api/users/:user-id/update";
 	addUsersCompanyUrl:string = "/api/users/:user-id/add";
 	searchUsersUrl:string = "/api/users/search";
+	blockUrl:string = "/api/users/:user-id/block";
+	unblockUrl:string = "/api/users/:user-id/unblock";
 
 	constructor(private http:HttpClient, private url:UrlsService) { }
 
@@ -54,5 +56,11 @@ export class UsersService {
 		var url = this.url.prefix+this.addUsersCompanyUrl;
 		url = url.replace(':user-id', userId);
 		return this.http.post<any>(url, {companies : companyId});
+	}
+
+	blockUser(val, userId) {
+		var url = this.url.prefix+this[val+'Url'];
+		url = url.replace(':user-id', userId);
+		return this.http.post<any>(url, {});
 	}
 }

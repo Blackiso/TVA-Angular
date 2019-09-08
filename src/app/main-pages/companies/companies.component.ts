@@ -180,7 +180,7 @@ export class CompaniesComponent implements OnInit {
  					this.popupError = true;
  				}else {
  					this.popupError = false;
- 					this.addFromArray(this.form);
+ 					this.addFromArray(response);
  					this.togglePopup();
  				}
  			},
@@ -196,8 +196,6 @@ export class CompaniesComponent implements OnInit {
  	}
 
  	addFromArray(obj) {
- 		delete obj.address;
- 		delete obj.phone;
  		this.companies.unshift(obj);
  	}
 

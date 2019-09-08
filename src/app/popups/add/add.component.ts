@@ -8,6 +8,7 @@ import { Component, EventEmitter, Output, Input, OnInit } from '@angular/core';
 export class AddComponent {
 
 	@Input() config:any;
+	@Input() xType:any;
 	@Input() title:any;
 	@Input() error:boolean;
 	@Input() loading:boolean = false;

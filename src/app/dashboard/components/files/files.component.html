@@ -3,14 +3,14 @@
 		Company Files
 	</div>
 	<div class="flex">
-		<button class="add-new-file">+ Add New File</button>
+		<button class="add-new-file" (click)="addNew = true">+ Add New File</button>
 	</div>
 </div>
 <div class="files-main flex">
 	<div class="files-container flex">
 		<div class="titles flex">
 			<div class="check-box">
-				<input (change)="checkEvent($event)" type="checkbox">
+				<input (click)="checkEvent()" [checked]="checkAll" type="checkbox">
 				<div class="box"></div>
 			</div>
 			<span>File Name</span>
@@ -18,11 +18,26 @@
 			<span>Year</span>
 			<span>Last Modified</span>
 			<span class="more-options">
-				<i class="remixicon-delete-bin-2-fill" [ngClass]="checkAll ? 'red-dlt' : ''"></i>
+				<i class="remixicon-delete-bin-2-fill" [class.red-dlt]="checkAll || deleteBtn" (click)="deleteAlert()"></i>
 			</span>
 		</div>
-		<div class="files flex">
-			<app-file *ngFor="let item of [].constructor(files_number); let i = index"></app-file>
+		<div class="files flex" [scrollLoading]="scrollCallBack">
+			<app-file *ngFor="let file of files" (checked)="fileChecked($event)" [data]="file" [check]="checkAll" [close]="closeAll" (opend)="closeAllFiles()" (edit)="openEditPopup($event)" (delete)="deleteAlert($event)">
+			</app-file>
+			<span *ngIf="!loading && files.length == 0" class="empty-list">Add new file to start.</span>
+			<div *ngIf="loading" class="loading-body flex">
+				<img src="/tva-assets/loading.svg" alt="">
+			</div>
 		</div>
 	</div>
 </div>
+
+<app-add *ngIf="addNew" [loading]="popupLoading" [config]="addNewConfig" [title]="popupTiltle" [error]="popupError" (formSubmit)="addNewFile($event)" (closePopup)="addNew = false">
+</app-add>
+
+<app-add *ngIf="editPopup" [loading]="popupLoading" [config]="editPopupConfig" [title]="editPopupTiltle" [error]="popupError" (formSubmit)="editFile($event)" (closePopup)="editPopup = false">
+</app-add>
+
+<ng-container *ngIf="alertPopup">
+	<app-alert [alertType]="alertType" (answerEvent)="alertAnswer($event)"></app-alert>
+</ng-container>

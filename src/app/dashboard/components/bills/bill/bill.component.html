@@ -1,0 +1,121 @@
+<div class="table-row-container" [class.expanded-row]="billOpned">
+	<div class="table-row">
+		<div class="close-bill" (click)="billOpned = !billOpned"></div>
+		<div class="check-box">
+			<input (keyup.enter)="blurInput($event)" type="checkbox">
+			<div class="box"></div>
+		</div>
+		<div class="row-items">
+			<div class="less-info">
+				<span>{{data.nfa}}</span>
+				<span>{{data.ndf}}</span>
+				<span>{{data.tva}}</span>
+				<span>{{data.ddf}}</span>
+			</div>
+			<form class="more-info" (submit)="editBill($event)">
+				<div class="info-box">
+					<span>N° Facture: </span>
+					<div>
+						<input (keyup.enter)="blurInput($event)" type="text" name="nfa" value="{{data.nfa}}">
+						<span>{{data.nfa}}</span>
+						<i class="remixicon-pencil-fill"></i>
+					</div>
+				</div>
+				<div class="info-box">
+					<span>Designation de bien et service: </span>
+					<div>
+						<input (keyup.enter)="blurInput($event)" type="text" name="dbs" value="{{data.dbs}}">
+						<span>{{data.dbs}}</span>
+						<i class="remixicon-pencil-fill"></i>
+					</div>
+				</div>
+				<div class="info-box">
+					<span>Date de facture: </span>
+					<div>
+						<input (keyup.enter)="blurInput($event)" type="text" name="ddf" value="{{data.ddf}}">
+						<span>{{data.ddf}}</span>
+						<i class="remixicon-pencil-fill"></i>
+					</div>
+				</div>
+				<div class="info-box">
+					<span>Fournisseur: </span>
+					<div>
+						<input (keyup.enter)="blurInput($event)" type="text" name="ndf" value="{{data.ndf}}">
+						<span>{{data.ndf}}</span>
+						<i class="remixicon-pencil-fill"></i>
+					</div>
+				</div>
+				<div class="info-box">
+					<span>ICE: </span>
+					<div>
+						<input (keyup.enter)="blurInput($event)" type="text" name="ice" value="{{data.ice}}">
+						<span>{{data.ice}}</span>
+						<i class="remixicon-pencil-fill"></i>
+					</div>
+				</div>
+				<div class="info-box">
+					<span>Identifaction Fiscal: </span>
+					<div>
+						<input (keyup.enter)="blurInput($event)" type="text" name="iff" value="{{data.iff}}">
+						<span>{{data.iff}}</span>
+						<i class="remixicon-pencil-fill"></i>
+					</div>
+				</div>
+				<div class="info-box">
+					<span>Montant HT: </span>
+					<div>
+						<input (keyup.enter)="blurInput($event)" type="text" name="mht" value="{{data.mht}}">
+						<span>{{data.mht}} MAD</span>
+						<i class="remixicon-pencil-fill"></i>
+					</div>
+				</div>
+				<div class="info-box">
+					<span>Taux TVA: </span>
+					<div>
+						<input (keyup.enter)="blurInput($event)" type="text" name="tau" value="{{data.tau}}">
+						<span>{{data.tau}}</span>
+						<i class="remixicon-pencil-fill"></i>
+					</div>
+				</div>
+				<div class="info-box">
+					<span>Montant TVA: </span>
+					<div>
+						<input (keyup.enter)="blurInput($event)" type="text" name="tva" value="{{data.tva}}">
+						<span>{{data.tva}} MAD</span>
+						<i class="remixicon-pencil-fill"></i>
+					</div>
+				</div>
+				<div class="info-box">
+					<span>Montant TTC: </span>
+					<div>
+						<input (keyup.enter)="blurInput($event)" type="text" name="ttc" value="{{data.ttc}}">
+						<span>{{data.ttc}} MAD</span>
+						<i class="remixicon-pencil-fill"></i>
+					</div>
+				</div>
+				<div class="info-box">
+					<span>Date de paiment: </span>
+					<div>
+						<input (keyup.enter)="blurInput($event)" type="text" name="ddp" value="{{data.ddp}}">
+						<span>{{data.ddp}}</span>
+						<i class="remixicon-pencil-fill"></i>
+					</div>
+				</div>
+				<div class="info-box">
+					<span>Mode de paiment: </span>
+					<div>
+						<input (keyup.enter)="blurInput($event)" type="text" name="mdp" value="{{data.mdp}}">
+						<span>{{data.mdp}}</span>
+						<i class="remixicon-pencil-fill"></i>
+					</div>
+				</div>
+				<button class="hide" type="submit">hidden button</button>
+			</form>
+		</div>
+		<div class="expand">
+			<i class="remixicon-file-copy-2-fill" (click)="duplicateBill($event)"></i>
+			<i [ngClass]="billOpned ? 'remixicon-arrow-down-s-fill' : 'remixicon-arrow-left-s-fill'" (click)="billOpned = !billOpned"></i>
+			<i class="remixicon-delete-bin-2-fill delete-icon-details"></i>
+		</div>
+	</div>
+</div>

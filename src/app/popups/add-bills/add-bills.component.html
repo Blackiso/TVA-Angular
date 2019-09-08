@@ -1,0 +1,104 @@
+<div class="popup-container">
+	<form class="alert-popup bill-popup" (submit)="addNewBill($event)">
+		<div class="alert-head">
+			<span>Add new facture</span>
+		</div>
+		<div class="alert-body">
+			<span *ngIf="error" class="popup-error">Error please try again!</span>
+			<div class="alert-content alert-with-inp">
+				<div class="input-grp">
+					<input type="text" name="ddf" placeholder="Date de facture">
+					<div>
+						<span>Date de facture</span>
+						<i (click)="lockInput($event, 'ddf')" class="lock unlocked remixicon-lock-fill"></i>
+					</div>
+				</div>
+				<div class="input-grp">
+					<input type="text" name="nfa" placeholder="N° de la facture">
+					<div>
+						<span>N° Facture</span>
+						<i (click)="lockInput($event, 'nfa')" class="lock unlocked remixicon-lock-fill"></i>
+					</div>
+				</div>
+				<div class="input-grp">
+					<input type="text" name="ndf" placeholder="Nome de fournisseur" [value]="selectedndf" (keyup)="searchSuppliers($event)" autocomplete="off">
+					<div>
+						<span>Fournisseur</span>
+						<i (click)="lockInput($event, 'ndf')" class="lock unlocked remixicon-lock-fill"></i>
+					</div>
+					<div *ngIf="suggestion" class="inp-suggestion trigger-btn" (clickAway)="suggestion = false">
+						<span *ngFor="let sup of suppliers" [attr.data-ndf]="sup.ndf" [attr.data-iff]="sup.iff" [attr.data-ice]="sup.ice"  (click)="setSupplier($event)">{{sup.ndf}}</span>
+					</div>
+				</div>
+				<div class="input-grp">
+					<input type="text" name="iff" placeholder="Identification commun d’entrprise" [value]="selectedice">
+					<div>
+						<span>ICE</span>
+						<i (click)="lockInput($event, 'iff')" class="lock unlocked remixicon-lock-fill"></i>
+					</div>
+				</div>
+				<div class="input-grp">
+					<input type="text" name="ice" placeholder="Identifaction Fiscal (IF)" [value]="selectediff">
+					<div>
+						<span>Identifaction Fiscal</span>
+						<i (click)="lockInput($event, 'ice')" class="lock unlocked remixicon-lock-fill"></i>
+					</div>
+				</div>
+				<div class="input-grp">
+					<input type="text" name="dbs" placeholder="Designation de bien et service">
+					<div>
+						<span>Designation de bien et service</span>
+						<i (click)="lockInput($event, 'dbs')" class="lock unlocked remixicon-lock-fill"></i>
+					</div>
+				</div>
+				<div class="input-grp">
+					<input type="text" [value]="mHT" (keyup)="calculate()" (input)="mHT = $event.target.value" name="mht" placeholder="Montant HT">
+					<div>
+						<span>Montant HT</span>
+						<i (click)="lockInput($event, 'mht')" class="lock unlocked remixicon-lock-fill"></i>
+					</div>
+				</div>
+				<div class="input-grp">
+					<input type="text" [value]="tTVA" (keyup)="calculate()" (input)="tTVA = $event.target.value" name="tau" placeholder="Taux TVA">
+					<div>
+						<span>Taux TVA</span>
+						<i (click)="lockInput($event, 'tau')" class="lock unlocked remixicon-lock-fill"></i>
+					</div>
+				</div>
+				<div class="input-grp">
+					<input type="text" [value]="mTVA" name="tva" placeholder="Montant TVA">
+					<div>
+						<span>Montant TVA</span>
+						<i (click)="lockInput($event, 'tva')" class="lock unlocked remixicon-lock-fill"></i>
+					</div>
+				</div>
+				<div class="input-grp">
+					<input type="text" [value]="mTTC" name="ttc" placeholder="Montant TTC">
+					<div>
+						<span>Montant TTC</span>
+						<i (click)="lockInput($event, 'ttc')" class="lock unlocked remixicon-lock-fill"></i>
+					</div>
+				</div>
+				<div class="input-grp">
+					<input type="text" name="mdp" placeholder="Mode de paiment">
+					<div>
+						<span>Mode de paiment</span>
+						<i (click)="lockInput($event, 'mdp')" class="lock unlocked remixicon-lock-fill"></i>
+					</div>
+				</div>
+				<div class="input-grp">
+					<input type="text" name="ddp" placeholder="Date de paiment">
+					<div>
+						<span>Date de paiment</span>
+						<i (click)="lockInput($event, 'ddp')" class="lock unlocked remixicon-lock-fill"></i>
+					</div>
+				</div>
+			</div>
+			<div class="alert-buttons">
+				<button type="button" (click)="lockAll($event)" class="white-btn">{{lockAllCheckBtn}}</button>
+				<button type="button" (click)="closePopup()" class="white-btn">CLOSE</button>
+				<button type="submit" class="highlighted-btn">ADD</button>
+			</div>
+		</div>
+	</form>
+</div>

@@ -6,14 +6,23 @@
 		<form class="alert-body" (submit)="submitPopup($event)">
 			<span *ngIf="error" class="popup-error">Error please try again!</span>
 			<div class="alert-content alert-with-inp">
-				<div *ngFor="let inp of config" class="input-grp" [class.h-inp-grp]="focus">
+				<div *ngFor="let inp of config" class="input-grp" [class.h-inp-grp]="inp.focus">
+
 					<input [value]="!!inp.value ? inp.value : ''" *ngIf="inp.type == null" type="text" name="{{inp.name}}" placeholder="{{inp.placeholder}}">
+
 					<input [value]="!!inp.value ? inp.value : ''" *ngIf="inp.type == 'password'" type="password" name="{{inp.name}}" placeholder="{{inp.placeholder}}">
+
 					<input [value]="!!inp.value ? inp.value : ''" *ngIf="inp.type == 'email'" name="email" type="email" name="{{inp.name}}" placeholder="{{inp.placeholder}}">
+
 					<div *ngIf="inp.type == 'user_email'" class="user_email flex" [class.h-inp-grp]="focus">
-						<input [value]="!!inp.value ? inp.value : ''" type="text" name="email" placeholder="{{inp.placeholder}}" (blur)="focus = false" (focus)="focus = true">
+						<input [value]="!!inp.value ? inp.value : ''" type="text" name="email" placeholder="{{inp.placeholder}}" (blur)="inp.focus = false" (focus)="inp.focus = true">
 						<span>@tva.edg</span>
 					</div>
+
+					<select *ngIf="inp.type == 'select'" name="{{inp.name}}" [value]="!!inp.value ? inp.value : 'quarterly'" (blur)="inp.focus = false" (focus)="inp.focus = true">
+						<option *ngFor="let op of inp.options" value="{{op.value}}">{{op.name}}</option>
+					</select>
+
 					<span>{{inp.title}}</span>
 				</div>
 			</div>

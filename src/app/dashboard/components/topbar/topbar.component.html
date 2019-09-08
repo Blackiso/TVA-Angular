@@ -1,7 +1,7 @@
-<section class="top-bar flex with-search">
+<section class="top-bar flex" [class.with-search]="allowSearch">
 	<div class="search-bar">
 		<i class="remixicon-search-line"></i>
-		<input type="text" placeholder="Search for a user in this company">
+		<input type="text" placeholder="Search for {{currentComponent}} in this company" (keyup)="searchKeyUp($event)" (keyup.enter)="search($event)">
 	</div>
 	<div class="notification noti-on">
 		<i class="remixicon-notification-3-line"></i>

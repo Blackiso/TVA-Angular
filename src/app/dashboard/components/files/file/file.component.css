@@ -272,7 +272,6 @@
 	display: -ms-flex;
 	display: -o-flex;
 	display: flex;
-	justify-content: center;
 }
 
 .custom-select-options > div > div:hover {
@@ -293,7 +292,7 @@
 	position: absolute;
 	top: 0;
 	bottom: 0;
-	left: 0px;
+	left: -8px;
 	margin: auto;
 	display: block;
 	background-color:  #0BF551;
@@ -313,4 +312,21 @@
 	display: -ms-flex;
 	display: -o-flex;
 	display: flex;
+}
+
+.loading-file {
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	background: #FFFFFF;
+	top: 0;
+	left: 0;
+	z-index: 5;
+	border-radius: 3px;
+	align-items: center;
+	justify-content: center;
+}
+
+.loading-file > img {
+	width: 25px;
 }

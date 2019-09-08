@@ -43,9 +43,11 @@
 .more-options > i {
 	margin-left: auto;
 	margin-right: 20px;
+	pointer-events: none;
 }
 
 .red-dlt {
 	color: #f14343 !important;
-	cursor: pointer;
+	cursor: pointer !important;
+	pointer-events: auto !important;
 }

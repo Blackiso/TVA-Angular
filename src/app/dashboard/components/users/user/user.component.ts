@@ -7,10 +7,11 @@ import { DashboardService } from '../../../services/dashboard.service';
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.css']
 })
-export class UserComponent implements OnInit {
+export class UserComponent {
 
 	@Output() deleted = new EventEmitter<any>();
 	@Output() edit = new EventEmitter<number>();
+	@Output() block = new EventEmitter<any>();
 	@Input() user:any;
 	moreOptions:boolean = false;
 
@@ -18,10 +19,6 @@ export class UserComponent implements OnInit {
 		private userService:UsersService,
 		private dashboard:DashboardService
 	) { }
-
-	ngOnInit() {
-		console.log(this.user);
-	}
 
 	toggleOptions() {
 		this.moreOptions = !this.moreOptions;
@@ -51,4 +48,11 @@ export class UserComponent implements OnInit {
 		);	
 	}
 
+	blockUser() {
+		this.block.emit({val : 'block', userId : this.user.user_id});
+	}
+
+	unblockUser() {
+		this.block.emit({val : 'unblock', userId : this.user.user_id});
+	}
 }

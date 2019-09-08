@@ -38,6 +38,7 @@ export class UsersComponent implements OnInit {
 	];
 	form:any;
 	loading:boolean;
+	loadingUsers:boolean = false;
 	alertPopup:boolean = false;
 	alertType:string = "error";
 	editPopup:boolean = false;
@@ -52,14 +53,25 @@ export class UsersComponent implements OnInit {
 	) { }
 
 	ngOnInit() {
+		this.dashboard.setCurruntComponent('users');
 		this.companyId = this.dashboard.companyId;
 		this.getAll();
 	}
 
 	getAll() {
+		this.loadingUsers = true;
 		this.usersService.getAll(this.companyId).subscribe(
 			response => {
-				this.users = response;
+				this.loadingUsers = false;
+				if (!!response.error) {
+					this.displayError();
+				}else {
+					this.users = response;
+				}
+			},
+			err => {
+				this.loadingUsers = false;
+				this.displayError();
 			}
 		)
 	}
@@ -72,12 +84,13 @@ export class UsersComponent implements OnInit {
 	displayEditPopup(user) { 
 		this.editConfig = [];
 		this.addPopupConfig.forEach(item => {
+			var _item = Object.assign({}, item);;
 			if (item.name == "email") {
-				item.value = user[item.name].split('@')[0];
+				_item.value = user[item.name].split('@')[0];
 			}else {
-				item.value = user[item.name];
+				_item.value = user[item.name];
 			}
-			this.editConfig.push(item);
+			this.editConfig.push(_item);
 		});
 		this.editPopup = true;
 	}
@@ -122,8 +135,7 @@ export class UsersComponent implements OnInit {
 		var user = this.getUserById(this.userToEdit); 
 		for (var item in obj) {
 			if (obj[item] == "") delete obj[item];
-			var userVal = item == 'email' ? user[item].split('@')[0] : user[item];
-			if (obj[item] == userVal) delete obj[item];
+			if (obj[item] == user[item]) delete obj[item];
 		}
 		return obj;
 	}
@@ -215,5 +227,24 @@ export class UsersComponent implements OnInit {
 
 	hideError() {
 		this.alertPopup = false;
+	}
+
+	block(event) {
+		this.usersService.blockUser(event.val, event.userId).subscribe(
+			response => {
+				if (response !== null) {
+					this.displayError();
+				}else {
+					this.users.forEach(user => {
+						if (user.user_id == event.userId) {
+							user.blocked = event.val == 'block' ? 1 : 0;
+						}
+					});
+				}
+			},
+			err => {
+				this.displayError();
+			}
+		)
 	}
 }

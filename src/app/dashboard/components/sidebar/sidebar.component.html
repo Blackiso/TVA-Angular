@@ -7,6 +7,15 @@
 		<span class="user-type">{{companyName}}</span>
 	</div>
 	<ul class="menu flex">
+		<li class="flex" [navigateTo]="{path:['companies']}">
+			<div class="icon flex">
+				<i class="remixicon-stack-line"></i>
+			</div>
+			<div class="name flex">
+				<span>Companies</span>
+				<span>Select a company</span>
+			</div>
+		</li>
 		<li [class.active-menu-item]="active == 'overview'" class="flex">
 			<div class="icon flex">
 				<i class="remixicon-pie-chart-line"></i>
@@ -44,7 +53,7 @@
 			</div>
 		</li>
 	</ul>
-	<div class="logout-container flex">
+	<div class="logout-container flex" (click)="logout()">
 		<div class="icon flex">
 			<i class="remixicon-shut-down-line"></i>
 		</div>

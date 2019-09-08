@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { DashboardService } from '../../services/dashboard.service'
 import { UserDataService } from '../../../services/user-data.service'
+import { AuthenticationService } from '../../../services/authentication.service'
+import { HelperModule } from '../../../modules/helper.module';
 
 @Component({
   selector: 'app-sidebar',
@@ -17,15 +19,29 @@ export class SidebarComponent implements OnInit {
 
 	constructor(
 		private userData:UserDataService,
-		private dashboard:DashboardService
+		private dashboard:DashboardService,
+		private authSearvice:AuthenticationService,
+		private helper:HelperModule
 	) { }
 
 	ngOnInit() {
 		this.userName = this.userData.userName;
 		this.companyName = this.dashboard.companyName;
-		console.log(this.dashboard.companyName);
+		
 		var url = window.location.pathname.split('/');
-		this.active = url[2] !== undefined ? url[2] : 'users';
+		this.active = url[2] !== undefined ? url[2] : 'files';
+	}
+
+	logout() {
+		this.authSearvice.logout().subscribe(
+			response => {
+				if (response == null) {
+					this.userData.userAuth = false;
+					this.userData.runAuth = false;
+					this.helper.reRoute(['/home']);
+				}
+			}
+		);
 	}
 
 }

@@ -11,6 +11,7 @@ export class AuthenticationService {
 	loginUrl:string = "/api/authentication/login";
 	authUrl:string = "/api/authentication/authenticate";
 	registerUrl:string = "/api/authentication/register";
+	logoutUrl:string = "/api/authentication/logout";
 
 	constructor(private http:HttpClient, private url:UrlsService) { }
 
@@ -24,5 +25,9 @@ export class AuthenticationService {
 
 	register(info) {
 		return this.http.post<any>(this.url.prefix+this.registerUrl, info);
+	}
+
+	logout() {
+		return this.http.post<any>(this.url.prefix+this.logoutUrl, {});
 	}
 }

@@ -64,6 +64,10 @@
 	cursor: pointer;
 }
 
+.remixicon-user-unfollow-line {
+	color: red !important;
+}
+
 @media only screen and (max-width: 1222px) {
 	:host {
 		width: calc((100%/3) - 13.4px);

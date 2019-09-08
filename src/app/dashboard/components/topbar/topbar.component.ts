@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DashboardService } from '../../services/dashboard.service';
 
 @Component({
   selector: 'app-topbar',
@@ -7,9 +8,37 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TopbarComponent implements OnInit {
 
-  constructor() { }
+	allowSearch:boolean = false;
+	currentComponent:string;
+	allowedComponents:any = ['files', 'bills'];
 
-  ngOnInit() {
-  }
+	constructor(private DashboardService:DashboardService) { }
+
+	ngOnInit() {
+		this.DashboardService.currentComponentS.subscribe(
+			component => {
+				this.currentComponent = component;
+				this.checkSearch();
+			}
+		);
+	}
+
+	checkSearch() {
+		if (this.allowedComponents.includes(this.currentComponent)) {
+			this.allowSearch = true;
+		}else {
+			this.allowSearch = false;
+		}
+	}
+
+	searchKeyUp(e) {
+		if (e.currentTarget.value == "") {
+			this.DashboardService.setSearchValue("");
+		}
+	}
+
+	search(e) {
+		this.DashboardService.setSearchValue(e.currentTarget.value);
+	}
 
 }

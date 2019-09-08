@@ -38,6 +38,10 @@ import { CompaniesComponent } from './main-pages/companies/companies.component';
 import { AddComponent } from './popups/add/add.component';
 import { AlertComponent } from './popups/alert/alert.component';
 import { AddUserComponent } from './popups/add-user/add-user.component';
+import { ScrollLoadingDirective } from './directives/scroll-loading.directive';
+import { BillsComponent } from './dashboard/components/bills/bills.component';
+import { AddBillsComponent } from './popups/add-bills/add-bills.component';
+import { BillComponent } from './dashboard/components/bills/bill/bill.component';
 
 @NgModule({
 	declarations: [
@@ -47,9 +51,7 @@ import { AddUserComponent } from './popups/add-user/add-user.component';
     	TopbarComponent,
     	FilesComponent,
     	FileComponent,
-    	ClickAwayDirective,
     	UsersComponent,
-    	NavigateToDirective,
     	HomeComponent,
     	LoginComponent,
     	RegisterComponent,
@@ -62,24 +64,30 @@ import { AddUserComponent } from './popups/add-user/add-user.component';
     	AddComponent,
     	AlertComponent,
     	UserComponent,
-    	AddUserComponent
+    	AddUserComponent,
+        ScrollLoadingDirective,
+        NavigateToDirective,
+        ClickAwayDirective,
+        BillsComponent,
+        AddBillsComponent,
+        BillComponent
   	],
   	imports: [
     	BrowserModule,
     	AppRoutingModule,
-      FormsModule,
-      HelperModule,
-      HttpClientModule,
-      NgScrollbarModule
+        FormsModule,
+        HelperModule,
+        HttpClientModule,
+        NgScrollbarModule
   	],
   	providers: [
-      FilesService,
-      DashboardService,
-      AuthenticationService,
-      UserDataService,
-      AuthGuard,
-      ReverseAuthGuard,
-      LocalStorageService
+        FilesService,
+        DashboardService,
+        AuthenticationService,
+        UserDataService,
+        AuthGuard,
+        ReverseAuthGuard,
+        LocalStorageService
     ],
 	bootstrap: [AppComponent]
 })

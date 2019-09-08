@@ -22,12 +22,12 @@ export class HelperModule {
 	}
 
 	getInputElem(parent) {
-		if (parent.nodeName == 'INPUT') {
+		if (parent.nodeName == 'INPUT' || parent.nodeName == 'SELECT') {
 			this.inputs[parent.name] = parent.value;
 		}else {
 			parent = parent.children;
 			[...parent].forEach(elem => {
-				if (elem.nodeName !== 'INPUT') {
+				if (elem.nodeName !== 'INPUT' || elem.nodeName !== 'SELECT') {
 					this.getInputElem(elem);
 				}else {
 					this.inputs[elem.name] = elem.value;

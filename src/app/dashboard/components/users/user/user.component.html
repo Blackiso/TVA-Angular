@@ -1,5 +1,6 @@
 <div class="user-icon">
-	<i class="remixicon-user-3-line"></i>
+	<i *ngIf="user.blocked == 0" class="remixicon-user-line"></i>
+	<i *ngIf="user.blocked == 1" class="remixicon-user-unfollow-line"></i>
 </div>
 <div class="info">
 	<span class="user-name">{{user.name}}</span>
@@ -11,5 +12,7 @@
 	<div class="options-menu" [class.hide]="!moreOptions">
 		<span (click)="editUser()"><i class="remixicon-pencil-fill"></i><span>Edit</span></span>
 		<span (click)="deleteUser()"><i class="remixicon-delete-bin-2-fill"></i><span>Remove</span></span>
+		<span *ngIf="user.blocked == 0" (click)="blockUser()"><i class="remixicon-indeterminate-circle-fill"></i><span>Block</span></span>
+		<span *ngIf="user.blocked == 1" (click)="unblockUser()"><i class="remixicon-add-circle-fill"></i><span>Unblock</span></span>
 	</div>
 </div>
