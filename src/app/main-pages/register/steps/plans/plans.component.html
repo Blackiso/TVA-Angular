@@ -1,31 +1,6 @@
 <div class="register-plans-container flex">
-	<span class="large-title">Please select your plan</span>
+	<span class="large-title">S'il vous plaît sélectionnez votre plan</span>
 	<div class="plans-container flex">
-		<div class="plan flex">
-			<div class="plan-head flex">
-				<span class="large-title">Regular</span>
-				<span class="sub-title">Calcule automatique & XML</span>
-			</div>
-			<div class="plan-body flex">
-				<span>Calcule automatique & XML</span>
-				<span>Possibility d’importe PDF</span>
-				<span>Possibilit d’importer XML</span>
-				<span>Espace de 30 fichiers</span>
-				<span>Calcule 200 facture</span>
-				<span>Ability de 20 users</span>
-			</div>
-			<div class="plan-footer flex">
-				<div class="input-grp flex">
-					<select>
-						<option value="3">3 mois</option>
-						<option value="6">6 mois</option>
-						<option value="9">9 mois</option>
-						<option value="12">12 mois</option>
-					</select>
-				</div>
-				<span><b>$29</b>/mon</span>
-			</div>
-		</div>
 		<div class="plan flex selected-plan">
 			<div class="plan-head flex">
 				<span class="large-title">Premium</span>
@@ -33,15 +8,14 @@
 			</div>
 			<div class="plan-body flex">
 				<span>Calcule automatique & XML</span>
-				<span>Possibility d’importe PDF</span>
-				<span>Possibilit d’importer XML</span>
-				<span>Espace de 30 fichiers</span>
-				<span>Calcule 200 facture</span>
+				<span>Possibility d’exportation de PDF</span>
+				<span>Espace des dossier illimité</span>
+				<span>Calcule quantité illimitée de factures</span>
 				<span>Ability de 20 users</span>
 			</div>
 			<div class="plan-footer flex">
 				<div class="input-grp flex">
-					<select>
+					<select id="months">
 						<option value="1">1 mois</option>
 						<option value="2">2 mois</option>
 						<option value="3" selected>3 mois</option>
@@ -56,10 +30,10 @@
 						<option value="12">12 mois</option>
 					</select>
 				</div>
-				<span><b>$62</b>/mon</span>
+				<span><b>100Dhs</b>/mon</span>
 			</div>
 		</div>
 	</div>
-	<button (click)="process()">Fill Payement Info</button>
-	<span class="note"><b>NOTE: </b>You can refund your payment within 7 days of payement !</span>
+	<button (click)="sendClick('main_payment_btn')" [class.button-loading]="loading" (click)="process()">Remplir les informations de paiement</button>
+	<span class="note"><b> REMARQUE: </b> vous pouvez rembourser votre paiement dans les 2 jours suivant le paiement!</span>
 </div>

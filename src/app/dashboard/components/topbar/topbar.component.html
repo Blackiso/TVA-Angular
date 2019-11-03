@@ -1,10 +1,21 @@
 <section class="top-bar flex" [class.with-search]="allowSearch">
 	<div class="search-bar">
 		<i class="remixicon-search-line"></i>
-		<input type="text" placeholder="Search for {{currentComponent}} in this company" (keyup)="searchKeyUp($event)" (keyup.enter)="search($event)">
+		<input type="text" placeholder="Rechercher {{translate[currentComponent]}} dans cette société" (keyup)="searchKeyUp($event)" (keyup.enter)="search($event)">
+	</div>
+	<div class="support-icon">
+		<i (click)="contactPopup = true" [tooltip]="'Contactez-nous'" class="remixicon-customer-service-2-line"></i>
 	</div>
 	<div class="notification noti-on">
-		<i class="remixicon-notification-3-line"></i>
+		<i class="remixicon-notification-3-line" [tooltip]="'Notifications'"></i>
 	</div>
-	<button>Upgrade My Account</button>
+	<button *ngIf="!isVerified" (click)="verifyEmail()" class="email-activate-alert flex">
+		<i class="remixicon-alert-line"></i>
+		Vérifiez votre e-mail
+	</button>
 </section>
+<app-verify-email *ngIf="verifyEmailPopup" (closePopup)="close()"></app-verify-email>
+<ng-container *ngIf="alertPopup">
+	<app-alert [alertType]="alertType" (answerEvent)="alertAnwser($event)"></app-alert>
+</ng-container>
+<app-contact-us *ngIf="contactPopup" (closePopup)="contactPopup = false"></app-contact-us>

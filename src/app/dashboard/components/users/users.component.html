@@ -1,20 +1,20 @@
 <div class="page-head flex">
 	<div class="title flex">
-		Company Users
+		Utilisateurs de la société
 	</div>
 	<div class="flex">
-		<button class="add-new-file" (click)="togglePopup()">+ Add User</button>
+		<button class="add-new-file" (click)="togglePopup()">+ Ajouter un utilisateur</button>
 	</div>
 </div>
 <div class="users-container flex">
 	<app-user *ngFor="let user of users" [user]="user" (block)="block($event)" (deleted)="deleteUser($event)" (edit)="editUser($event)"></app-user>
-	<span *ngIf="!loadingUsers && users.length == 0" class="empty-list">Add new user to company to start.</span>
+	<span *ngIf="!loadingUsers && users.length == 0" class="empty-list">Ajouter un nouveau utilisateur à la société pour commencer.</span>
 	<div *ngIf="loadingUsers" class="loading-body flex">
 		<img src="/tva-assets/loading.svg" alt="">
 	</div>
 </div>
 
-<app-add *ngIf="addNewPopup" (closePopup)="addNewPopup = false" [config]="addPopupConfig" [loading]="loading" [title]="popupTiltle" (formSubmit)="addNewUser($event)" [error]="popupError">
+<app-add *ngIf="addNewPopup" (closePopup)="addNewPopup = false" [config]="addPopupConfig" [loading]="loading" [title]="popupTiltle" (formSubmit)="addNewUser($event)" [error]="popupError" [errorInput]="errorInput">
 </app-add>
 
 <app-add *ngIf="editPopup" (closePopup)="editPopup = false" [config]="editConfig" [loading]="loading" [title]="editPopupTiltle" (formSubmit)="editUserSubmit($event)" [error]="popupError">

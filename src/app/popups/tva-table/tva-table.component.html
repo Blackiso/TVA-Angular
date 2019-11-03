@@ -1,0 +1,28 @@
+<div class="popup-container">
+	<div class="alert-popup tva-table-popup">
+		<div class="alert-head">
+			<span>Tableau simple</span>
+		</div>
+		<div class="alert-body">
+			<div class="tva-table flex">
+				<div class="tva-table-head flex">
+					<span>Type de la TVA</span>
+					<span>Totale</span>
+				</div>
+				<div class="tva-table-body flex">
+					<div *ngFor="let item of data | keyvalue">
+						<span>{{titles[item.key]}}</span>
+						<span>{{item.value.toFixed(2) | money}}</span>
+					</div>
+				</div>
+				<div class="tva-table-head table-foot flex">
+					<span>Totale de TVA</span>
+					<span>{{totalTVA.toFixed(2) | money}}</span>
+				</div>
+			</div>
+			<div class="alert-buttons">
+				<button (click)="closeMe()" class="highlighted-btn">FERMER</button>
+			</div>
+		</div>
+	</div>
+</div>

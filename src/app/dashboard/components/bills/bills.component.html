@@ -1,39 +1,54 @@
 <div class="page-head flex">
 	<div class="title flex">
-		Factures de Janvier
+		Factures de {{names[month-1]}}
 	</div>
 	<div class="download-btns">
-		<div class="pdf">
+		<div class="pdf" (click)="openPDF()">
 			<i class="remixicon-file-fill"></i>
 			<span>PDF</span>
 		</div>
-		<div class="xml">
+		<div class="xml" (click)="openXML()">
 			<i class="remixicon-file-fill"></i>
 			<span>XML</span>
 		</div>
+		<div class="tva" (click)="tvaTable = true">
+			<i class="remixicon-table-fill"></i>
+			<span>TAB</span>
+		</div>
 	</div>
 	<div class="flex">
-		<button (click)="addPopup = true" class="add-new-file">+ Add New</button>
+		<button (click)="addPopup = true" class="add-new-file">+ Ajouter une nouvelle facture</button>
 	</div>
 </div>
 <div class="table">
 	<div class="table-row table-head">
 		<div class="check-box">
-			<input type="checkbox">
+			<input type="checkbox" [checked]="checkedBills.length == bills.length && !loading && bills.length !== 0" (click)="checkAllBills($event)">
 			<div class="box"></div>
 		</div>
-		<span>Nemuro Facture</span>
+		<span>Numéro Facture</span>
 		<span>Fournisseur</span>
 		<span>Montant TVA  (MAD)</span>
 		<span>Date de facture</span>
 		<div class="expand">
-			<i class="remixicon-delete-bin-2-fill"></i>
+			<i class="remixicon-delete-bin-2-fill no-click" [tooltip]="'Supprimer'" [class.red-dlt]="checkedBills.length > 0" (click)="deleteAlert()"></i>
 		</div>
 	</div>
-	<div class="rows">
-		<app-bill *ngFor="let bill of bills" [data]="bill" (copyBill)="addNewBill($event)"></app-bill>
+	<div class="rows" [scrollLoading]="scrollCallBack">
+		<app-bill *ngFor="let bill of bills" [data]="bill" (checking)="checkSingleBill($event)" (copyBill)="addNewBill($event)" [check]="checkedBills.indexOf(bill.id) > -1" (delete)="deleteAlert($event)" [closeMe]="closeAll_" (closeAll)="closeAll()"></app-bill>
+
+		<span *ngIf="!loading && bills.length == 0" class="empty-list">Ajouter une nouvelle facture pour commencer.</span>
+		<div *ngIf="loading" class="loading-body flex">
+			<img src="/tva-assets/loading.svg" alt="">
+		</div>
 	</div>
 </div>
 <ng-container *ngIf="addPopup">
-	<app-add-bills (addBill)="addNewBill($event)" (close)="addPopup = false"></app-add-bills>
+	<app-add-bills (addBill)="addNewBill($event)" (close)="addPopup = false" [loading]="addLoading"></app-add-bills>
+</ng-container>
+<ng-container *ngIf="tvaTable">
+	<app-tva-table (close)="tvaTable = false" [fileId]="fileId" [month]="month" (error)="displayError()"></app-tva-table>
+</ng-container>
+<ng-container *ngIf="alertPopup">
+	<app-alert [alertType]="alertType" (answerEvent)="alertAnswer($event)"></app-alert>
 </ng-container>

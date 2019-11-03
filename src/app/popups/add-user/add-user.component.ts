@@ -14,6 +14,7 @@ export class AddUserComponent {
 	@Output() close = new EventEmitter<boolean>();
 	users:any = [];
 	shownType:string = "hover";
+	searchUser:boolean = false;
 
 	constructor(private usersService:UsersService) { }
 

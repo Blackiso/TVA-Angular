@@ -11,6 +11,7 @@ export class UserDataService {
 	userName:string;
 	userEmail:string;
 	userType:string;
+	active:boolean;
 
 	constructor() { }
 
@@ -20,5 +21,15 @@ export class UserDataService {
 		this.userName = data.name;
 		this.userEmail = data.email;
 		this.userType = data.type;
+		this.active = data.active;
+	}
+
+	clearUser() {
+		this.runAuth = false;
+		this.userAuth = false;
+		this.userId = null;
+		this.userName = null;
+		this.userEmail = null;
+		this.userType = null;
 	}
 }

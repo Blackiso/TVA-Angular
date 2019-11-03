@@ -1,15 +1,21 @@
 <div class="email-verefication-container flex">
 	<img src="tva-assets/undraw_envelope_n8lc.svg" alt="">
-	<span class="large-title">Email Verification</span>
-	<span>A confirmation email has been sent to <b>mycompany@support.com</b>. Copy the code in the email and past it below.</span>
+	<span class="large-title">vérification d'Email</span>
+	<span>Un email de confirmation a été envoyé à <b>{{userEmail}}</b>. Copiez le code dans l'email et collez-le ci-dessous.</span>
 	<div class="verify flex">
-		<div class="input-grp loading-input">
-			<input type="text" placeholder="Code de verification">			
+		<div class="input-grp" [class.loading-input]="loading" [class.input-error]="error" [class.loading-input-done]="done">
+			<input type="text" placeholder="Code de verification" id="code" (keyup.enter)="verify()">			
 		</div>
-		<div class="verify-btn">Verify</div>
+		<div class="verify-btn" (click)="verify()">Vérifier</div>
 	</div>
-	<button (click)="verify()">Next Step</button>
-	<div class="resend-email">
-		<span>Didn’t get any email? <a>Resend</a> Or <a>Contact us</a></span>
+	<button [class.block-click-btn]="block" (click)="nextStep()">L'étape suivante</button>
+	<span class="skip-text hide">Ignorer la vérification!</span>
+	<div class="resend-email flex">
+		<span>Vous n'avez pas reçu de courrier électronique? <a (click)="sendEmail()"> Renvoyer </a> ou <a (click)="contact()"> contactez-nous </a></span>
+		<span *ngIf="sent" class="mail-sent">Nous vous avons envoyé l'e-mail</span>
 	</div>
 </div>
+<ng-container *ngIf="alertPopup">
+	<app-alert [alertType]="alertType" (answerEvent)="alertAnwser($event)"></app-alert>
+</ng-container>
+<app-contact-us *ngIf="contactPopup" (closePopup)="contactPopup = false"></app-contact-us>

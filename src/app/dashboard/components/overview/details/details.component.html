@@ -1,0 +1,41 @@
+<div class="overview-box-child">
+	<div class="page-head flex">
+		<div class="title flex">
+			Informations de la société
+			<i (click)="lunchPopup()" [tooltip]="'Modifier'" class="remixicon-pencil-fill"></i>
+		</div>
+	</div>
+	<div class="details-main flex">
+		<div *ngIf="!loaded" class="loaded">
+			<img src="/tva-assets/loading.svg" alt="">
+		</div>
+		<div *ngIf="loaded" class="piece-info flex">
+			<span class="tit"><i class="remixicon-building-4-line"></i> Nom de société</span>
+			<span class="value">{{data.company_name}}</span>
+		</div>
+		<div *ngIf="loaded" class="piece-info flex">
+			<span class="tit"><i class="remixicon-profile-line"></i> Activité de société</span>
+			<span class="value">{{data.activity}}</span>
+		</div>
+		<div *ngIf="loaded" class="piece-info flex">
+			<span class="tit"><i class="remixicon-global-line"></i> N° d'identification fiscale</span>
+			<span class="value">{{data.i_f}}</span>
+		</div>
+		<div *ngIf="loaded" class="piece-info flex">
+			<span class="tit"><i class="remixicon-phone-line"></i> Numéro de téléphone</span>
+			<span class="value">{{data.phone}}</span>
+		</div>
+		<div *ngIf="loaded" class="piece-info flex">
+			<span class="tit"><i class="remixicon-mail-line"></i> Email adresse</span>
+			<span class="value">{{data.email}}</span>
+		</div>
+		<div *ngIf="loaded" class="piece-info flex">
+			<span class="tit"><i class="remixicon-map-pin-line"></i> Adresse</span>
+			<span class="value">{{data.address}}</span>
+		</div>
+	</div>
+</div>
+
+<app-add *ngIf="editPopup" [loading]="popupLoading" [config]="editPopupConfig" [title]="editPopupTiltle" [error]="popupError" (formSubmit)="editCompany($event)" (closePopup)="editPopup = false" [errorInput]="errorInput">
+</app-add>
+

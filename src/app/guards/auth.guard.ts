@@ -22,6 +22,10 @@ export class AuthGuard implements CanActivate {
                 this.router.navigate(['/home']);
                 return false;
             }else {
+                if (this.userData.userType == "pending") {
+                    this.router.navigate(['/register']);
+                    return false;
+                }
                 return true;
             }
         }else {
@@ -29,6 +33,10 @@ export class AuthGuard implements CanActivate {
             return this.auth.authenticate().pipe(
                 map(data => {
                     this.userData.setUserAuth(data);
+                    if (this.userData.userType == "pending") {
+                        this.router.navigate(['/register']);
+                        return false;
+                    }
                     return true;
                 }),
                 catchError(err => { 

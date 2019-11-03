@@ -1,17 +1,22 @@
 <div class="popup-container">
 	<div class="alert-popup">
 		<div class="alert-head">
-			<span>Add user to company</span>
+			<span>Ajouter un utilisateur à la société</span>
 		</div>
 		<div class="alert-body">
-			<div class="alert-content alert-with-inp">
+			<div *ngIf="!searchUser" class="choice-buttons flex">
+				<button (click)="searchUser = true">Rechercher un utilisateurs</button>
+				<span class="or-style">Ou</span>
+				<button (click)="_addNew()">Créer un nouveau utilisateurs</button>
+			</div>
+			<div *ngIf="searchUser" class="alert-content alert-with-inp">
 				<div class="input-grp">
 					<input type="text" placeholder="User name..." (keyup.enter)="search($event, true)" (keyup)="search($event, false)">
-					<span>Search Users</span>
+					<span>Rechercher des utilisateurs</span>
 				</div>
 				<ng-scrollbar class="users-result-scroll" [visibility]="shownType">
 					<div class="users-result flex">
-						<span *ngIf="users.length == 0" class="no-result">Search for users.</span>
+						<span *ngIf="users.length == 0" class="no-result">Rechercher des utilisateurs.</span>
 						<div *ngFor="let user of users" class="user-result flex" (click)="add(user)">
 							<div class="icon">
 								<i class="remixicon-user-3-line"></i>
@@ -26,8 +31,7 @@
 				</ng-scrollbar>
 			</div>
 			<div class="alert-buttons">
-				<button (click)="_close()" class="white-btn">CANCEL</button>
-				<button (click)="_addNew()" class="highlighted-btn">ADD NEW</button>
+				<button (click)="_close()" class="white-btn">ANNULER</button>
 			</div>
 		</div>
 	</div>

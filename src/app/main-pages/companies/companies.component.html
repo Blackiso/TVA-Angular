@@ -1,13 +1,36 @@
 <div class="main-container flex">
+	<div class="top-menu">
+		<span class="logout flex trigger-btn" (click)="dropMenu = true"><i class="remixicon-account-pin-circle-fill"></i> Mon compte</span>
+		<div *ngIf="dropMenu" class="drop-down" (clickAway)="dropMenu = false">
+			<div>
+				<i class="remixicon-account-circle-line"></i>
+				<span>{{ userEmail }}</span>
+			</div>
+			<div *ngIf="userType !== 'user'" (click)="settingPopup = true">
+				<i class="remixicon-settings-3-line"></i>
+				<span>Paramètres</span>
+			</div>
+			<div (click)="contactPopup = true">
+				<i class="remixicon-customer-service-2-line"></i>
+				<span>Contactez-nous</span>
+			</div>
+			<div (click)="logout()">
+				<i class="remixicon-shut-down-line"></i>
+				<span>Se déconnecter</span>
+			</div>
+		</div>
+	</div>
 	<div class="header flex">
-		<div class="logo flex"><i class="remixicon-amazon-fill"></i></div>
+		<div class="logo flex">
+			<img src="tva-assets/main-logo.png" alt="" />
+		</div>
 		<div class="text flex">
-			<span class="large">Welcome {{ userName }}! you're one step from your dashboard.</span>
-			<span class="small">Please select a company</span>
+			<span class="large">Bienvenue  {{ userName }}! vous êtes à un pas de votre tableau de bord.</span>
+			<span class="small">Veuillez sélectionner une société</span>
 		</div>
 		<div class="search-grp flex">
 			<div><i class="remixicon-search-line"></i></div>
-			<input (keyup)="search($event)" (keyup.enter)="search($event)" type="text" placeholder="Search for a company">
+			<input (keyup)="search($event)" (keyup.enter)="search($event)" type="text" placeholder="Rechercher une société">
 		</div>
 	</div>
 	<ng-scrollbar class="app-scroll-container" [visibility]="shownType">
@@ -17,12 +40,13 @@
 				<span class="company-if">if : {{company.i_f}}</span>
 				<span class="company-name">{{company.company_name}}</span>
 				<span class="company-activity">{{company.activity}}</span>
-				<div class="company-button flex" id="{{company.id}}" (click)="dashboard($event)">
+				<div class="company-button flex" (mouseenter)="hoverBtn($event)" (mouseleave)="outBtn($event)" id="{{company.id}}" (click)="dashboard($event)">
 					<i class="remixicon-arrow-right-line"></i>
+					<span>Ouvrir</span>
 				</div>
 			</div>
 			<span *ngIf="!loading && companies.length == 0" class="empty-comapnies">
-				You have not created a company.
+				Vous n'avez pas créer une société.
 			</span>
 			<div *ngIf="loading" class="loading-body flex">
 				<img src="/tva-assets/loading.svg" alt="">
@@ -30,11 +54,13 @@
 		</div>
 	</ng-scrollbar>
 	<div class="button-container">
-		<button *ngIf="userType !== 'user'" (click)="togglePopup()">+ Add new company</button>
+		<button *ngIf="userType !== 'user'" (click)="togglePopup()">+ Ajouter une nouvelle société</button>
 	</div>
 </div>
-<app-add *ngIf="addNewPopup" (closePopup)="togglePopup()" [config]="addPopupConfig" [title]="popupTiltle" (formSubmit)="addNew($event)" [error]="popupError">
+<app-add *ngIf="addNewPopup" (closePopup)="togglePopup()" [config]="addPopupConfig" [title]="popupTiltle" (formSubmit)="addNew($event)" [error]="popupError" [loading]="popupLoading" [errorInput]="errorInput">
 </app-add>
 <ng-container *ngIf="alertPopup">
 	<app-alert [alertType]="alertType" (answerEvent)="alertAnwser($event)"></app-alert>
 </ng-container>
+<app-contact-us *ngIf="contactPopup" (closePopup)="contactPopup = false"></app-contact-us>
+<app-settings *ngIf="settingPopup" [component]="true" (close)="settingPopup = false"></app-settings>

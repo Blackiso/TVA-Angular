@@ -1,0 +1,13 @@
+<div [class.component]="component">
+	<div class="setting-components">
+		<span *ngIf="component" (click)="closeMe()" class="close-me"><i class="remixicon-close-fill"></i></span>
+		<app-account (error)="showError()" (getPassword)="getPassword()" [password]="password"></app-account>
+		<app-payments (error)="showError()"></app-payments>
+	</div>
+	<ng-container *ngIf="error">
+		<app-alert [alertType]="alertType" (answerEvent)="hideError($event)"></app-alert>
+	</ng-container>
+	<ng-container *ngIf="passwordAlert">
+		<app-alert [alertType]="'password'" (answerEvent)="passwordAccuired($event)"></app-alert>
+	</ng-container>
+</div>

@@ -3,8 +3,10 @@ import { HelperModule } from '../../modules/helper.module';
 import { UserDataService } from '../../services/user-data.service';
 import { CompaniesService } from '../../services/companies.service';
 import { LocalStorageService } from '../../services/local-storage.service';
+import { AuthenticationService } from '../../services/authentication.service';
 import { NgScrollbar } from 'ngx-scrollbar';
 import { map } from 'rxjs/operators';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-companies',
@@ -17,44 +19,56 @@ export class CompaniesComponent implements OnInit {
 
 	userName:string;
 	userType:string;
+	userEmail:string;
 	form:any;
 	companies:any = [];
 	loading:boolean = true;
+	errorInput:any = [];
 	popupError:boolean = false;
+	popupLoading:boolean = false;
 	addNewPopup:boolean = false;
 	alertPopup:boolean = false;
 	alertType:string;
 	toBeDeleted:string;
 	shownType:string = "hover";
-	popupTiltle:string = "Creating new company";
+	popupTiltle:string = "Création d'une nouvelle société";
 	stopPages:boolean = false;
 	searchKeyword:string;
 	searching:boolean;
+	contactPopup:boolean = false;
+	settingPopup:boolean = false;
+	dropMenu:boolean = false;
 	addPopupConfig:any = [
 		{
 			name : 'company_name',
-			placeholder : 'Your company name',
-			title : 'Name'
+			placeholder : 'Le nom de votre société',
+			title : 'Le nom'
 		},
 		{
 			name : 'activity',
-			placeholder : 'Your company activity',
-			title : 'Activity'
+			placeholder : "L'activité de votre société",
+			title : "L'activité"
 		},
 		{
 			name : 'i_f',
-			placeholder : 'Identifiant fiscal e.g 12344',
+			placeholder : 'Identifiant fiscal e.g 12345678',
 			title : 'Identifiant fiscal (IF)'
 		},
 		{
 			name : 'address',
-			placeholder : 'Company Address',
-			title : 'Address'
+			placeholder : 'Adresse de la société',
+			title : 'Adresse'
 		},
 		{
 			name : 'phone',
-			placeholder : 'Phone numbre  e.g 06XXXXXXXX',
-			title : 'Phone number'
+			placeholder : 'Numéro de téléphone  e.g 06XXXXXXXX',
+			title : 'téléphone'
+		},
+		{
+			name : 'email',
+			placeholder : 'Email de société',
+			title : 'Email',
+			optional : true
 		}
 	];
 
@@ -62,10 +76,14 @@ export class CompaniesComponent implements OnInit {
 		private helper:HelperModule,
 		private userData:UserDataService,
 		private compService:CompaniesService,
-		private local:LocalStorageService
+		private local:LocalStorageService,
+		private authSearvice:AuthenticationService,
+		private titleService: Title
 	) {
 		this.userName = this.userData.userName;
 		this.userType = this.userData.userType;
+		this.userEmail = this.userData.userEmail;
+		this.titleService.setTitle("Paramanagers | Sociétés");
 	}
 
 	ngOnInit() {
@@ -103,6 +121,28 @@ export class CompaniesComponent implements OnInit {
 		var _company = this.getCompany(companyId);
 		this.local.addItem('companyId', companyId);
 		this.local.addItem('companyName', _company.company_name);
+
+		var found = false;
+		var emptyObj = {
+			id : companyId,
+			files : []
+		};
+		var localFiles = JSON.parse(this.local.getItem('files'));
+		if (localFiles == null) {
+			localFiles = [];
+			localFiles.push(emptyObj);
+		}else {
+			localFiles.forEach(x => {
+				if (x.id == companyId) {
+					found = true;
+				}
+			});
+			if (!found) {
+				localFiles.push(emptyObj);
+			}
+		}
+
+		this.local.addItem('files', JSON.stringify(localFiles));
 		this.helper.reRoute(['/dashboard']);
 	}
 
@@ -168,14 +208,26 @@ export class CompaniesComponent implements OnInit {
  	}
 
  	addNew(e) {
- 		this.form = this.helper.extractFormValues(e);
- 		if (this.helper.emptyObject(this.form)) {
- 			this.popupError = true;
+ 		this.errorInput = [];
+ 		this.form = e;
+ 		if (isNaN(this.form.i_f) || this.form.i_f.length > 8) {
+ 			this.addErrorInput('i_f');
  			return;
  		}
 
+ 		if (isNaN(this.form.phone) || this.form.phone.length > 10 || this.form.phone.length < 10) {
+ 			this.addErrorInput('phone');
+ 			return;
+ 		}
+
+ 		if (this.form.email == "") {
+ 			this.form.email = this.userData.userEmail;
+ 		}
+
+ 		this.popupLoading = true;
  		this.compService.addCompany(this.form).subscribe(
  			response => {
+ 				this.popupLoading = false;
  				if (response.error) {
  					this.popupError = true;
  				}else {
@@ -186,8 +238,14 @@ export class CompaniesComponent implements OnInit {
  			},
  			err => {
  				this.popupError = true;
+ 				this.popupLoading = false;
  			}
  		)
+ 	}
+
+ 	addErrorInput(name) {
+ 		this.errorInput.push(name);
+ 		this.errorInput = this.errorInput.slice();
  	}
 
  	togglePopup() {
@@ -246,5 +304,31 @@ export class CompaniesComponent implements OnInit {
 			}
 		)
  	}
+
+ 	logout() {
+		this.authSearvice.logout().subscribe(
+			response => {
+				if (response == null) {
+					this.userData.clearUser();
+					this.sendClick('user_loggedOut_companies');
+					this.helper.reRoute(['/home']);
+				}
+			}
+		);
+	}
+
+	hoverBtn(e) {
+		var btn = e.target;
+		btn.classList.add('hovered');
+	}
+
+	outBtn(e) {
+		var btn = e.target;
+		btn.classList.remove('hovered');
+	}
+
+	sendClick(name) {
+		this.helper.analyticsEvent(name);
+	}
 
 }

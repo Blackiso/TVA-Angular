@@ -1,0 +1,70 @@
+<div class="page-head flex">
+	<div class="title flex">
+		Paramètres du compte
+	</div>
+</div>
+<div class="account-setting-container flex">
+	<form class="edit-account flex" (submit)="formSubmit($event)" autocomplete="off">
+		<span class="title">
+			Modifier le compte 
+			<img *ngIf="loading" src="/tva-assets/loading.svg" alt="">
+			<span *ngIf="done" class="update-done">compte mis à jour <i class="remixicon-check-line"></i></span>
+		</span>
+		<div class="input-grp" [class.input-error]="errorInputs.indexOf('name') > -1">
+			<input type="text" name="name" placeholder="Votr Nom" [value]="data.name">
+			<div>
+				<span>Nom</span>
+			</div>
+		</div>
+		<div class="input-grp" [class.input-error]="errorInputs.indexOf('email') > -1">
+			<input type="email" name="email" placeholder="Votr Email" [value]="data.email">
+			<div>
+				<span>Email</span>
+			</div>
+		</div>
+		<div class="double-input-grp">
+			<div class="input-grp" [class.input-error]="errorInputs.indexOf('password') > -1">
+				<input type="password" name="password" placeholder="Votr Mot de pass" [value]="data.password">
+				<div>
+					<span>Nouveau mot de pass</span>
+				</div>
+			</div>
+			<div class="input-grp" [class.input-error]="errorInputs.indexOf('password') > -1">
+				<input type="password" name="repassword" placeholder="Confirmé mot de pass" [value]="data.repassword">
+				<div>
+					<span>Confirmé mot de pass</span>
+				</div>
+			</div>
+		</div>
+		<div class="input-grp">
+			<select name="language">
+				<option value="">Francais</option>
+				<!-- <option value="">English</option> -->
+			</select>
+			<div>
+				<span>Langue</span>
+			</div>
+		</div>
+		<button type="submit">Enregistrer</button>
+	</form>
+	<div class="account-info flex">
+		<span class="title">Information sur le compte</span>
+		<div class="account-type flex">
+			<span class="sub-title">Type de compte</span>
+			<div>
+				<span>{{userType}}</span>
+			</div>
+		</div>
+		<div class="account-temp flex">
+			<span class="sub-title">Temp restant avant l’expiration</span>
+			<div *ngIf="paymentDetails">
+				<span>Charge mensuelle termine {{paymentEnd}} ({{paymentLeft}}  joure)</span>
+				<span>Charge mensuelle commance {{paymentStart}} ({{paymentDuration}} mois)</span>
+			</div>
+		</div>
+	</div>
+</div>
+<app-verify-email *ngIf="verifyEmailPopup" (closePopup)="verifyEmailPopup = false"></app-verify-email>
+<ng-container *ngIf="alertPopup">
+	<app-alert [alertType]="alertType" (answerEvent)="alertAnwser($event)"></app-alert>
+</ng-container>

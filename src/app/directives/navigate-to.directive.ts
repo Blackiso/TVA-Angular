@@ -19,12 +19,13 @@ export class NavigateToDirective {
 	@HostListener('click')
 	navigate() {
 		let parent = this.mainElem.parentNode;
-		this.router.navigate(this.navigateTo.path);	
-		
-		[...parent.children].forEach(child => {
-			child.classList.remove(this.navigateTo.class);
-		});
-		this.mainElem.classList.add(this.navigateTo.class);
+		if (!this.navigateTo.block) {
+			this.router.navigate(this.navigateTo.path);
+			[...parent.children].forEach(child => {
+				child.classList.remove(this.navigateTo.class);
+			});
+			this.mainElem.classList.add(this.navigateTo.class);
+		}
 	}
 
 }

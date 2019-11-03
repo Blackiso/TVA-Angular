@@ -1,30 +1,30 @@
 <div class="page-head flex">
 	<div class="title flex">
-		Company Files
+		Dossiers de la société
 	</div>
 	<div class="flex">
-		<button class="add-new-file" (click)="addNew = true">+ Add New File</button>
+		<button class="add-new-file" (click)="addNew = true">+ Ajouter un nouveau dossier</button>
 	</div>
 </div>
 <div class="files-main flex">
 	<div class="files-container flex">
 		<div class="titles flex">
 			<div class="check-box">
-				<input (click)="checkEvent()" [checked]="checkAll" type="checkbox">
+				<input [checked]="checkedFiles.length == files.length && !loading && files.length !== 0" (click)="checkAllFiles($event)" type="checkbox">
 				<div class="box"></div>
 			</div>
-			<span>File Name</span>
-			<span>Type</span>
-			<span>Year</span>
-			<span>Last Modified</span>
+			<span class="culumn">Nom de Dossier</span>
+			<span class="culumn">Type</span>
+			<span class="culumn">Année</span>
+			<span class="culumn">Dernière Modification</span>
 			<span class="more-options">
-				<i class="remixicon-delete-bin-2-fill" [class.red-dlt]="checkAll || deleteBtn" (click)="deleteAlert()"></i>
+				<i class="remixicon-delete-bin-2-fill" [tooltip]="'Supprimer'" [class.red-dlt]="checkedFiles.length > 0" (click)="deleteAlert()"></i>
 			</span>
 		</div>
 		<div class="files flex" [scrollLoading]="scrollCallBack">
-			<app-file *ngFor="let file of files" (checked)="fileChecked($event)" [data]="file" [check]="checkAll" [close]="closeAll" (opend)="closeAllFiles()" (edit)="openEditPopup($event)" (delete)="deleteAlert($event)">
+			<app-file *ngFor="let file of files" [check]="checkedFiles.indexOf(file.id) > -1" (checking)="checkSingleFile($event)" [data]="file" [close]="closeAll" (opend)="closeAllFiles()" (edit)="openEditPopup($event)" (delete)="deleteAlert($event)">
 			</app-file>
-			<span *ngIf="!loading && files.length == 0" class="empty-list">Add new file to start.</span>
+			<span *ngIf="!loading && files.length == 0" class="empty-list">Ajouter un nouveau dossier pour commencer.</span>
 			<div *ngIf="loading" class="loading-body flex">
 				<img src="/tva-assets/loading.svg" alt="">
 			</div>
@@ -32,7 +32,7 @@
 	</div>
 </div>
 
-<app-add *ngIf="addNew" [loading]="popupLoading" [config]="addNewConfig" [title]="popupTiltle" [error]="popupError" (formSubmit)="addNewFile($event)" (closePopup)="addNew = false">
+<app-add *ngIf="addNew" [loading]="popupLoading" [config]="addNewConfig" [title]="popupTiltle" [error]="popupError" (formSubmit)="addNewFile($event)" (closePopup)="addNew = false" [errorInput]="errorInput">
 </app-add>
 
 <app-add *ngIf="editPopup" [loading]="popupLoading" [config]="editPopupConfig" [title]="editPopupTiltle" [error]="popupError" (formSubmit)="editFile($event)" (closePopup)="editPopup = false">

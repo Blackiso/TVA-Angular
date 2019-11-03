@@ -12,6 +12,9 @@ export class AuthenticationService {
 	authUrl:string = "/api/authentication/authenticate";
 	registerUrl:string = "/api/authentication/register";
 	logoutUrl:string = "/api/authentication/logout";
+	sendEmailUrl:string = "/api/account/email/send";
+	verifyEmailUrl:string = "/api/account/email/verify";
+	resetURL:string = "/api/account/reset";
 
 	constructor(private http:HttpClient, private url:UrlsService) { }
 
@@ -29,5 +32,21 @@ export class AuthenticationService {
 
 	logout() {
 		return this.http.post<any>(this.url.prefix+this.logoutUrl, {});
+	}
+
+	send() {
+		return this.http.post<any>(this.url.prefix+this.sendEmailUrl, {});
+	}
+
+	verify(code) {
+		return this.http.post<any>(this.url.prefix+this.verifyEmailUrl, {code : code});
+	}
+
+	sendReset(email) {
+		return this.http.post<any>(this.url.prefix+this.resetURL, {email : email});
+	}
+
+	reeset(data) {
+		return this.http.patch<any>(this.url.prefix+this.resetURL, data);
 	}
 }

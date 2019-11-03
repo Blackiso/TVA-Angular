@@ -45,6 +45,12 @@
 	z-index: 2;
 }
 
+.row-items > .less-info > span {
+	overflow: hidden;
+	white-space: nowrap;
+	margin-left: 10px;
+}
+
 .row-items > .less-info > span:first-of-type {
 	color: #323E4E;
 }
@@ -114,6 +120,8 @@
 	border-bottom: 1px solid rgba(126, 137, 150, 0.27);
 	font-weight: 500;
     color: #35557b;
+    overflow: hidden !important;
+    white-space: nowrap !important;
 }
 
 .row-items > .more-info > div > div {
@@ -125,6 +133,7 @@
 	color: #7e8996;
 }
 
+.row-items > .more-info > div > div > select,
 .row-items > .more-info > div > div > input {
 	position: absolute;
 	width: 100%;
@@ -138,10 +147,13 @@
 	top: -5px;
 }
 
+.row-items > .more-info > div > div > select:focus,
 .row-items > .more-info > div > div > input:focus { opacity: 1; }
 
+.row-items > .more-info > div > div > select:focus ~ i,
 .row-items > .more-info > div > div > input:focus ~ i { opacity: 0 !important; }
 
+.row-items > .more-info > div > div > select:hover ~ i,
 .row-items > .more-info > div > div > input:hover ~ i { opacity: 1; }
 
 .row-items > .more-info > div > div > i {
@@ -168,6 +180,10 @@
 	flex: 0 auto;
 }
 
+.download-btns > div:hover {
+	background-color: #d2e7ff;
+}
+
 .download-btns > div {
 	padding: 8px 0;
 	font-size: 11px;
@@ -181,14 +197,15 @@
 	display: -ms-flex;
 	display: -o-flex;
 	display: flex;
+	border-right: 1px solid rgba(50, 62, 78, .10);
 }
 
 .download-btns > div > i {
 	margin-right: 5px;
 }
 
-.download-btns > div:first-of-type {
-	border-right: 1px solid rgba(50, 62, 78, .10);
+.download-btns > div:last-of-type {
+	border-right: none;
 }
 
 .close-bill {
@@ -208,4 +225,9 @@
 	position: relative;
 	z-index: 5;
 	height: 10px
+}
+
+.no-click {
+	pointer-events: none;
+	cursor: default;
 }

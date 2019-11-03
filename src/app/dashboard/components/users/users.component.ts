@@ -15,25 +15,32 @@ export class UsersComponent implements OnInit {
 	addNewPopup:boolean = false;
 	adduserPopup:boolean = false;
 	popupError:boolean = false;
-	popupTiltle:string = "Add new user";
+	popupTiltle:string = "Ajouter un nouveau utilisateur";
 	typePopup:string = "new";
 	addPopupConfig:any = [
 		{
 			name : 'name',
-			placeholder : 'New user name',
-			title : 'Name'
+			placeholder : "Nouveau nom d'utilisateur",
+			title : 'Nom'
 		},
 		{
 			name : 'email',
-			placeholder : 'New user email',
+			placeholder : "Nouvel email d'utilisateur",
 			title : 'Email',
 			type : 'user_email'
 		},
 		{
 			name : 'password',
-			placeholder : 'New user password',
-			title : 'Password',
+			placeholder : "Nouveau mot de passe d'utilisateur",
+			title : 'Mot de passe',
 			type : 'password'
+		},
+		{
+			name : 'wild',
+			placeholder : '',
+			title : 'Ajouter à toutes les autres sociétés',
+			type : 'checkBox',
+			hideTitle : true
 		}
 	];
 	form:any;
@@ -43,8 +50,9 @@ export class UsersComponent implements OnInit {
 	alertType:string = "error";
 	editPopup:boolean = false;
 	editConfig:any = [];
-	editPopupTiltle:string = "Edit User";
+	editPopupTiltle:string = "Modifier l'utilisateur";
 	userToEdit:number;
+	errorInput:any = [];
 
 	constructor(
 		private helper:HelperModule,
@@ -66,6 +74,9 @@ export class UsersComponent implements OnInit {
 				if (!!response.error) {
 					this.displayError();
 				}else {
+					response.forEach(user => {
+						user.password = "@@@@@@@@@@@@@";
+					});
 					this.users = response;
 				}
 			},
@@ -87,6 +98,9 @@ export class UsersComponent implements OnInit {
 			var _item = Object.assign({}, item);;
 			if (item.name == "email") {
 				_item.value = user[item.name].split('@')[0];
+			}else if (item.name == "password") {
+				_item.title = "Nouveau mot de passe";
+				_item.value = user[item.name];
 			}else {
 				_item.value = user[item.name];
 			}
@@ -96,10 +110,13 @@ export class UsersComponent implements OnInit {
 	}
 
 	editUserSubmit(e) {
-		this.form = this.helper.extractFormValues(e);
+		this.form = e;
 		this.setupEmail();
 		this.form = this.extractUpdate(this.form);
 		if (!Object.keys(this.form).length) return;
+		if (!!this.form.wild) {
+			this.form.wild = this.form.wild == "on" ? 1 : 0;
+		}
 		this.loading = true;
 		this.usersService.updateUser(this.form, this.userToEdit).subscribe(
 			response => {
@@ -189,11 +206,14 @@ export class UsersComponent implements OnInit {
 	}
 
 	addNewUser(e) {
-		this.form = this.helper.extractFormValues(e);
- 		if (this.helper.emptyObject(this.form) || !this.setupEmail()) {
- 			this.popupError = true;
- 			return;
- 		}
+		this.errorInput = [];
+		this.form = e;
+		if (!this.setupEmail()) {
+			this.errorInput.push('email');
+			this.errorInput = this.errorInput.slice();
+			return;
+		}
+		this.form.wild = this.form.wild == "on" ? 1 : 0;
  		this.loading = true;
  		this.form.company = this.dashboard.companyId;
  		this.usersService.addNewUser(this.form).subscribe(

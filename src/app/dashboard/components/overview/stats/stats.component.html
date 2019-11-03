@@ -1,0 +1,21 @@
+<div class="overview-box-child">
+	<div class="page-head flex">
+		<div class="title flex">
+			Statistiques de la société
+		</div>
+	</div>
+	<div class="stats-main flex">
+		<div style="display: block; width: 100%;">
+			<canvas style="width: 100%" id="myChart" baseChart
+				[datasets]="barChartData"
+				[labels]="barChartLabels"
+				[options]="barChartOptions"
+				[plugins]="barChartPlugins"
+				[legend]="barChartLegend"
+				[chartType]="lineChartType"
+				[chartType]="barChartType">
+			</canvas>
+		</div>
+	</div>
+</div>
+

@@ -16,32 +16,46 @@ export class SidebarComponent implements OnInit {
 	userName:string;
 	userType:string;
 	companyName:string;
+	isUser:boolean;
 
 	constructor(
-		private userData:UserDataService,
+		public userData:UserDataService,
 		private dashboard:DashboardService,
 		private authSearvice:AuthenticationService,
 		private helper:HelperModule
-	) { }
+	) {
+		this.isUser = this.userData.userType == 'user' ? true : false;
+	}
 
 	ngOnInit() {
-		this.userName = this.userData.userName;
 		this.companyName = this.dashboard.companyName;
+		this.dashboard.companyName$.subscribe(
+			name => {
+				this.companyName = name;
+			}
+		);
 		
-		var url = window.location.pathname.split('/');
-		this.active = url[2] !== undefined ? url[2] : 'files';
+		this.dashboard.currentComponentS.subscribe(
+			component => {
+				this.active = component;
+			}
+		);
 	}
 
 	logout() {
 		this.authSearvice.logout().subscribe(
 			response => {
 				if (response == null) {
-					this.userData.userAuth = false;
-					this.userData.runAuth = false;
+					this.userData.clearUser();
+					this.sendClick('user_loggedOut_dashboard');
 					this.helper.reRoute(['/home']);
 				}
 			}
 		);
+	}
+
+	sendClick(name) {
+		this.helper.analyticsEvent(name);
 	}
 
 }

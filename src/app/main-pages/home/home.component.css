@@ -24,7 +24,7 @@
 .nav-container {
 	height: 60px;
 	align-items: center;
-	padding: 0 100px;
+	padding: 0 70px;
 	color: #FFFFFF;
 	font-weight: 500;
 	padding-top: 22px;
@@ -51,19 +51,50 @@
 	font-family: 'IBM Plex Sans', sans-serif;
 	font-size: 16px;
 	font-weight: 700;
-	margin-right: 150px;
+	margin-right: 50px;
 	letter-spacing: 0.05em;
 }
 
+.logo > img {
+	width: 150px;
+    margin-bottom: -9px;
+}
+
 .navigation {
-	font-size: 13px;
+	font-size: 12px;
 	line-height: 21px;
 	letter-spacing: 0.07em;
+}
+
+@media only screen and (max-width: 1200px) {
+	.navigation {
+		font-size: 11px;
+	}
+
+	.logo {
+		margin-right: 40px;
+	}
 }
 
 .navigation > li {
 	margin-right: 25px;
 	cursor: pointer;
+	position: relative;
+}
+
+.navigation > li:hover:after {
+	width: 100%;
+}
+
+.navigation > li:after {
+	content: '';
+	height: 2px;
+	width: 0%;
+	background-color: white;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	transition: .3s;
 }
 
 .nav-buttons {
@@ -98,7 +129,7 @@
 }
 
 .landing-text-container {
-	padding-left: 100px;
+	padding-left: 70px;
 }
 
 .landing-text-container > div {
@@ -120,6 +151,16 @@
 	color: #FFFFFF;
 	margin-top: 20px;
 	margin-bottom: 40px;
+}
+
+.landing-btns > .video-btn {
+	margin-left: 20px;
+	align-items: center;
+	justify-content: center;
+}
+
+.landing-btns > .video-btn > i {
+	margin-right: 7px;
 }
 
 @media only screen and (max-width: 1134px) {
@@ -173,12 +214,12 @@
 }
 
 .features-title:before {
-	content: 'Features';
+	content: 'Fonctionnalités';
 }
 
 .features-container {
 	align-self: stretch;
-	padding: 0 100px;
+	padding: 0 70px;
 	margin-top: 80px;
 	flex-wrap: wrap;
 	position: relative;
@@ -251,7 +292,7 @@
 .service-section {
 	background-color: #F6F8FA;
 	margin-top: 150px;
-	padding: 100px;
+	padding: 100px 70px;
 	position: relative;
 	z-index: 1;
 	width: 100%;
@@ -273,7 +314,7 @@
 }
 
 .service-title:before {
-	content: 'About our services';
+	content: 'A propos de nos services';
 }
 
 .servies-content {
@@ -340,7 +381,7 @@
 }
 
 .payment-section {
-	padding: 100px;
+	padding: 100px 70px;
 	position: relative;
 	z-index: 1;
 	width: 100%;
@@ -350,7 +391,7 @@
 }
 
 .payment-title:before {
-	content: 'Prices';
+	content: 'Paiement';
 }
 
 .payment-section > img {
@@ -458,7 +499,7 @@
 }
 
 .plan-footer > span > b {
-	font-size: 34px;
+	font-size: 28px;
 	line-height: 51px;
 	color: #323E4E;
 	font-weight: 400;
@@ -472,6 +513,7 @@
 .plan-footer > .input-grp > select {
 	height: 30px;
 	opacity: 0;
+	pointer-events: none !important;
 }
 
 .note {
@@ -497,4 +539,63 @@ footer {
 	line-height: 16px;
 	text-align: center;
 	color: #FFFFFF;
+}
+
+@media only screen and (max-width: 1105px) {
+	.nav-container {
+		padding: 0 50px;
+		padding-top: 22px;
+	}
+
+	.landing-text-container {
+		padding-left: 50px;
+	}
+
+	.features-container {
+		padding: 0 50px;
+	}
+
+	.service-section {
+		padding: 100px 50px;
+	}
+
+	.nav-buttons > button {
+		width: 108px;
+	    font-size: 9px;
+	    padding: 7px;
+	}
+
+	.logo > img {
+		width: 130px;
+		margin-bottom: -4px;
+	}
+}
+
+.player-container {
+	position: fixed;
+	height: 100vh;
+	width: 100%;
+	top: 0;
+	left: 0;
+	background: rgba(0, 0, 0, 0.72);;
+	z-index: 200;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.player-container > video {
+	width: 80%;
+}
+
+.close-video {
+	position: absolute;
+	top: 20px;
+	right: 20px;
+	color: white;
+}
+
+.close-video > i {
+	font-size: 30px;
+	cursor: pointer;
 }

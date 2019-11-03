@@ -1,18 +1,18 @@
 <div class="table-row-container" [class.expanded-row]="billOpned">
 	<div class="table-row">
-		<div class="close-bill" (click)="billOpned = !billOpned"></div>
+		<div class="close-bill" (click)="toggleBill()"></div>
 		<div class="check-box">
-			<input (keyup.enter)="blurInput($event)" type="checkbox">
+			<input type="checkbox" [checked]="check" (click)="checkMe($event)">
 			<div class="box"></div>
 		</div>
 		<div class="row-items">
 			<div class="less-info">
 				<span>{{data.nfa}}</span>
 				<span>{{data.ndf}}</span>
-				<span>{{data.tva}}</span>
+				<span>{{mTVA}}</span>
 				<span>{{data.ddf}}</span>
 			</div>
-			<form class="more-info" (submit)="editBill($event)">
+			<form class="more-info" (submit)="editBill($event)" id="UpdateForm">
 				<div class="info-box">
 					<span>N° Facture: </span>
 					<div>
@@ -64,39 +64,39 @@
 				<div class="info-box">
 					<span>Montant HT: </span>
 					<div>
-						<input (keyup.enter)="blurInput($event)" type="text" name="mht" value="{{data.mht}}">
-						<span>{{data.mht}} MAD</span>
+						<input (keyup.enter)="blurInput($event)" type="text" name="mht" (keyup)="calculate()" [value]="mHT" (input)="mHT = $event.target.value">
+						<span>{{mHT}} MAD</span>
 						<i class="remixicon-pencil-fill"></i>
 					</div>
 				</div>
 				<div class="info-box">
 					<span>Taux TVA: </span>
 					<div>
-						<input (keyup.enter)="blurInput($event)" type="text" name="tau" value="{{data.tau}}">
-						<span>{{data.tau}}</span>
+						<input (keyup.enter)="blurInput($event)" type="text" name="tau" (keyup)="calculate()" [value]="tTVA" (input)="tTVA = $event.target.value">
+						<span>{{tTVA}}</span>
 						<i class="remixicon-pencil-fill"></i>
 					</div>
 				</div>
 				<div class="info-box">
 					<span>Montant TVA: </span>
 					<div>
-						<input (keyup.enter)="blurInput($event)" type="text" name="tva" value="{{data.tva}}">
-						<span>{{data.tva}} MAD</span>
-						<i class="remixicon-pencil-fill"></i>
+						<input (keyup.enter)="blurInput($event)" type="hidden" name="tva" [value]="mTVA" (input)="mTVA = $event.target.value">
+						<span>{{mTVA}} MAD</span>
+						<!-- <i class="remixicon-pencil-fill"></i> -->
 					</div>
 				</div>
 				<div class="info-box">
 					<span>Montant TTC: </span>
 					<div>
-						<input (keyup.enter)="blurInput($event)" type="text" name="ttc" value="{{data.ttc}}">
-						<span>{{data.ttc}} MAD</span>
-						<i class="remixicon-pencil-fill"></i>
+						<input (keyup.enter)="blurInput($event)" type="hidden" name="ttc" [value]="mTTC" (input)="mTTC = $event.target.value">
+						<span>{{mTTC}} MAD</span>
+						<!-- <i class="remixicon-pencil-fill"></i> -->
 					</div>
 				</div>
 				<div class="info-box">
 					<span>Date de paiment: </span>
 					<div>
-						<input (keyup.enter)="blurInput($event)" type="text" name="ddp" value="{{data.ddp}}">
+						<input (keyup.enter)="blurInput($event)" type="text" name="ddp" [value]="data.ddp">
 						<span>{{data.ddp}}</span>
 						<i class="remixicon-pencil-fill"></i>
 					</div>
@@ -104,18 +104,26 @@
 				<div class="info-box">
 					<span>Mode de paiment: </span>
 					<div>
-						<input (keyup.enter)="blurInput($event)" type="text" name="mdp" value="{{data.mdp}}">
-						<span>{{data.mdp}}</span>
+						<select name="mdp" [value]="data.mdp" (change)="submitForm($event)">
+							<option value="1">Espèce</option>
+							<option value="2">Cheque</option>
+							<option value="3">Prélèvement</option>
+							<option value="4">Virement</option>
+							<option value="5">Effet</option>
+							<option value="6">Compensation</option>
+							<option value="7">Autres</option>
+						</select>
+						<span>{{paymentMode[data.mdp-1]}}</span>
 						<i class="remixicon-pencil-fill"></i>
 					</div>
 				</div>
-				<button class="hide" type="submit">hidden button</button>
+				<button class="hide" type="submit" id="{{data.id}}">hidden button</button>
 			</form>
 		</div>
 		<div class="expand">
-			<i class="remixicon-file-copy-2-fill" (click)="duplicateBill($event)"></i>
-			<i [ngClass]="billOpned ? 'remixicon-arrow-down-s-fill' : 'remixicon-arrow-left-s-fill'" (click)="billOpned = !billOpned"></i>
-			<i class="remixicon-delete-bin-2-fill delete-icon-details"></i>
+			<i class="remixicon-file-copy-2-fill" [tooltip]="'Dupliquer'" (click)="duplicateBill($event)"></i>
+			<i [ngClass]="billOpned ? 'remixicon-arrow-down-s-fill' : 'remixicon-arrow-left-s-fill'" (click)="toggleBill()"></i>
+			<i class="remixicon-delete-bin-2-fill delete-icon-details" [tooltip]="'Supprimer'" (click)="deleteMe()"></i>
 		</div>
 	</div>
 </div>

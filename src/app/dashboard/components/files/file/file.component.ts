@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChange
 import { FilesService } from '../../../services/files.service';
 import { ClickAwayDirective } from '../../../../directives/click-away.directive';
 import { HelperModule } from '../../../../modules/helper.module';
+import { LocalStorageService } from '../../../../services/local-storage.service';
 
 interface monthObjct {
 	name:string,
@@ -16,26 +17,42 @@ interface monthObjct {
 })
 export class FileComponent implements OnChanges {
 
-	@Output() checked = new EventEmitter<any>();
+	@Output() checking = new EventEmitter<any>();
 	@Output() opend = new EventEmitter<any>();
 	@Output() edit = new EventEmitter<any>();
 	@Output() delete = new EventEmitter<any>();
 
 	@Input() check:boolean;
 	@Input() close:boolean;
+	@Input() plane:boolean = false;
 	@Input() data:any;
 
 	_close:boolean = true;
 	openning:boolean = false;
 	moreInfo:boolean = false;
 	monthsSelect:boolean = false;
-	names:any = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Aout', 'Septembre', 'Octobre', 'Novembre', 'Décembre'];
+	names:any ={
+		quarterly : { 3: 'Trimestre 1', 6: 'Trimestre 2', 9: 'Trimestre 3', 12: 'Trimestre 4', },
+		monthly : { 1: 'Janvier', 2: 'Février', 3: 'Mars', 4: 'Avril', 5: 'Mai', 6: 'Juin', 7: 'Juillet', 8: 'Aout', 9: 'Septembre', 10: 'Octobre', 11: 'Novembre', 12: 'Décembre' }
+	};
 	monthCurrentVal:monthObjct;
 	loading:boolean = true;
 	detailsSet:boolean = false;
 	details:any = []; 
+	filesTypes:any = {
+		quarterly : 'Trimestriel',
+		monthly : 'Mensuel'
+	}
+	selectTitle:any = {
+		quarterly : 'Periode',
+		monthly : 'Mois'
+	}
 
-	constructor(private helper:HelperModule, private fileService:FilesService) { }
+	constructor(
+		private helper:HelperModule, 
+		private fileService:FilesService,
+		private local:LocalStorageService
+	) { }
 
 	ngOnChanges(changes: {[propKey: string]: SimpleChange}) {
 		if (!!changes.close && this.openning) {
@@ -77,19 +94,18 @@ export class FileComponent implements OnChanges {
 
 	setDefault() {
 		this.monthCurrentVal = {
-			name : this.names[this.details[0].month-1],
+			name : this.names[this.data.type][this.details[0].month],
 			val : this.details[0].month,
 			number : this.details[0].bills
 		};
 	}
 
-	checkFile(e) {
-		this.check = e.currentTarget.checked;
-		var emit = {
+	checkMe(e) {
+		var obj = {
 			id : this.data.id,
-			check : this.check
+			val : e.currentTarget.checked
 		};
-		this.checked.emit(emit);
+		this.checking.emit(obj);
 	}
 
 	setMonth(e) {
@@ -104,15 +120,49 @@ export class FileComponent implements OnChanges {
 		elemnt.classList.add('selected-month');
 	}
 
+	setLastModified() {
+		var companyId = this.local.getItem('companyId');
+		var files = JSON.parse(this.local.getItem('files'));
+		var compIndex;
+		files.forEach((obj, i) => {
+			if (obj.id == companyId) {
+				compIndex = i;
+			}
+		});
+
+		files[compIndex].files.forEach((file, i) => {
+			if (file.id == this.data.id) {
+				files[compIndex].files.splice(i, 1);
+			}
+		});
+
+		if (files[compIndex].files.length < 5) {
+			files[compIndex].files.push(this.data);
+		}
+
+		console.log(files);
+		this.local.addItem('files', JSON.stringify(files));
+	}
+
 	editFile() {
 		this.edit.emit(this.data);
 	}
 
 	deleteFile() {
-		this.delete.emit([this.data.id]);
+		this.delete.emit(this.data.id);
 	}
 
-	submitFile() {
+	submitFile(e) {
+		e.preventDefault();
+		this.setLastModified();
 		this.helper.reRoute(['/dashboard', 'bills', this.data.id, this.monthCurrentVal.val]);
+	}
+
+	openPDF() {
+		window.open(location.origin+"/api/download/"+this.data.id+"/"+this.monthCurrentVal.val+"/pdf");
+	}
+
+	openXML() {
+		window.open(location.origin+"/api/download/"+this.data.id+"/"+this.monthCurrentVal.val+"/xml");
 	}
 }

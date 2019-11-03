@@ -1,34 +1,34 @@
 <form class="register-form flex" (submit)="register($event)">
 	<div class="info-div">
-		<span class="large-title">Account registration</span>
-		<span class="sub-title">Please fill the form below with your informations.</span>
+		<span class="large-title">Enregistrement du Compte</span>
+		<span class="sub-title">Veuillez remplir le formulaire ci-dessous avec vos informations.</span>
 	</div>
 	<span class="register-error" *ngIf="registerError">
 		<span *ngIf="!!registerErrorMsg; else errorMsg">{{ registerErrorMsg }}</span>
-		<ng-template #errorMsg>Register error please try again!</ng-template>
+		<ng-template #errorMsg>Erreur veuillez réessayer!</ng-template>
 	</span>	
 	<div class="double-input-grp">
 		<div class="input-grp" [class.input-error]="nameTemplate.errors?.required && nameTemplate.touched">
-			<input type="text" placeholder="Name" required name="name" [(ngModel)]="name" #nameTemplate="ngModel">
-			<span>First Name</span>
+			<input type="text" placeholder="Prénom" required name="name" [(ngModel)]="name" #nameTemplate="ngModel">
+			<span>Prénom</span>
 		</div>
 		<div class="input-grp" [class.input-error]="lnameTemplate.errors?.required && lnameTemplate.touched">
-			<input type="text" placeholder="Last Name" required name="lname" [(ngModel)]="lname" #lnameTemplate="ngModel">
-			<span>Last Name</span>
+			<input type="text" placeholder="Nom de famille" required name="lname" [(ngModel)]="lname" #lnameTemplate="ngModel">
+			<span>Nom de famille</span>
 		</div>
 	</div>
 	<div class="input-grp" [class.input-error]="emailTemplate.errors?.pattern || emailTemplate.errors?.required && emailTemplate.touched">
 		<input required name="email" [pattern]="emailPattern" [(ngModel)]="email" #emailTemplate="ngModel" placeholder="mycompany@email.com">
-		<span>Address Email</span>
+		<span>Adresse Email</span>
 	</div>
 	<div class="input-grp" [class.input-error]="passwordTemplate.errors?.required && passwordTemplate.touched">
 		<input required name="password" [(ngModel)]="password" #passwordTemplate="ngModel" type="password" placeholder="Entrez votre mot de passe">
 		<span>Mot de passe</span>
 	</div>
 	<div class="input-grp" [class.input-error]="repasswordTemplate.errors?.required && repasswordTemplate.touched">
-		<input required name="repassword" [(ngModel)]="repassword" #repasswordTemplate="ngModel" type="password" placeholder="Entrez votre mot de passe">
+		<input required name="repassword" [(ngModel)]="repassword" #repasswordTemplate="ngModel" type="password" placeholder="Confirmé votre mot de passe">
 		<span>Confirmé votre mot de pass</span>
 	</div>
-	<span class="terms">By clicking Next, you agree to our <a>Terms and Conditions</a></span>
-	<button [class.button-loading]="loadingBtn">Next Step</button>
+	<span class="terms">En cliquant sur Suivant, vous acceptez nos <a>Conditions d'utilisation</a>.</span>
+	<button (click)="sendClick('main_register_btn')" [class.button-loading]="loadingBtn">L'étape suivante</button>
 </form>

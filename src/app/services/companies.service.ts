@@ -9,6 +9,9 @@ export class CompaniesService {
 
 	allCompaniesUrl:string = "/api/companies/all";
 	deleteCompanyUrl:string = "/api/companies/:id/delete";
+	companyUrl:string = "/api/companies/:id";
+	updateCompanyUrl:string = "/api/companies/:id/update";
+	statsCompanyUrl:string = "/api/companies/:id/stats";
 	addCompanyUrl:string = "/api/companies";
 	searchUrl:string = "/api/companies/search";
 
@@ -31,5 +34,20 @@ export class CompaniesService {
 
 	search(keyword) {
 		return this.http.get<any>(this.url.prefix+this.searchUrl+"?keyword="+keyword);
+	}
+
+	getCompany(id) {
+		var url = this.companyUrl.replace(":id", id);
+		return this.http.get<any>(this.url.prefix+url);
+	}
+
+	getStats(id) {
+		var url = this.statsCompanyUrl.replace(":id", id);
+		return this.http.get<any>(this.url.prefix+url);
+	}
+
+	updateCompany(id, data) {
+		var url = this.updateCompanyUrl.replace(":id", id);
+		return this.http.patch<any>(this.url.prefix+url, data);
 	}
 }

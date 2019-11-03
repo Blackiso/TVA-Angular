@@ -1,9 +1,10 @@
 .main-container {
 	height: 100vh;
 	width: 100%;
-	background-image: url('/tva-assets/tva-bg-svg.svg');
+	background-image: url('/tva-assets/home-payment-bg.svg');
 	background-size: cover;
 	position: relative;
+	background-position: bottom;
 }
 
 .main-container:before {
@@ -12,7 +13,7 @@
 	width: 300px;
 	left: 0;
 	top: 0;
-	position: absolute;
+	position: fixed;
 	background-color: white;
 	z-index: -1;
 }
@@ -27,6 +28,7 @@
 	width: 300px;
 	height: 100%;
 	flex-direction: column;
+	position: fixed;
 }
 
 .image-conatiner {
@@ -45,6 +47,12 @@
 	line-height: 31px;
 	color: #323E4E;
 	margin-bottom: 50px;
+}
+
+.logo-container-m > img {
+	width: 190px;
+    margin-bottom: -20px;
+    cursor: pointer;
 }
 
 .info-register {
@@ -75,17 +83,23 @@
 	font-size: 12px;
 	line-height: 18px;
 	color: #323E4E;
+	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flex;
+	display: -o-flex;
+	display: flex;
+	flex-direction: column;
 }
 
-.sign-in > a {
-	color: #2E98CF;
-	cursor: pointer;
+.sign-in > span {
+	margin-bottom: 5px;
 }
 
 .register-container {
 	flex: 1;
 	align-items: center;
 	flex-direction: column;
+	margin-left: 300px;
 }
 
 .register-form {
@@ -270,6 +284,10 @@ _:-ms-fullscreen, :root .email-verefication-container {
 	cursor: pointer;
 }
 
+.verify-btn:hover {
+	text-decoration: underline;
+}
+
 .email-verefication-container > button {
 	width: 55%;
 }
@@ -283,6 +301,7 @@ _:-ms-fullscreen, :root .email-verefication-container {
 	margin-top: 20px;
 	border-top: 1px solid rgba(50, 62, 78, 0.1);
 	box-sizing: border-box;
+	flex-direction: column;
 }
 
 .resend-email > span > a {
@@ -304,24 +323,22 @@ _:-ms-fullscreen, :root .email-verefication-container {
 }
 
 .plans-container {
+	width: 100%;
+	align-items: center;
 	margin-bottom: 20px;
+	justify-content: center;
 }
 
 .plan {
 	padding: 20px 30px;
 	background-color: white;
 	flex-direction: column;
-	margin-left: 20px;
 	box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.12);
 	border-radius: 3px;
 	margin-top: 25px;
 	box-sizing: border-box;
 	cursor: pointer;
 	transition: .3s;
-}
-
-.plan:first-of-type{
-	margin-left: 0px;
 }
 
 .plan:hover {
@@ -403,7 +420,7 @@ _:-ms-fullscreen, :root .email-verefication-container {
 }
 
 .plan-footer > span > b {
-	font-size: 34px;
+	font-size: 28px;
 	line-height: 51px;
 	color: #323E4E;
 	font-weight: 400;
@@ -476,4 +493,21 @@ _:-ms-fullscreen, :root .email-verefication-container {
 	font-size: 12px;
     margin-bottom: 10px;
     color: #ff5f5f
+}
+
+.mail-sent {
+	color: #37d260;
+    font-size: 13px;
+    margin-top: 20px;
+}
+
+.skip-text {
+	margin-top: 10px;
+    font-size: 11px !important;
+    margin-bottom: -10px;
+    cursor: pointer;
+}
+
+.skip-text:hover {
+	text-decoration: underline;
 }

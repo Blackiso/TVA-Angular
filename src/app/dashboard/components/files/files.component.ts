@@ -2,6 +2,7 @@ import { Component, OnInit, HostListener } from '@angular/core';
 import { FilesService } from '../../services/files.service';
 import { DashboardService } from '../../services/dashboard.service';
 import { HelperModule } from '../../../modules/helper.module';
+import { LocalStorageService } from '../../../services/local-storage.service';
 
 @Component({
   selector: 'app-files',
@@ -14,39 +15,38 @@ export class FilesComponent implements OnInit {
 	checkAll:boolean = false;
 	closeAll:boolean = false;
 	deleteBtn:boolean = false;
-	checkedFiles:any = [];
 	companyId:any;
 	addNew:boolean = false;
 	addNewConfig:any = [
 		{
 			name : 'file_name',
-			placeholder : 'Your file name',
-			title : 'Name'
+			placeholder : 'Nom de dossier',
+			title : 'Nom'
 		},
 		{
 			name : 'type',
-			placeholder : 'Type of file',
+			placeholder : 'Type de dossier',
 			title : 'Type',
 			type : 'select',
 			options : [
 				{
-					name : 'Quarterly',
+					name : 'Trimestriel',
 					value : 'quarterly'
 				},
 				{
-					name : 'Monthly',
+					name : 'Mensuel',
 					value : 'monthly'
 				}
 			]
 		},
 		{
 			name : 'year',
-			placeholder : 'Year of creation',
-			title : 'Year'
+			placeholder : 'Année de création',
+			title : 'Année'
 		}
 	];
 	popupError:boolean = false;
-	popupTiltle:string = "Create New File";
+	popupTiltle:string = "Créer un nouveau dossier";
 	popupLoading:boolean = false;
 	form:any;
 	scrollCallBack:any;
@@ -55,17 +55,19 @@ export class FilesComponent implements OnInit {
 	page:boolean = false;
 	editPopupConfig:any;
 	editPopup:boolean = false;
-	editPopupTiltle:string = "Edit File";
+	editPopupTiltle:string = "Modifier le dossier";
 	fileToEdit:any;
 	alertPopup:boolean = false;
 	alertType:string = "error";
-	tempId:any;
 	currentFilesAll:boolean = true;
+	checkedFiles:any = [];
+	errorInput:any = [];
 
 	constructor(
 		private helper:HelperModule,
 		private fileService:FilesService,
-		private DashboardService:DashboardService
+		private DashboardService:DashboardService,
+		private local:LocalStorageService
 	) {
 		this.companyId = this.DashboardService.companyId;
 		this.scrollCallBack = this.loadPages.bind(this);
@@ -87,6 +89,29 @@ export class FilesComponent implements OnInit {
 				}
 			}
 		);
+	}
+
+	checkAllFiles(e) {
+		if (e.currentTarget.checked) {
+			this.checkedFiles = [];
+			this.files.forEach(file => {
+				this.checkedFiles.push(file.id);
+			});
+		}else {
+			this.checkedFiles = [];
+		}
+	}
+
+	checkSingleFile(e) {
+		if (e.val) {
+			this.checkedFiles.push(e.id);
+		}else {
+			this.checkedFiles.forEach((id, i) => {
+				if (id == e.id) {
+					this.checkedFiles.splice(i, 1);
+				}
+			});
+		}
 	}
 
 	searchFiles(keyword) {
@@ -124,6 +149,7 @@ export class FilesComponent implements OnInit {
 				this.loading = false;
 				if (response.error) {
 					this.page = false;
+					if (response.error.exit) this.morePages = false;
 					this.displayError();
 				}else {
 					this.files = !this.page ? response : this.files.concat(response);
@@ -134,49 +160,22 @@ export class FilesComponent implements OnInit {
 			err => {
 				this.loading = false;
 				this.page = false;
+				this.morePages = false;
 				this.displayError();
 			}
 		);
-	}
-
-	fileChecked(e) {
-		if (e.check) {
-			this.checkedFiles.push(e);
-		}else {
-			this.checkedFiles.forEach((x, i) => {
-				if (x.id == e.id) {
-					this.checkedFiles.splice(i, 1); 
-				}
-			});
-		}	
-		this.deleteBtn = this.checkedFiles.length > 0 ? true : false;
 	}
 
 	closeAllFiles() {
 		this.closeAll = !this.closeAll;
 	}
 
-	checkEvent() {
-		this.checkAll = !this.checkAll;
-		if (!this.checkAll) this.deleteBtn = false;
-		if (this.checkAll) {
-			this.checkedFiles = [];
-			this.files.forEach(file => {
-				var x = {
-					id : file.id,
-					check : true
-				};
-				this.checkedFiles.push(x);
-			});
-		}else {
-			this.checkedFiles = [];
-		}
-	}
-
 	addNewFile(e) {
-		this.form = this.helper.extractFormValues(e);
-		if (this.helper.emptyObject(this.form) || isNaN(this.form.year)) {
- 			this.popupError = true;
+		this.errorInput = [];
+		this.form = e;
+		if (isNaN(this.form.year)) {
+ 			this.errorInput.push('year');
+ 			this.errorInput = this.errorInput.slice();
  			return;
  		}
  		this.popupError = false;
@@ -199,21 +198,12 @@ export class FilesComponent implements OnInit {
 	}
 
 	deleteChecked() {
-		var ids = [];
-		if (!!this.tempId) {
-			console.log(this.tempId);
-			ids = this.tempId;
-		}else {
-			this.checkedFiles.forEach(file => {
-				ids.push(file.id);
-			});
-		}
-		this.fileService.deleteFiles(ids).subscribe(
+		this.fileService.deleteFiles(this.checkedFiles).subscribe(
 			response => {
 				if (response !== null) {
 					this.displayError();
 				}else {
-					this.deleteFiles(ids);
+					this.deleteFiles(this.checkedFiles);
 				}
 			},
 			err => {
@@ -223,9 +213,17 @@ export class FilesComponent implements OnInit {
 	}
 
 	deleteFiles(ids) {
-		this.checkAll = false;
+		var companyId = this.local.getItem('companyId');
+		var _files = JSON.parse(this.local.getItem('files'));
+		var compIndex;
+		_files.forEach((obj, i) => {
+			if (obj.id == companyId) {
+				compIndex = i;
+			}
+		});
 		if (ids.length == this.files.length) {
 			this.files = [];
+			_files[compIndex].files = [];
 		}else {
 			ids.forEach(id => {
 				this.files.forEach((file, i) => {
@@ -233,8 +231,15 @@ export class FilesComponent implements OnInit {
 						this.files.splice(i, 1); 
 					}
 				});
+				_files[compIndex].files.forEach((file, i) => {
+					if (file.id == id) {
+						_files[compIndex].files.splice(i, 1);
+					}
+				});
 			});
 		}
+		this.local.addItem('files', JSON.stringify(_files));
+		this.checkedFiles = [];
 	}
 
 	openEditPopup(file) {
@@ -251,7 +256,7 @@ export class FilesComponent implements OnInit {
 	}
 
 	editFile(e) {
-		this.form = this.extractUpdate(this.helper.extractFormValues(e));
+		this.form = this.extractUpdate(e);
 		if (!!this.form.year && isNaN(this.form.year)) {
  			this.popupError = true;
  			return;
@@ -320,8 +325,10 @@ export class FilesComponent implements OnInit {
 	}
 
 	deleteAlert(e?) {
-		this.tempId = null;
-		if (!!e) this.tempId = e;
+		if (!!e) {
+			this.checkedFiles = [];
+			this.checkedFiles.push(e);
+		}
 		this.alertType = "delete";
 		this.alertPopup = true;
 	}

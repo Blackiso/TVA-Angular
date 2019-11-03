@@ -1,14 +1,14 @@
 <div class="main-container flex">
 	<div class="form-container flex">
 		<div class="logo-container-m">
-			<span>MY COMPANYLOGO</span>
+			<img [navigateTo]="{path:['home']}" src="tva-assets/main-logo.png" alt="" />
 		</div>
 		<form class="login-form flex" (submit)="loginUser($event)">
 			<div class="info-div">
-				<span class="large-title">User Login</span>
-				<span class="sub-title">Please sign in to your existing account.</span>
+				<span class="large-title">S'identifier</span>
+				<span class="sub-title">Veuillez vous connecter à votre compte existant.</span>
 			</div>
-			<span class="login-error" *ngIf="loginError">Login error please try again!</span>	
+			<span class="login-error" *ngIf="loginError">Erreur de connexion, veuillez réessayer!</span>	
 			<div class="input-grp" [class.input-error]="emailTemplate.errors?.pattern || emailTemplate.errors?.required && emailTemplate.touched">
 				<input required name="email" [pattern]="emailPattern" [(ngModel)]="email" #emailTemplate="ngModel" placeholder="mycompany@email.com">
 				<span>Address Email</span>
@@ -18,9 +18,9 @@
 				<span>Mot de passe</span>
 			</div>
 			<div class="more-login-options flex">
-				<span class="forgot-password">Forgot Password ?</span>
+				<span (click)="displayEmailAlert()" class="forgot-password">Mot de passe oublié ?</span>
 			</div>
-			<button [class.button-loading]="loadingBtn" type="submit">Sign in</button>
+			<button (click)="sendClick('main_login_btn')" [class.button-loading]="loadingBtn" type="submit">Se connecter</button>
 		</form>
 		<span class="signup">Pas encore inscrit? <a [navigateTo]="{path:['register']}">Enregistrez-vous</a> </span>
 	</div>
@@ -28,3 +28,6 @@
 		<img src="tva-assets/undraw_all_the_data_h4ki.svg" />
 	</div>
 </div>
+<ng-container *ngIf="alert">
+	<app-alert [alertType]="alertType" (answerEvent)="alertAnwser($event)"></app-alert>
+</ng-container>

@@ -8,11 +8,11 @@
 	<span class="user-password">●●●●●●●●●●●●●●</span>
 </div>
 <div class="more-user-options">
-	<i class="remixicon-more-2-line trigger-btn" (click)="toggleOptions()" (clickAway)="closeOptions()"></i>
+	<i class="remixicon-more-2-line trigger-btn" [tooltip]="'Options'" (click)="toggleOptions()" (clickAway)="closeOptions()"></i>
 	<div class="options-menu" [class.hide]="!moreOptions">
-		<span (click)="editUser()"><i class="remixicon-pencil-fill"></i><span>Edit</span></span>
-		<span (click)="deleteUser()"><i class="remixicon-delete-bin-2-fill"></i><span>Remove</span></span>
-		<span *ngIf="user.blocked == 0" (click)="blockUser()"><i class="remixicon-indeterminate-circle-fill"></i><span>Block</span></span>
-		<span *ngIf="user.blocked == 1" (click)="unblockUser()"><i class="remixicon-add-circle-fill"></i><span>Unblock</span></span>
+		<span (click)="editUser()"><i class="remixicon-pencil-fill"></i><span>Modifier</span></span>
+		<span (click)="deleteUser()"><i class="remixicon-delete-bin-2-fill"></i><span>Supprimer</span></span>
+		<span *ngIf="user.blocked == 0" (click)="blockUser()"><i class="remixicon-indeterminate-circle-fill"></i><span>Bloquer</span></span>
+		<span *ngIf="user.blocked == 1" (click)="unblockUser()"><i class="remixicon-add-circle-fill"></i><span>Débloquer</span></span>
 	</div>
 </div>

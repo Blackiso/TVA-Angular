@@ -1,36 +1,38 @@
 <div class="main-container flex">
 	<div class="side-bar-register flex">
 		<div class="logo-container-m">
-			<span>MY COMPANYLOGO</span>
+			<img [navigateTo]="{path:['home']}" src="tva-assets/main-logo.png" alt="" />
 		</div>
 		<div class="info-register">
-			<span class="info-title">Account registration</span>
-			<span class="sub-info-title">Please complete the steps aside to finish up your registration.</span>
+			<span class="info-title">Enregistrement du Compte</span>
+			<span class="sub-info-title">S'il vous plaît compléter les étapes de côté pour terminer votre inscription.</span>
 		</div>
-		<span class="sign-in">Deja inscrit ? <a [navigateTo]="{path:['login']}">Connecter-vous</a></span>
+		<div *ngIf="!logedIn" class="sign-in">
+			<span>Vous avez déjà un compte?</span> 
+			<button [navigateTo]="{path:['login']}">Connecter-vous</button>
+		</div>
+		<div *ngIf="logedIn" class="sign-in">
+			<span>{{userEmail}}</span> 
+			<button (click)="logout()">Se déconnecter</button>
+		</div>
 		<div class="image-conatiner">
-			<img src="tva-assets/undraw_profile_data_mk6k.svg" alt="">
+			<img src="tva-assets/{{images[step-1]}}" alt="">
 		</div>
 	</div>
 	<div class="register-container flex">
 		<div class="steps-container">
-			<!-- ------------------------------------------- -->
-			<span class="back-step" (click)="stepBack()">
-				<i class="remixicon-arrow-left-line"></i>
-			</span>
-			<!-- ------------------------------------------- -->
 			<div class="steps">
 				<div [class.active-step]="step == 1" [class.step-done]="step > 1">
-					<span>1. Account Info</span>
+					<span>1. Informations</span>
 				</div>
 				<div [class.active-step]="step == 2" [class.step-done]="step > 2">
-					<span>2. Verification</span>
+					<span>2. Vérification</span>
 				</div>
 				<div [class.active-step]="step == 3" [class.step-done]="step > 3">
-					<span>3. Select Plan</span>
+					<span>3. Paiement</span>
 				</div>
 				<div [class.active-step]="step == 4" [class.step-done]="step > 4">
-					<span>4. Finish</span>
+					<span>4. Terminer</span>
 				</div>
 			</div>
 		</div>

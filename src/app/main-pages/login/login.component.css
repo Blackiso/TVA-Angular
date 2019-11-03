@@ -1,9 +1,10 @@
 .main-container {
 	height: 100vh;
 	width: 100%;
-	background-image: url('/tva-assets/tva-bg-svg.svg');
+	background-image: url('/tva-assets/home-payment-bg.svg');
 	background-size: cover;
 	position: relative;
+	background-position: bottom;
 }
 
 .main-container:before {
@@ -41,6 +42,12 @@
 	line-height: 25px;
 	letter-spacing: 0.03em;
 	color: #323E4E;
+}
+
+.logo-container-m > img {
+	width: 190px;
+    margin-bottom: -20px;
+    cursor: pointer;
 }
 
 .login-form {
@@ -113,4 +120,9 @@
 	font-size: 12px;
     margin-bottom: 10px;
     color: #ff5f5f;
+}
+
+.forgot-password:hover {
+	text-decoration: underline;
+	color: #4688d6;
 }

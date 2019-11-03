@@ -38,13 +38,15 @@
 	align-items: center;
 	padding: 0 35px;
 	box-sizing: border-box;
-	z-index: 2;
+	z-index: 50;
 }
 
 .logo-container {
 	background: #2E98CF;
 	height: 50px;
 	width: 100%;
+    align-items: center;
+    /*justify-content: center;*/
 }
 
 .logo-container > span {
@@ -54,6 +56,11 @@
 	font-size: 14px;
 	color: #FFFFFF;
 	padding: 0 25px;
+}
+
+.logo-container > img {
+	width: 160px;
+	margin-left: 25px;
 }
 
 .user-info {
@@ -83,6 +90,31 @@
 	padding: 15px 0;
 	border-bottom: 1px solid rgba(48, 112, 187, 0.61);
 	cursor: pointer;
+	position: relative;
+}
+
+.menu > li:before {
+	content: '';
+	position: absolute;
+	left: -25px;
+	top: 0;
+	width: 240px;
+	height: 100%;
+	background-color: rgba(35, 89, 159, 0.45);
+	z-index: -1;
+	opacity: 0;
+	transition: .3s;
+}
+
+@media only screen and (max-width: 1024px) {
+	.menu > li:before {
+		width: 200px;
+		left: -20;
+	}
+}
+
+.menu > li:hover:before {
+	opacity: 1;
 }
 
 .icon {
@@ -128,11 +160,17 @@
 	cursor: pointer;
 }
 
+.logout-container:hover > .icon {
+	background-color: #FFFFFF;
+	color: #4688D6 !important;
+}
+
 .active-menu-item > .icon {
 	background-color: #FFFFFF;
 	color: #4688D6 !important;
 }
 
+.support-icon,
 .notification {
 	margin-left: auto;
 	margin-right: 30px;
@@ -140,9 +178,20 @@
 	position: relative;
 }
 
+.notification {
+	margin-left: 0;
+}
+
+.support-icon > i,
 .notification > i {
 	font-size: 20px;
 	color: #9E9898;
+	cursor: pointer;
+	transition: .3s;
+}
+
+.support-icon > i:hover {
+	color: #0077FF;
 }
 
 .noti-on:before {
@@ -277,12 +326,8 @@
 	cursor: pointer;
 }
 
-.options-menu > span:hover {
+.options-menu > span:hover > span {
 	text-decoration: underline;
-}
-
-.options-menu > span:hover > i {
-	text-decoration: none;
 }
 
 .options-menu > span:last-of-type {
@@ -294,9 +339,9 @@
 }
 
 .popup-container {
-	height: 100%;
+	height: 100vh;
 	width: 100%;
-	position: absolute;
+	position: fixed;
 	top: 0;
 	left: 0;
 	background-color: rgba(0, 0, 0, 0.15);
@@ -338,6 +383,9 @@
 	flex: 1;
 	font-size: 12px;
 	color: #949597;
+	margin-left: 10px;
+	overflow: hidden;
+    white-space: nowrap;
 }
 
 .table-row > span:first-of-type {
@@ -417,4 +465,13 @@
 .selected-filter {
 	background-color: #4688D6;
 	color: white !important;
+}
+
+.email-activate-alert {
+	background-color: #FF9700;
+	border-color: #FF9700; 
+}
+
+.email-activate-alert > i {
+	margin-right: 5px;
 }

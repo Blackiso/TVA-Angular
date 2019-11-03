@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NgScrollbarModule } from 'ngx-scrollbar';
+import { ChartsModule } from 'ng2-charts';
 
 import { FilesService } from './dashboard/services/files.service';
 import { DashboardService } from './dashboard/services/dashboard.service';
@@ -42,6 +43,23 @@ import { ScrollLoadingDirective } from './directives/scroll-loading.directive';
 import { BillsComponent } from './dashboard/components/bills/bills.component';
 import { AddBillsComponent } from './popups/add-bills/add-bills.component';
 import { BillComponent } from './dashboard/components/bills/bill/bill.component';
+import { BillsBasedComponent } from './abstract/bills-based/bills-based.component';
+import { SettingsComponent } from './dashboard/components/settings/settings.component';
+import { BlockClickDirective } from './directives/block-click.directive';
+import { CapturePaymentComponent } from './main-pages/capture-payment/capture-payment.component';
+import { AccountComponent } from './dashboard/components/settings/account/account.component';
+import { PaymentsComponent } from './dashboard/components/settings/payments/payments.component';
+import { TvaTableComponent } from './popups/tva-table/tva-table.component';
+import { MoneyPipe } from './pipes/money.pipe';
+import { OverviewComponent } from './dashboard/components/overview/overview.component';
+import { DetailsComponent } from './dashboard/components/overview/details/details.component';
+import { StatsComponent } from './dashboard/components/overview/stats/stats.component';
+import { OverviewFilesComponent } from './dashboard/components/overview/files/files.component';
+import { VerifyEmailComponent } from './popups/verify-email/verify-email.component';
+import { ContactUsComponent } from './popups/contact-us/contact-us.component';
+import { TooltipDirective } from './directives/tooltip.directive';
+import { PasswordResetComponent } from './main-pages/password-reset/password-reset.component';
+import { NotFoundComponent } from './main-pages/not-found/not-found.component';
 
 @NgModule({
 	declarations: [
@@ -70,7 +88,23 @@ import { BillComponent } from './dashboard/components/bills/bill/bill.component'
         ClickAwayDirective,
         BillsComponent,
         AddBillsComponent,
-        BillComponent
+        BillComponent,
+        SettingsComponent,
+        BlockClickDirective,
+        CapturePaymentComponent,
+        AccountComponent,
+        PaymentsComponent,
+        TvaTableComponent,
+        MoneyPipe,
+        OverviewComponent,
+        DetailsComponent,
+        StatsComponent,
+        OverviewFilesComponent,
+        VerifyEmailComponent,
+        ContactUsComponent,
+        TooltipDirective,
+        PasswordResetComponent,
+        NotFoundComponent
   	],
   	imports: [
     	BrowserModule,
@@ -78,7 +112,8 @@ import { BillComponent } from './dashboard/components/bills/bill/bill.component'
         FormsModule,
         HelperModule,
         HttpClientModule,
-        NgScrollbarModule
+        NgScrollbarModule,
+        ChartsModule
   	],
   	providers: [
         FilesService,

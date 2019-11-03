@@ -3,28 +3,31 @@
 		<img src="/tva-assets/home.svg">
 		<nav class="nav-container flex">
 			<div class="logo">
-				<span>Zeux.</span>
+				<img src="tva-assets/white-logo.png" alt="" />
 			</div>
 			<ul class="navigation flex">
-				<li (click)="scrollTo('home')">Home</li>
-				<li (click)="scrollTo('about')">About Us</li>
-				<li (click)="scrollTo('features')">Features</li>
-				<li (click)="scrollTo('pricing')">Pricing</li>
-				<li [navigateTo]="{path:['page']}">Contact us</li>
+				<li (click)="scrollTo('home')">Accueil</li>
+				<li (click)="scrollTo('about')">À propos</li>
+				<li (click)="scrollTo('features')">Fonctionnalités</li>
+				<li (click)="scrollTo('pricing')">Paiement</li>
+				<li (click)="contactPopup = true">Contactez-nous</li>
 			</ul>
 			<div class="nav-buttons">
-				<button class="home-btn-white" [navigateTo]="{path:['login']}">Login</button>
-				<button class="home-btn-transparent" [navigateTo]="{path:['register']}">Register</button>
+				<button class="home-btn-white" (click)="sendClick('nav_login_btn')" [navigateTo]="{path:['login']}">Se connecter</button>
+				<button class="home-btn-transparent" (click)="sendClick('nav_register_btn')" [navigateTo]="{path:['register']}">Enregistrer</button>
 			</div>
 		</nav>
 		<div class="landing-content flex">
 			<div class="landing-text-container flex">
 				<div>
-					<span class="large-title">Build a Better Company. For better Customers</span>
+					<span class="large-title">La première plateforme online de TVA au maroc</span>
 					<p class="small-txt">
-						Curabitur pharetra elit quis ipsum pellentesque imperdiet. Suspendisse egestas pulvinar odio, suscipit auctor nibh hendrerit non.
+						Paramanagers est l'outil la plus efficace pour déclarer votre TVA au maroc, conçu spécialement pour améliorer la productivité et facilités l'accès aux données.
 					</p>
-					<button [navigateTo]="{path:['register']}" class="home-btn-white blue-text-btn">GET STERTED NOW</button>
+					<div class="landing-btns flex">
+						<button (click)="sendClick('home_register_btn')" [navigateTo]="{path:['register']}" class="home-btn-white blue-text-btn">COMMENCEZ</button>
+						<button (click)="sendClick('home_video_btn'); video = true" class="home-btn-white video-btn blue-text-btn flex"><i class="remixicon-play-circle-fill"></i> VIDÉO</button>
+					</div>
 				</div>
 			</div>
 			<div class="landing-img-container">
@@ -34,40 +37,40 @@
 	</section>
 	<section class="features-section flex" #features>
 		<img src="tva-assets/features-bg.svg" alt="">
-		<span class="features-title section-title">Managing your company has never been easier</span>
+		<span class="features-title section-title">La gestion de votre entreprise na jamais été aussi simple</span>
 		<div class="features-container flex">
 			<div class="feature flex">
 				<div class="f-icon">
 					<i class="remixicon-timer-line"></i>
 				</div>
-				<span>Save more time</span>
-				<p>A complete about-face in its core economy Amsterdams progressive</p>
+				<span>Économiser plus de temps</span>
+				<p>Interface d'utilisateur rapide et facile pour la productivité</p>
 			</div>
 			<div class="feature flex">
 				<div class="f-icon">
-					<i class="remixicon-bar-chart-line"></i>
+					<i class="remixicon-calculator-line"></i>
 				</div>
-				<span>Keep track on your stats</span>
-				<p>A complete about-face in its core economy Amsterdams progressive</p>
+				<span>Automatisation des calculs</span>
+				<p>Votre TVA est calculée en temps réel pour une meilleure productivité</p>
 			</div>
 			<div class="feature flex">
 				<div class="f-icon">
-					<i class="remixicon-user-smile-line"></i>
+					<i class="remixicon-folder-2-line"></i>
 				</div>
-				<span>Happy costumers</span>
-				<p>A complete about-face in its core economy Amsterdams progressive</p>
+				<span>Sauvegarder tous vos dossiers</span>
+				<p>Tout est sauvegardé pour un accès rapide et une gestion facile</p>
 			</div>
 			<div class="feature flex">
 				<div class="f-icon">
 					<i class="remixicon-thumb-up-line"></i>
 				</div>
-				<span>Manage your workers</span>
-				<p>A complete about-face in its core economy Amsterdams progressive</p>
+				<span>Gérez vos ouvriers</span>
+				<p>Vous pouvez ajouter des travailleurs à votre compte sans partager vos informations d'identification</p>
 			</div>
 		</div>
 	</section>
 	<section class="service-section flex" #about>
-		<span class="service-title section-title">Why choose our services?</span>
+		<span class="service-title section-title">Pourquoi choisir nos services?</span>
 		<div class="servies-content flex">
 			<div class="services flex">
 				<div class="service">
@@ -75,8 +78,8 @@
 						<img src="tva-assets/s-img-1.svg" alt="">
 					</div>
 					<div class="s-content">
-						<span>Export Ready Files</span>
-						<p>A fold ozone swims across the frog. The platform scratches without our equipped worm.</p>
+						<span>Exporter des fichiers XML et PDF</span>
+						<p>exportation de tableau de deduction rendue facile et rapide, vous pouvez également exporter dans deux formats différents XML et PDF</p>
 					</div>
 				</div>
 				<div class="service">
@@ -84,8 +87,8 @@
 						<img src="tva-assets/s-img-2.svg" alt="">
 					</div>
 					<div class="s-content">
-						<span>Keep track on you company</span>
-						<p>A fold ozone swims across the frog. The platform scratches without our equipped worm.</p>
+						<span>Des outils pour faciliter votre travail</span>
+						<p>Nous avons ajouté de nombreux outils pour vous aider à être plus productif et à rendre votre travail très facile. De plus, nous avons ajouté Tableau Simple (TAB) pour vous aider a declarer votre TVA plus rapidement.</p>
 					</div>
 				</div>
 				<div class="service">
@@ -93,14 +96,14 @@
 						<img src="tva-assets/s-img-3.svg" alt="">
 					</div>
 					<div class="s-content">
-						<span>Access your files from everywhere</span>
-						<p>A fold ozone swims across the frog. The platform scratches without our equipped worm.</p>
+						<span>Accédez à vos fichiers partout</span>
+						<p>Tous vos fichiers et données sont enregistrés sur le cloud pour un accès rapide où que vous soyez sans installation ou téléchargement, avec des serveurs hautement fiables fournis par Amazon..</p>
 					</div>
 				</div> 
 				<div class="service">
 					<div class="s-img"></div>
 					<div class="s-content">
-						<button [navigateTo]="{path:['register']}">GET STARTED NOW</button>
+						<button (click)="sendClick('about_register_btn')" [navigateTo]="{path:['register']}">COMMENCEZ</button>
 					</div>
 				</div>
 			</div>
@@ -111,33 +114,8 @@
 	</section>
 	<section class="payment-section flex" #pricing>
 		<img src="tva-assets/home-payment-bg.svg" alt="">
-		<span class="payment-title section-title">Fair prices for a better service</span>
+		<span class="payment-title section-title">Prix justes pour un meilleur service</span>
 		<div class="plans-container flex">
-			<div class="plan flex">
-				<div class="plan-head flex">
-					<span class="large-title">Regular</span>
-					<span class="sub-title">Calcule automatique & XML</span>
-				</div>
-				<div class="plan-body flex">
-					<span>Calcule automatique & XML</span>
-					<span>Possibility d’importe PDF</span>
-					<span>Possibilit d’importer XML</span>
-					<span>Espace de 30 fichiers</span>
-					<span>Calcule 200 facture</span>
-					<span>Ability de 20 users</span>
-				</div>
-				<div class="plan-footer flex">
-					<div class="input-grp flex">
-						<select>
-							<option value="3">3 mois</option>
-							<option value="6">6 mois</option>
-							<option value="9">9 mois</option>
-							<option value="12">12 mois</option>
-						</select>
-					</div>
-					<span><b>$29</b>/mon</span>
-				</div>
-			</div>
 			<div class="plan flex">
 				<div class="plan-head flex">
 					<span class="large-title">Premium</span>
@@ -145,11 +123,10 @@
 				</div>
 				<div class="plan-body flex">
 					<span>Calcule automatique & XML</span>
-					<span>Possibility d’importe PDF</span>
-					<span>Possibilit d’importer XML</span>
-					<span>Espace de 30 fichiers</span>
-					<span>Calcule 200 facture</span>
-					<span>Ability de 20 users</span>
+					<span>Possibility d’exportation de PDF</span>
+					<span>Espace des dossier illimité</span>
+					<span>Calcule quantité illimitée de factures</span>
+					<span>Ability de ajouter 20 users</span>
 				</div>
 				<div class="plan-footer flex">
 					<div class="input-grp flex">
@@ -168,15 +145,22 @@
 							<option value="12">12 mois</option>
 						</select>
 					</div>
-					<span><b>$62</b>/mon</span>
+					<span><b>100Dhs</b>/mon</span>
 				</div>
 			</div>
 		</div>
 		<span class="note">
-			You can select the plan and the months on registering, and you can refund your paiment within 7 days in case you didn’t like our service
+			Vous pouvez sélectionner le forfait et les mois d’enregistrement, et vous pouvez rembourser votre paiement dans 2 jours si vous n’aimiez pas notre service.
 		</span>
 	</section>
 	<footer>
-		<span>Ⓒ Copyrights Perlnova 2019. All rights reserved | Privacy policy | Terms of use</span>
+		<span>Ⓒ Copyrights Perlnova 2019. All rights reserved</span>
 	</footer>
 </div>
+<div *ngIf="video" class="player-container">
+	<video src="videos/video-01.mp4" controls></video>
+	<span class="close-video" (click)="video = false;">
+		<i class="remixicon-close-line"></i>
+	</span>
+</div>
+<app-contact-us *ngIf="contactPopup" (closePopup)="contactPopup = false"></app-contact-us>

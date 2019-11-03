@@ -18,6 +18,10 @@
 	margin-left: 30px;
 }
 
+.titles > .culumn {
+	margin-right: 15px;
+}
+
 .titles > .more-options > i {
 	cursor: pointer;
 } 
@@ -25,6 +29,11 @@
 .files-row  > *,
 .titles > * {
 	flex: 1;
+}
+
+.titles > span {
+	overflow: hidden !important;
+    white-space: nowrap !important;
 }
 
 .files {
@@ -44,10 +53,4 @@
 	margin-left: auto;
 	margin-right: 20px;
 	pointer-events: none;
-}
-
-.red-dlt {
-	color: #f14343 !important;
-	cursor: pointer !important;
-	pointer-events: auto !important;
 }

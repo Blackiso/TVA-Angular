@@ -8,9 +8,12 @@ import { UrlsService } from '../../services/urls.service';
 export class BillsService {
 
 	suppliersURL:string = "/api/bills/suppliers";
+	tableURL:string = "/api/bills/:file-id/:month/table";
 	addURL:string = "/api/bills/:file-id";
 	updateURL:string = "/api/bills/:bill-id";
 	getAllURL:string = "/api/bills/:file-id/:month";
+	searchBillsUrl:string = "/api/bills/:file-id/:month/search";
+	deleleBillUrl:string = "/api/bills/delete";
 
 	constructor(private http:HttpClient, private url:UrlsService) { }
 
@@ -20,16 +23,24 @@ export class BillsService {
 		return this.http.get<any>(url);
 	}
 
+	getTable(fileId, month) {
+		var url = this.url.prefix+this.tableURL;
+		url = url.replace(':file-id', fileId);
+		url = url.replace(':month', month);
+		return this.http.get<any>(url);
+	}
+
 	addBill(data, fileId) {
 		var url = this.url.prefix+this.addURL;
 		url = url.replace(':file-id', fileId);
 		return this.http.post<any>(url, data);
 	}
 
-	getAll(fileId, month) {
+	getAll(fileId, month, lastItem) {
 		var url = this.url.prefix+this.getAllURL;
 		url = url.replace(':file-id', fileId);
 		url = url.replace(':month', month);
+		if (lastItem !== false) url += "?last_item="+lastItem;
 		return this.http.get<any>(url);
 	}
 
@@ -37,5 +48,24 @@ export class BillsService {
 		var url = this.url.prefix+this.updateURL;
 		url = url.replace(':bill-id', billId);
 		return this.http.patch(url, data);
+	}
+
+	deleteBills(bills) {
+		var options = {
+			headers: new HttpHeaders({'Content-Type': 'application/json'}),
+			body : {
+				ids : bills
+			}
+		};
+		var url = this.url.prefix+this.deleleBillUrl;
+		return this.http.delete<any>(url, options);
+	}
+
+	searchFor(keyword, fileId, month) {
+		var url = this.url.prefix+this.searchBillsUrl;
+		url = url.replace(':file-id', fileId);
+		url = url.replace(':month', month);
+		url += "?keyword="+keyword;
+		return this.http.get<any>(url);
 	}
 }

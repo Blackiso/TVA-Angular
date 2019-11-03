@@ -1,0 +1,39 @@
+<div class="page-head flex">
+	<div class="title flex">
+		Historique de paiement
+		<img *ngIf="loading" src="/tva-assets/loading.svg" alt="">
+	</div>
+</div>
+<div class="table">
+	<div class="table-row table-head">
+		<span>Nom complet</span>
+		<span>Email de paiement</span>
+		<span>Type de compte</span>
+		<span>Montant (MAD)</span>
+		<span>Date de paiement</span>
+		<div class="refund"></div>
+	</div>
+	<div class="rows">
+		<div *ngFor="let payment of data; let i = index" class="table-row-container">
+			<div class="table-row">
+				<div class="row-items">
+					<div class="less-info">
+						<span>{{payment.full_name}}</span>
+						<span>{{payment.payer_email}}</span>
+						<span>{{payment.account_type}}</span>
+						<span>{{payment.payment_amount}}</span>
+						<span>{{payment.payment_time}}</span>
+					</div>
+				</div>
+				<div class="refund">
+					<span *ngIf="payment.refunded == 0" (click)="startRefund(payment.payment_id)">Rembourser</span>
+					<span class="refunddone" *ngIf="payment.refunded == 1">Terminé</span>
+					<span class="norefund" *ngIf="payment.refunded == 'no'">inéligible</span>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<ng-container *ngIf="refundAlert">
+	<app-alert [alertType]="alertType" (answerEvent)="alertAnswer($event)"></app-alert>
+</ng-container>

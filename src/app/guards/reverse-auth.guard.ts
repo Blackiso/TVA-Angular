@@ -19,7 +19,7 @@ export class ReverseAuthGuard implements CanActivate {
     canActivate() {
         if (this.userData.runAuth) {
             if (this.userData.userAuth) {
-                this.router.navigate(['/companies']);
+                this.redirectUser();
                 return false;
             }else {
                 return true;
@@ -29,13 +29,21 @@ export class ReverseAuthGuard implements CanActivate {
             return this.auth.authenticate().pipe(
                 map(data => {
                     this.userData.setUserAuth(data);
-                    this.router.navigate(['/companies']);
+                    this.redirectUser();
                     return false;
                 }),
                 catchError(err => { 
                     return of(true);
                 })
             );
+        }
+    }
+
+    redirectUser() {
+        if (this.userData.userType == "pending") {
+            this.router.navigate(['/register']);
+        }else {
+            this.router.navigate(['/companies']);
         }
     }
 }

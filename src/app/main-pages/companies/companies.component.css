@@ -1,9 +1,10 @@
 .main-container {
 	height: 100vh;
 	width: 100%;
-	background-image: url('/tva-assets/tva-bg-svg.svg');
+	background-image: url('/tva-assets/main-bg.svg');
 	background-size: cover;
 	position: relative;
+	background-position: bottom;
 	flex-direction: column;
 	align-items: center;
 }
@@ -15,12 +16,16 @@
 
 .header > .logo {
 	justify-content: center;
-	margin-bottom: 20px;
+	margin-bottom: 25px;
 }
 
 .header > .logo > i {
 	color: #687C8E;
 	font-size: 64px;
+}
+
+.header > .logo > img {
+	width: 200px;
 }
 
 .header > .text {
@@ -105,6 +110,7 @@
 	margin-bottom: 3vw;
 	box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.22);
 	border-radius: 5px;
+	z-index: 0;
 }
 
 .company:nth-of-type(3n) {
@@ -117,6 +123,23 @@
 	top: 10px;
 	cursor: pointer;
 	color: #EF8C8C;
+	z-index: 2;
+}
+
+.company > i:hover {
+	color: white;
+}
+
+.company > i:hover:after {
+	content: '';
+    height: 16px;
+    width: 16px;
+    position: absolute;
+    background-color: #f18d8d;
+    right: 0px;
+    top: 0px;
+    z-index: -1;
+    border-radius: 100%;
 }
 
 .company-if {
@@ -153,14 +176,153 @@
 	align-items: center;
 	justify-content: center;
 	cursor: pointer;
+	transition: .3s;
+}
+
+.company-button > span {
+	opacity: 0;
+	visibility: hidden;
+}
+
+.hovered {
+	width: 70px;
+	border-radius: 20px;
+}
+
+.hovered > span {
+	opacity: 1;
+    visibility: visible;
+    margin-left: 23px;
+    font-size: 12px;
+}
+
+.hovered > i {
+	opacity: 0;
+	visibility: hidden;
 }
 
 .company-button > i {
 	font-size: 24px;
+    margin-right: -49px;
 }
 
 .button-container {
 	margin-top: auto;
 	padding-top: 20px;
 	padding-bottom: 50px;
+}
+
+.top-menu {
+	width: 100%;
+	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flex;
+	display: -o-flex;
+	display: flex;
+	justify-content: center;
+	padding-top: 15px;
+}
+
+.top-menu > span:first-of-type {
+	margin-left: auto;
+	margin-right: 20px;
+	position: relative;
+}
+
+.top-menu > span {
+	font-size: 13px;
+    color: #828181;
+	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flex;
+	display: -o-flex;
+	display: flex;
+	padding: 5px 10px;
+    border-radius: 3px;
+    transition: .3s;
+    cursor: pointer;
+}
+
+.top-menu > span > i {
+    font-size: 19px;
+    margin-right: 5px;
+    color: #4688d6;
+    transition: .3s;
+}
+
+.compt-active,
+.top-menu > span:hover {
+	background-color: #4688d6;
+    color: white;
+}
+
+.compt-active > i,
+.top-menu > span:hover > i {
+	color: white;
+}
+
+.drop-down {
+	position: absolute;
+	right: 15px;
+	top: 50px;
+	background-color: white;
+	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flex;
+	display: -o-flex;
+	display: flex;
+	flex-direction: column;
+	border-radius: 3px;
+	box-shadow: 0px 5px 16px 1px rgba(0, 0, 0, 0.06);
+	overflow: hidden;
+}
+
+.drop-down > div {
+	padding: 10px 20px;
+	box-sizing: border-box;
+	border-bottom: 1px solid #e8e7e7;
+	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flex;
+	display: -o-flex;
+	display: flex;
+	align-items: center;
+	transition: .3s;
+	cursor: pointer;
+}
+
+.drop-down > div:first-of-type:hover,
+.drop-down > div:first-of-type {
+	background-color: #cee4ff;
+	cursor: default;
+}
+
+.drop-down > div:first-of-type:hover > i {
+	color: #4688d6;
+}
+
+.drop-down > div:last-of-type {
+	border-bottom: none;
+}
+
+.drop-down > div > i {
+	margin-right: 10px;
+    font-size: 20px;
+    color: #4688d6;
+    transition: .3s;
+}
+
+.drop-down > div > span {
+	font-size: 13px;
+    color: #525252;
+    overflow: hidden;
+	position: relative;
+}
+
+.drop-down > div:hover {
+	background-color: #e6f0fd;
+}
+
+.drop-down > div:hover > i {
+	color: #525252;
 }

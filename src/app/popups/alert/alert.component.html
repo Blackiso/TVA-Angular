@@ -1,21 +1,27 @@
-<div class="popup-container">
+<div class="popup-container" (keydown)="pressedEnter($event)">
 	<div class="alert-popup">
 		<div class="alert-head">
 			<span>{{currentType.title}}</span>
 		</div>
 		<div class="alert-body">
-			<div class="alert-content">
+			<div *ngIf="!currentType.return" class="alert-content">
 				<div class="alert-icon">
-					<i class="remixicon-alert-fill"></i>
+					<i *ngIf="alertType == 'emailSent'" class="remixicon-mail-send-fill"></i>
+					<i *ngIf="alertType == 'RefundDone'" class="remixicon-checkbox-circle-fill"></i>
+					<i *ngIf="currentType.alert" class="remixicon-alert-fill"></i>
 				</div>
 				<div class="alert-text">
 					{{currentType.msg}}
 				</div>
 			</div>
+			<div *ngIf="currentType.return" class="alert-content">
+				<div class="input-grp">
+					<input [type]="currentType.type" id="input" (keyup.enter)="sendReturn($event)" placeholder="{{currentType.placeholder}}">
+					<span>{{currentType.msg}}</span>
+				</div>
+			</div>
 			<div class="alert-buttons">
-				<button *ngIf="alertType == 'delete'" (click)="answer(false)" class="white-btn">NO</button>
-				<button *ngIf="alertType == 'delete'" (click)="answer(true)" class="highlighted-btn">YES</button>
-				<button *ngIf="alertType == 'error'" (click)="answer(true)" class="highlighted-btn">OK</button>
+				<button *ngFor="let btn of currentType.option" (click)="answer(btn)" [ngClass]="btn == 'NON' || btn == 'ANNULER' ? 'white-btn' : 'highlighted-btn'">{{btn}}</button>
 			</div>
 		</div>
 	</div>

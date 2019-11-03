@@ -1,0 +1,24 @@
+<div class="page-head flex">
+	<div class="title flex">
+		Derniers dossiers modifiés
+	</div>
+</div>
+<div class="files-main flex">
+	<div class="files-container flex">
+		<div class="titles flex">
+			<div class="check-box">
+			</div>
+			<span>Nom de Dossier</span>
+			<span>Type</span>
+			<span>Année</span>
+			<span>Dernière Modification</span>
+			<span class="more-options">
+			</span>
+		</div>
+		<div class="files flex">
+			<app-file *ngFor="let file of files" [data]="file" [close]="closeAll" (opend)="closeAllFiles()" [plane]="true">
+			</app-file>
+			<span *ngIf="files.length == 0" class="empty-list">Ajouter un nouveau dossier pour commencer.</span>
+		</div>
+	</div>
+</div>

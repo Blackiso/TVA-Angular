@@ -1,0 +1,20 @@
+<div class="popup-container">
+	<div class="alert-popup">
+		<div class="alert-head">
+			<span>Vérifiez votre e-mail</span>
+		</div>
+		<form class="alert-body" (submit)="submitPopup($event)">
+			<div class="alert-content alert-with-inp">
+				<div class="input-grp" [class.input-error]="error">
+					<input type="text" name="code" placeholder="Code de vérification">
+					<span>Code de vérification</span>
+				</div>
+			</div>
+			<span class="resend-text">Vous n'avez pas reçu de courrier électronique? <a (click)="sendEmail()"> Renvoyer </a></span>
+			<div class="alert-buttons">
+				<button *ngIf="!loading" (click)="close()" class="white-btn" type="button">ANNULER</button>
+				<button [class.button-loading]="loading" class="highlighted-btn" type="submit">VERIFY</button>
+			</div>
+		</form>
+	</div>
+</div>

@@ -1,4 +1,6 @@
 import { Component, OnInit, ElementRef, ViewChild, OnDestroy } from '@angular/core';
+import { Title } from '@angular/platform-browser';
+import { HelperModule } from '../../modules/helper.module';
 
 @Component({
   selector: 'app-home', 
@@ -13,8 +15,12 @@ export class HomeComponent implements OnInit {
 	@ViewChild('pricing', {static:false}) pricing: ElementRef;
 
 	scrolled:boolean = false; 
+	contactPopup:boolean = false;
+	video:boolean = false;
 
-	constructor(private ElementRef:ElementRef) { }
+	constructor(private ElementRef:ElementRef, private titleService: Title, private helper:HelperModule) {
+		this.titleService.setTitle('Paramanagers | Accueil');
+	}
 
 	ngOnInit() {
 		window.addEventListener('scroll', this.navbarScroll.bind(this));
@@ -33,6 +39,10 @@ export class HomeComponent implements OnInit {
 			left: 0,
 			behavior: 'smooth'
 		});
+	}
+
+	sendClick(name) {
+		this.helper.analyticsEvent(name);
 	}
 
 	ngOnDestroy() {

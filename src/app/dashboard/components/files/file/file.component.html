@@ -1,34 +1,34 @@
 <div class="files-row flex" (click)="openFile($event)" [class.file-checked]="check" [class.file-opend]="!_close">
 	<span class="open-file"></span>
 	<div class="check-box dont-open">
-		<input type="checkbox" [checked]="check" (change)="checkFile($event)">
-		<div class="box"></div>
+		<input *ngIf="!plane" type="checkbox" [checked]="check" (click)="checkMe($event)">
+		<div *ngIf="!plane" class="box"></div>
 	</div>
-	<span>{{data.file_name}}</span>
-	<span>{{data.type}}</span>
-	<span>{{data.year}}</span>
-	<span>{{data.last_modified}}</span>
+	<span class="culumn">{{data.file_name}}</span>
+	<span class="culumn">{{filesTypes[data.type]}}</span>
+	<span class="culumn">{{data.year}}</span>
+	<span class="culumn">{{data.last_modified}}</span>
 	<span class="more-options">
-		<i class="remixicon-more-2-line dont-open trigger-btn" (click)="moreInfo = true"></i>
+		<i *ngIf="!plane" [tooltip]="'Options'" class="remixicon-more-2-line dont-open trigger-btn" (click)="moreInfo = true"></i>
 		<div class="options-menu dont-open" [class.hide]="!moreInfo" (clickAway)="moreInfo = false">
-			<span (click)="editFile()"><i class="remixicon-pencil-fill"></i><span>Edit</span></span>
-			<span (click)="deleteFile()"><i class="remixicon-delete-bin-2-fill"></i><span>Remove</span></span>
+			<span (click)="editFile()"><i class="remixicon-pencil-fill"></i><span>Modifier</span></span>
+			<span (click)="deleteFile()"><i class="remixicon-delete-bin-2-fill"></i><span>Supprimer</span></span>
 		</div>
 	</span>
-	<form class="select-month-container dont-open" (submit)="submitFile()">
+	<form class="select-month-container dont-open" (submit)="submitFile($event)">
 		<div *ngIf="loading" class="loading-file flex"><img src="/tva-assets/loading.svg" alt=""></div>
 		<div class="select-month">
-			<span>Month :</span>
+			<span>Mois :</span>
 			<div *ngIf="!loading" class="custom-select-container">
 				<div class="custom-select trigger-btn" (click)="monthsSelect = !monthsSelect">
 					<span>{{monthCurrentVal.name}}</span>
 					<i class="remixicon-arrow-down-s-fill"></i>
 				</div>
-				<div class="custom-select-options" (clickAway)="monthsSelect = false" [class.hide]="!monthsSelect">
-					<span>Current Months:</span>
+				<div [class.trim]="data.type == 'quarterly'" class="custom-select-options" (clickAway)="monthsSelect = false" [class.hide]="!monthsSelect">
+					<span>{{ selectTitle[data.type] }} en cours:</span>
 					<div>
-						<div *ngFor="let month of details" (click)="setMonth($event)" [attr.data-select]="month.month" [attr.data-number]="month.bills" [attr.data-name]="names[month.month-1]" [class.selected-month]="monthCurrentVal.val == month.month">
-							{{names[month.month-1]}} <span>({{month.bills}})</span>
+						<div *ngFor="let month of details" (click)="setMonth($event)" [attr.data-select]="month.month" [attr.data-number]="month.bills" [attr.data-name]="names[data.type][month.month]" [class.selected-month]="monthCurrentVal.val == month.month">
+							{{names[data.type][month.month]}} <span>({{month.bills}})</span>
 						</div>
 					</div>
 				</div>
@@ -36,11 +36,11 @@
 		</div>
 		<span *ngIf="!loading" class="bills-num">{{monthCurrentVal.number}} Factures</span>
 		<div class="download">
-			<div>
+			<div (click)="openPDF()">
 				<i class="remixicon-file-fill"></i>
 				<span>PDF</span>
 			</div>
-			<div>
+			<div (click)="openXML()">
 				<i class="remixicon-file-fill"></i>
 				<span>XML</span>
 			</div>

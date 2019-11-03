@@ -1,103 +1,126 @@
 <div class="popup-container">
 	<form class="alert-popup bill-popup" (submit)="addNewBill($event)">
 		<div class="alert-head">
-			<span>Add new facture</span>
+			<span>Ajouter une nouvelle facture</span>
 		</div>
 		<div class="alert-body">
-			<span *ngIf="error" class="popup-error">Error please try again!</span>
+			<span *ngIf="error" class="popup-error">Erreur s'il vous plaît essayez à nouveau!</span>
 			<div class="alert-content alert-with-inp">
-				<div class="input-grp">
-					<input type="text" name="ddf" placeholder="Date de facture">
+				<div class="input-grp" [class.input-error]="errorInput.indexOf('ddf') > -1">
+					<input type="text" name="ddf" [value]="ddf" placeholder="Date de la facture ex. 12 06 2019" (blur)="parseDate($event)">
 					<div>
 						<span>Date de facture</span>
-						<i (click)="lockInput($event, 'ddf')" class="lock unlocked remixicon-lock-fill"></i>
+						<i (click)="lockInput($event, 'ddf')" [class.locked]="lockedInputs.indexOf('ddf') > -1" class="lock remixicon-lock-fill"></i>
 					</div>
 				</div>
-				<div class="input-grp">
+				<div class="input-grp" [class.input-error]="errorInput.indexOf('nfa') > -1">
 					<input type="text" name="nfa" placeholder="N° de la facture">
 					<div>
 						<span>N° Facture</span>
-						<i (click)="lockInput($event, 'nfa')" class="lock unlocked remixicon-lock-fill"></i>
+						<i (click)="lockInput($event, 'nfa')" [class.locked]="lockedInputs.indexOf('nfa') > -1" class="lock remixicon-lock-fill"></i>
 					</div>
 				</div>
-				<div class="input-grp">
+				<div class="input-grp" [class.input-error]="errorInput.indexOf('ndf') > -1">
 					<input type="text" name="ndf" placeholder="Nome de fournisseur" [value]="selectedndf" (keyup)="searchSuppliers($event)" autocomplete="off">
 					<div>
 						<span>Fournisseur</span>
-						<i (click)="lockInput($event, 'ndf')" class="lock unlocked remixicon-lock-fill"></i>
+						<i (click)="lockInput($event, 'ndf')" [class.locked]="lockedInputs.indexOf('ndf') > -1" class="lock remixicon-lock-fill"></i>
 					</div>
 					<div *ngIf="suggestion" class="inp-suggestion trigger-btn" (clickAway)="suggestion = false">
-						<span *ngFor="let sup of suppliers" [attr.data-ndf]="sup.ndf" [attr.data-iff]="sup.iff" [attr.data-ice]="sup.ice"  (click)="setSupplier($event)">{{sup.ndf}}</span>
+						<div *ngFor="let sup of suppliers" [attr.data-ndf]="sup.ndf" [attr.data-iff]="sup.iff" [attr.data-ice]="sup.ice" [attr.data-dbs]="sup.dbs"  (click)="setSupplier($event)">
+							<span>Nom: <b>{{sup.ndf}}</b></span>
+							<span>IF: <b>{{sup.iff}}</b></span>
+						</div>
 					</div>
 				</div>
-				<div class="input-grp">
-					<input type="text" name="iff" placeholder="Identification commun d’entrprise" [value]="selectedice">
+				<div class="input-grp" [class.input-error]="errorInput.indexOf('ice') > -1">
+					<input type="text" name="ice" placeholder="Identification commun d’entrprise" [value]="selectedice">
 					<div>
 						<span>ICE</span>
-						<i (click)="lockInput($event, 'iff')" class="lock unlocked remixicon-lock-fill"></i>
+						<i (click)="lockInput($event, 'ice')" [class.locked]="lockedInputs.indexOf('ice') > -1" class="lock remixicon-lock-fill"></i>
 					</div>
 				</div>
-				<div class="input-grp">
-					<input type="text" name="ice" placeholder="Identifaction Fiscal (IF)" [value]="selectediff">
+				<div class="input-grp" [class.input-error]="errorInput.indexOf('iff') > -1">
+					<input type="text" name="iff" placeholder="Identifaction Fiscal (IF)" [value]="selectediff">
 					<div>
 						<span>Identifaction Fiscal</span>
-						<i (click)="lockInput($event, 'ice')" class="lock unlocked remixicon-lock-fill"></i>
+						<i (click)="lockInput($event, 'iff')" [class.locked]="lockedInputs.indexOf('iff') > -1" class="lock remixicon-lock-fill"></i>
 					</div>
 				</div>
 				<div class="input-grp">
-					<input type="text" name="dbs" placeholder="Designation de bien et service">
+					<div class="double-inp-in-grp">
+						<input type="text" (blur)="inputDBS($event)" name="dbs" [value]="selecteddbs" placeholder="Designation de bien et service">
+						<select name="bill_type" [value]="dbsSelectValue" (change)="setDBS($event)">
+							<option value="other">Autres</option>
+							<option value="transport">Transport</option>
+							<option value="bank">Services bancaire</option>
+						</select>
+					</div>
 					<div>
 						<span>Designation de bien et service</span>
-						<i (click)="lockInput($event, 'dbs')" class="lock unlocked remixicon-lock-fill"></i>
+						<i (click)="lockInput($event, 'dbs')" [class.locked]="lockedInputs.indexOf('dbs') > -1" class="lock remixicon-lock-fill"></i>
 					</div>
 				</div>
-				<div class="input-grp">
+				<div class="input-grp" [class.input-error]="errorInput.indexOf('mht') > -1">
 					<input type="text" [value]="mHT" (keyup)="calculate()" (input)="mHT = $event.target.value" name="mht" placeholder="Montant HT">
 					<div>
 						<span>Montant HT</span>
-						<i (click)="lockInput($event, 'mht')" class="lock unlocked remixicon-lock-fill"></i>
+						<i (click)="lockInput($event, 'mht')" [class.locked]="lockedInputs.indexOf('mht') > -1" class="lock remixicon-lock-fill"></i>
 					</div>
 				</div>
-				<div class="input-grp">
+				<div class="input-grp" [class.input-error]="errorInput.indexOf('tau') > -1">
 					<input type="text" [value]="tTVA" (keyup)="calculate()" (input)="tTVA = $event.target.value" name="tau" placeholder="Taux TVA">
 					<div>
 						<span>Taux TVA</span>
-						<i (click)="lockInput($event, 'tau')" class="lock unlocked remixicon-lock-fill"></i>
+						<i (click)="lockInput($event, 'tau')" [class.locked]="lockedInputs.indexOf('tau') > -1" class="lock remixicon-lock-fill"></i>
 					</div>
 				</div>
-				<div class="input-grp">
+				<div class="input-grp" [class.input-error]="errorInput.indexOf('tva') > -1">
 					<input type="text" [value]="mTVA" name="tva" placeholder="Montant TVA">
 					<div>
 						<span>Montant TVA</span>
-						<i (click)="lockInput($event, 'tva')" class="lock unlocked remixicon-lock-fill"></i>
+						<i (click)="lockInput($event, 'tva')" [class.locked]="lockedInputs.indexOf('tva') > -1" class="lock remixicon-lock-fill"></i>
 					</div>
 				</div>
-				<div class="input-grp">
+				<div class="input-grp" [class.input-error]="errorInput.indexOf('ttc') > -1">
 					<input type="text" [value]="mTTC" name="ttc" placeholder="Montant TTC">
 					<div>
 						<span>Montant TTC</span>
-						<i (click)="lockInput($event, 'ttc')" class="lock unlocked remixicon-lock-fill"></i>
+						<i (click)="lockInput($event, 'ttc')" [class.locked]="lockedInputs.indexOf('ttc') > -1" class="lock remixicon-lock-fill"></i>
 					</div>
 				</div>
-				<div class="input-grp">
-					<input type="text" name="mdp" placeholder="Mode de paiment">
-					<div>
-						<span>Mode de paiment</span>
-						<i (click)="lockInput($event, 'mdp')" class="lock unlocked remixicon-lock-fill"></i>
-					</div>
+				<div class="input-grp" [class.h-inp-grp]="selectFocus">
+					<select name="mdp" (blur)="selectFocus = false" (focus)="selectFocus = true" id="mdp" (change)="checkModePayment()">
+						<option value="1">Espèce</option>
+						<option value="2">Cheque</option>
+						<option value="3">Prélèvement</option>
+						<option value="4">Virement</option>
+						<option value="5">Effet</option>
+						<option value="6">Compensation</option>
+						<option value="7">Autres</option>
+					</select>
+					<span>Mode de paiment</span>
 				</div>
-				<div class="input-grp">
-					<input type="text" name="ddp" placeholder="Date de paiment">
+				<div class="input-grp" [class.input-error]="errorInput.indexOf('ddp') > -1">
+					<input type="text" name="ddp" [value]="ddp" placeholder="Date de paiment ex. 12 06 2019" (blur)="parseDate($event)">
 					<div>
 						<span>Date de paiment</span>
-						<i (click)="lockInput($event, 'ddp')" class="lock unlocked remixicon-lock-fill"></i>
+						<i (click)="lockInput($event, 'ddp')" [class.locked]="lockedInputs.indexOf('ddp') > -1" class="lock remixicon-lock-fill"></i>
 					</div>
 				</div>
-			</div>
-			<div class="alert-buttons">
-				<button type="button" (click)="lockAll($event)" class="white-btn">{{lockAllCheckBtn}}</button>
-				<button type="button" (click)="closePopup()" class="white-btn">CLOSE</button>
-				<button type="submit" class="highlighted-btn">ADD</button>
+				<div class="input-grp" [class.input-error]="errorInput.indexOf('pro') > -1">
+					<input type="text" name="pro" placeholder="Prorata de déduction">
+					<div>
+						<span>Prorata <b class="x-optionl">(Optionnel)</b></span>
+						<i (click)="lockInput($event, 'pro')" [class.locked]="lockedInputs.indexOf('pro') > -1" class="lock remixicon-lock-fill"></i>
+					</div>
+				</div>
+				<div class="alert-buttons">
+					<button *ngIf="!loading" type="button" (click)="lockAll($event)" class="white-btn">{{lockAllCheckBtn}}
+					</button>
+					<button *ngIf="!loading" type="button" (click)="closePopup()" class="white-btn">FERMER</button>
+					<button [class.button-loading]="loading" type="submit" class="highlighted-btn">AJOUTER</button>
+				</div>
 			</div>
 		</div>
 	</form>

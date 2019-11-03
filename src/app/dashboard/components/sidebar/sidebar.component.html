@@ -1,9 +1,9 @@
 <section class="side-bar flex">
 	<div class="logo-container flex">
-		<span>MY COMPANY LOGO</span>
+		<img src="tva-assets/white-logo.png" alt="" />
 	</div>
 	<div class="user-info flex">
-		<span class="wlcm-name">Welcome, {{userName}}</span>
+		<span class="wlcm-name">Bienvenue, {{userData.userName}}</span>
 		<span class="user-type">{{companyName}}</span>
 	</div>
 	<ul class="menu flex">
@@ -12,17 +12,17 @@
 				<i class="remixicon-stack-line"></i>
 			</div>
 			<div class="name flex">
-				<span>Companies</span>
-				<span>Select a company</span>
+				<span>Sociétés</span>
+				<span>Mes société</span>
 			</div>
 		</li>
-		<li [class.active-menu-item]="active == 'overview'" class="flex">
+		<li [class.active-menu-item]="active == 'overview'" class="flex" [navigateTo]="{path:['dashboard','overview'], class:activeClass}">
 			<div class="icon flex">
 				<i class="remixicon-pie-chart-line"></i>
 			</div>
 			<div class="name flex">
-				<span>Overview</span>
-				<span>Global Stats</span>
+				<span>Présentation</span>
+				<span>Statistique</span>
 			</div>
 		</li>
 		<li [class.active-menu-item]="active == 'files'" class="flex" [navigateTo]="{path:['dashboard','files'], class:activeClass}">
@@ -30,26 +30,26 @@
 				<i class="remixicon-file-line"></i>
 			</div>
 			<div class="name flex">
-				<span>My Files</span>
-				<span>File Manager</span>
+				<span>Mes dossiers</span>
+				<span>Gestion des fichiers</span>
 			</div>
 		</li>
-		<li [class.active-menu-item]="active == 'users'" class="flex" [navigateTo]="{path:['dashboard','users'], class:activeClass}">
+		<li [class.not-allowed]="isUser" [class.active-menu-item]="active == 'users'" class="flex" [navigateTo]="{path:['dashboard','users'], class:activeClass, block:isUser}">
 			<div class="icon flex">
 				<i class="remixicon-user-3-line"></i>
 			</div>
 			<div class="name flex">
-				<span>My Users</span>
-				<span>Users Manager</span>
+				<span>Mes utilisateurs</span>
+				<span>Gestion d'utilisateurs</span>
 			</div>
 		</li>
-		<li [class.active-menu-item]="active == 'settings'" class="flex">
+		<li [class.not-allowed]="isUser" [class.active-menu-item]="active == 'settings'" class="flex" [navigateTo]="{path:['dashboard','settings'], class:activeClass, block:isUser}">
 			<div class="icon flex">
 				<i class="remixicon-settings-3-line"></i>
 			</div>
 			<div class="name flex">
-				<span>Settings</span>
-				<span>Account Settings</span>
+				<span>Paramètres</span>
+				<span>Paramètres du compte</span>
 			</div>
 		</li>
 	</ul>
@@ -57,6 +57,6 @@
 		<div class="icon flex">
 			<i class="remixicon-shut-down-line"></i>
 		</div>
-		<span>Log Out</span>
+		<span>Se déconnecter</span>
 	</div>
 </section>

@@ -4,9 +4,9 @@
 			<span>{{title}}</span>
 		</div>
 		<form class="alert-body" (submit)="submitPopup($event)">
-			<span *ngIf="error" class="popup-error">Error please try again!</span>
+			<span *ngIf="error" class="popup-error">Erreur s'il vous plaît essayez à nouveau!</span>
 			<div class="alert-content alert-with-inp">
-				<div *ngFor="let inp of config" class="input-grp" [class.h-inp-grp]="inp.focus">
+				<div *ngFor="let inp of config" class="input-grp" [class.h-inp-grp]="inp.focus" [class.input-error]="errorInput.indexOf(inp.name) > -1">
 
 					<input [value]="!!inp.value ? inp.value : ''" *ngIf="inp.type == null" type="text" name="{{inp.name}}" placeholder="{{inp.placeholder}}">
 
@@ -14,6 +14,14 @@
 
 					<input [value]="!!inp.value ? inp.value : ''" *ngIf="inp.type == 'email'" name="email" type="email" name="{{inp.name}}" placeholder="{{inp.placeholder}}">
 
+					<div class="inp-checkbox-container" *ngIf="inp.type == 'checkBox'">
+						<div class="check-box">
+							<input [checked]="!!inp.value ? (inp.value == 1 ? true : false) : false" name="email" type="checkbox"name="{{inp.name}}">
+							<div class="box"></div>
+						</div>
+						<span>{{inp.title}}</span>
+					</div>
+					
 					<div *ngIf="inp.type == 'user_email'" class="user_email flex" [class.h-inp-grp]="focus">
 						<input [value]="!!inp.value ? inp.value : ''" type="text" name="email" placeholder="{{inp.placeholder}}" (blur)="inp.focus = false" (focus)="inp.focus = true">
 						<span>@tva.edg</span>
@@ -23,12 +31,12 @@
 						<option *ngFor="let op of inp.options" value="{{op.value}}">{{op.name}}</option>
 					</select>
 
-					<span>{{inp.title}}</span>
+					<span [class.hide]="inp.hideTitle">{{inp.title}} <b *ngIf="inp.optional" class="x-optionl">(Optionnel)</b></span>
 				</div>
 			</div>
 			<div class="alert-buttons">
-				<button *ngIf="!loading" (click)="close()" class="white-btn" type="button">CANCEL</button>
-				<button [class.button-loading]="loading" class="highlighted-btn" type="submit">SAVE</button>
+				<button *ngIf="!loading" (click)="close()" class="white-btn" type="button">ANNULER</button>
+				<button [class.button-loading]="loading" class="highlighted-btn" type="submit">ENREGISTRER</button>
 			</div>
 		</form>
 	</div>

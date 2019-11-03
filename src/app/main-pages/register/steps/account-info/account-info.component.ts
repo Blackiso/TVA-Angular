@@ -86,7 +86,11 @@ export class AccountInfoComponent {
 	}
 
 	nextStep() {
+		this.sendClick('user_registered');
 		this.next.emit(true);
 	}
 
+	sendClick(name) {
+		this.helper.analyticsEvent(name);
+	}
 }

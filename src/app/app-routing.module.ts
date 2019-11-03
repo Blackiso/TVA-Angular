@@ -7,14 +7,20 @@ import { LoginComponent } from './main-pages/login/login.component';
 import { RegisterComponent } from './main-pages/register/register.component';
 import { PageComponent } from './main-pages/page/page.component';
 import { CompaniesComponent } from './main-pages/companies/companies.component';
+import { CapturePaymentComponent } from './main-pages/capture-payment/capture-payment.component';
+import { PasswordResetComponent } from './main-pages/password-reset/password-reset.component';
+import { NotFoundComponent } from './main-pages/not-found/not-found.component';
 
 import { DashboardComponent } from './dashboard/dashboard/dashboard.component';
 import { FilesComponent } from './dashboard/components/files/files.component';
 import { UsersComponent } from './dashboard/components/users/users.component';
 import { BillsComponent } from './dashboard/components/bills/bills.component';
+import { SettingsComponent } from './dashboard/components/settings/settings.component';
+import { OverviewComponent } from './dashboard/components/overview/overview.component';
 
 import { AuthGuard } from './guards/auth.guard';
 import { ReverseAuthGuard } from './guards/reverse-auth.guard';
+import { PaymentGuard } from './guards/payment.guard';
 
 const routes: Routes = [
 	{
@@ -35,7 +41,7 @@ const routes: Routes = [
 	{
 		path : 'register',
 		component : RegisterComponent,
-		canActivate : [ReverseAuthGuard]
+		canActivate : [PaymentGuard]
 	},
 	{
 		path : 'page',
@@ -43,9 +49,18 @@ const routes: Routes = [
 		canActivate : [AuthGuard]
 	},
 	{
+		path : 'capture-payment',
+		component : CapturePaymentComponent
+	},
+	{
 		path : 'companies',
 		component : CompaniesComponent,
 		canActivate : [AuthGuard]
+	},
+	{
+		path : 'reset',
+		component : PasswordResetComponent,
+		canActivate : [ReverseAuthGuard]
 	},
 	{
 		path : 'dashboard',
@@ -53,7 +68,11 @@ const routes: Routes = [
 		children : [
 			{
 				'path' : '',
-				'component' : FilesComponent
+				'component' : OverviewComponent
+			},
+			{
+				'path' : 'overview',
+				'component' : OverviewComponent
 			},
 			{
 				'path' : 'files',
@@ -66,9 +85,21 @@ const routes: Routes = [
 			{
 				'path' : 'bills/:file/:month',
 				'component' : BillsComponent
+			},
+			{
+				'path' : 'settings',
+				'component' : SettingsComponent
 			}
 		],
 		canActivate : [AuthGuard]
+	},
+	{
+		path: '404', 
+		component: NotFoundComponent
+	},
+	{
+		path: '**',
+		redirectTo: '/404'
 	}
 ];
 

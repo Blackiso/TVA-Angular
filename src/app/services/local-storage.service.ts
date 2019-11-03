@@ -18,10 +18,11 @@ export class LocalStorageService {
 	}
 
 	checkItem(id) {
-		if (window.localStorage.getItem(id) !== undefined) {
-			return true;
+		var check = window.localStorage.getItem(id);
+		if (check === null) {
+			return false;
 		}
-		return false;
+		return true;
 	}
 
 	clear() {

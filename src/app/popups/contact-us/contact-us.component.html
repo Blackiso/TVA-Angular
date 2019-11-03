@@ -1,0 +1,42 @@
+<div class="popup-container">
+	<div class="alert-popup contact-popup">
+		<div class="alert-head">
+			<span>Contacter le support de Perlnova</span>
+		</div>
+		<form class="alert-body" (submit)="submitPopup($event)">
+			<span *ngIf="error" class="popup-error">Erreur s'il vous plaît essayez à nouveau!</span>
+			<div *ngIf="done" class="email-sent">
+				<span>Nous avons reçu votre demande et nous allons la traiter, assurez-vous de vérifier votre courrier électronique pour obtenir notre réponse.</span>
+			</div>
+			<div *ngIf="!done" class="alert-content alert-with-inp">
+				<div class="double-input-grp">
+					<div class="input-grp" [class.input-error]="inputError.indexOf('name') > -1">
+						<input type="text" placeholder="Prénom" name="name" [value]="name">
+						<span>Prénom</span>
+					</div>
+					<div class="input-grp" [class.input-error]="inputError.indexOf('lname') > -1">
+						<input type="text" placeholder="Nom de famille" name="lname" [value]="lname">
+						<span>Nom de famille</span>
+					</div>
+				</div>
+				<div class="input-grp" [class.input-error]="inputError.indexOf('email') > -1">
+					<input type="text" name="email" placeholder="Votre adresse email" [value]="email">
+					<span>Email</span>
+				</div>
+				<div class="input-grp" [class.input-error]="inputError.indexOf('subject') > -1">
+					<input type="text" name="subject" placeholder="Objectif du courriel">
+					<span>Objectif</span>
+				</div>
+				<div class="input-grp" [class.input-error]="inputError.indexOf('body') > -1">
+					<textarea name="body"></textarea>
+					<span>Votre message</span>
+				</div>
+			</div>
+			<div class="alert-buttons">
+				<button *ngIf="!loading && done" (click)="close()" class="white-btn" type="button">FERMER</button>
+				<button *ngIf="!loading && !done" (click)="close()" class="white-btn" type="button">ANNULER</button>
+				<button *ngIf="!done" [class.button-loading]="loading" class="highlighted-btn" type="submit">ENVOYER</button>
+			</div>
+		</form>
+	</div>
+</div>
