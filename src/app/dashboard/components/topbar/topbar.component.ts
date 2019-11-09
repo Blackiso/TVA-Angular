@@ -21,6 +21,7 @@ export class TopbarComponent implements OnInit {
 	alertPopup:boolean = false;
 	alertType:string = "error";
 	isVerified:boolean;
+	userType:string;
 	contactPopup:boolean = false;
 
 	constructor(
@@ -29,6 +30,7 @@ export class TopbarComponent implements OnInit {
 		private authSearvice:AuthenticationService
 	) {
 		this.isVerified = this.userData.active;
+		this.userType = this.userData.userType;
 	}
 
 	ngOnInit() {

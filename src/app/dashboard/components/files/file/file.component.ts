@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChange } from '@angular/core';
 import { FilesService } from '../../../services/files.service';
+import { BillsService } from '../../../services/bills.service';
 import { ClickAwayDirective } from '../../../../directives/click-away.directive';
 import { HelperModule } from '../../../../modules/helper.module';
 import { LocalStorageService } from '../../../../services/local-storage.service';
@@ -42,15 +43,18 @@ export class FileComponent implements OnChanges {
 	filesTypes:any = {
 		quarterly : 'Trimestriel',
 		monthly : 'Mensuel'
-	}
+	};
 	selectTitle:any = {
 		quarterly : 'Periode',
 		monthly : 'Mois'
-	}
+	};
+	alertPopup:boolean = false;
+	alertType:string;
 
 	constructor(
 		private helper:HelperModule, 
 		private fileService:FilesService,
+		private billsService:BillsService,
 		private local:LocalStorageService
 	) { }
 
@@ -163,6 +167,42 @@ export class FileComponent implements OnChanges {
 	}
 
 	openXML() {
-		window.open(location.origin+"/api/download/"+this.data.id+"/"+this.monthCurrentVal.val+"/xml");
+		// window.open(location.origin+"/api/download/"+this.data.id+"/"+this.monthCurrentVal.val+"/xml");
+		this.displayDownload();
+	}
+
+	downloadXML(name) {
+		if (name == "" || name == true) {
+			name = this.data.id+"-"+this.monthCurrentVal.val;
+		}
+		this.billsService.getXML(this.data.id, this.monthCurrentVal.val).subscribe(
+			response => {
+				var a = document.createElement('a');
+		        var blob = new Blob([response], {type: "text/plain;charset=utf-8"});
+            	var url = window.URL.createObjectURL(blob);
+		        a.href = url;
+		        a.download = name+'.xml';
+		        document.body.append(a);
+		        a.click();
+		        a.remove();
+		        window.URL.revokeObjectURL(url);
+			}
+		);
+	}
+
+	alertAnswer(e) {
+		this[this.alertType+"Answer"](e);
+	}
+
+	xmlAnswer(e) {
+		this.alertPopup = false;
+		if (e) {
+			this.downloadXML(e);
+		}
+	}
+
+	displayDownload() {
+		this.alertType = "xml";
+		this.alertPopup = true;
 	}
 }

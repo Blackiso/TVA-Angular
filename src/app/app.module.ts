@@ -13,6 +13,8 @@ import { LocalStorageService } from './services/local-storage.service';
 
 import { AuthGuard } from './guards/auth.guard';
 import { ReverseAuthGuard } from './guards/reverse-auth.guard';
+import { PaymentGuard } from './guards/payment.guard';
+import { UserGuard } from './guards/user-guard.guard';
 
 import { HelperModule } from './modules/helper.module';
 
@@ -122,7 +124,9 @@ import { NotFoundComponent } from './main-pages/not-found/not-found.component';
         UserDataService,
         AuthGuard,
         ReverseAuthGuard,
-        LocalStorageService
+        LocalStorageService,
+        PaymentGuard,
+        UserGuard
     ],
 	bootstrap: [AppComponent]
 })

@@ -49,6 +49,14 @@ export class AlertComponent implements OnInit {
 			return : true,
 			type : "email"
 		},
+		xml : {
+			title : "Téléchargement de fichier XML",
+			msg : "Nome de fichier",
+			placeholder : "Fichier XML",
+			option : ["ANNULER", "TÉLÉCHARGER"],
+			return : true,
+			type : "text"
+		},
 		emailSent : {
 			title : "Email envoyé",
 			msg : "Veuillez vérifier votre boîte de réception pour récupérer votre mot de passe.",
@@ -59,7 +67,8 @@ export class AlertComponent implements OnInit {
 		OK : true,
 		OUI : true,
 		NON : false,
-		ANNULER : false
+		ANNULER : false,
+		TÉLÉCHARGER : true
 	};
 	currentType:any;
 
@@ -69,7 +78,7 @@ export class AlertComponent implements OnInit {
 
 	@HostListener('document:keydown', ['$event'])
 	pressedEnter(e) {
-		if (this.alertType == 'password') {
+		if (this.currentType.return) {
 			return;
 		}else {
 			if (e.keyCode === 13) {

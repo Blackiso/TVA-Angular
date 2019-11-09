@@ -109,7 +109,27 @@ export class BillsComponent implements OnInit {
 	}
 
 	openXML() {
-		window.open(location.origin+"/api/download/"+this.fileId+"/"+this.month+"/xml");
+		// window.open(location.origin+"/api/download/"+this.fileId+"/"+this.month+"/xml");
+		this.displayDownload();
+	}
+
+	downloadXML(name) {
+		if (name == "" || name == true) {
+			name = this.fileId+"-"+this.month;
+		}
+		this.billsService.getXML(this.fileId, this.month).subscribe(
+			response => {
+				var a = document.createElement('a');
+		        var blob = new Blob([response], {type: "text/plain;charset=utf-8"});
+            	var url = window.URL.createObjectURL(blob);
+		        a.href = url;
+		        a.download = name+'.xml';
+		        document.body.append(a);
+		        a.click();
+		        a.remove();
+		        window.URL.revokeObjectURL(url);
+			}
+		);
 	}
 
 	addNewBill(data) {
@@ -226,11 +246,23 @@ export class BillsComponent implements OnInit {
 		this.alertPopup = false;
 	}
 
+	xmlAnswer(e) {
+		this.alertPopup = false;
+		if (e !== false) {
+			this.downloadXML(e);
+		}
+	}
+
 	displayError() {
 		this.loading = false;
 		this.addLoading = false;
 		this.tvaTable = false;
 		this.alertType = "error";
+		this.alertPopup = true;
+	}
+
+	displayDownload() {
+		this.alertType = "xml";
 		this.alertPopup = true;
 	}
 }

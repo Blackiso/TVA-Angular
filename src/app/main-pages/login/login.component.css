@@ -45,7 +45,7 @@
 }
 
 .logo-container-m > img {
-	width: 190px;
+	/*width: 190px;*/
     margin-bottom: -20px;
     cursor: pointer;
 }

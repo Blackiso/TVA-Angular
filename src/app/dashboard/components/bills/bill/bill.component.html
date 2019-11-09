@@ -9,7 +9,7 @@
 			<div class="less-info">
 				<span>{{data.nfa}}</span>
 				<span>{{data.ndf}}</span>
-				<span>{{mTVA}}</span>
+				<span>{{mTVA | money}}</span>
 				<span>{{data.ddf}}</span>
 			</div>
 			<form class="more-info" (submit)="editBill($event)" id="UpdateForm">
@@ -65,7 +65,7 @@
 					<span>Montant HT: </span>
 					<div>
 						<input (keyup.enter)="blurInput($event)" type="text" name="mht" (keyup)="calculate()" [value]="mHT" (input)="mHT = $event.target.value">
-						<span>{{mHT}} MAD</span>
+						<span>{{mHT | money}} MAD</span>
 						<i class="remixicon-pencil-fill"></i>
 					</div>
 				</div>
@@ -81,7 +81,7 @@
 					<span>Montant TVA: </span>
 					<div>
 						<input (keyup.enter)="blurInput($event)" type="hidden" name="tva" [value]="mTVA" (input)="mTVA = $event.target.value">
-						<span>{{mTVA}} MAD</span>
+						<span>{{mTVA | money}} MAD</span>
 						<!-- <i class="remixicon-pencil-fill"></i> -->
 					</div>
 				</div>
@@ -89,7 +89,7 @@
 					<span>Montant TTC: </span>
 					<div>
 						<input (keyup.enter)="blurInput($event)" type="hidden" name="ttc" [value]="mTTC" (input)="mTTC = $event.target.value">
-						<span>{{mTTC}} MAD</span>
+						<span>{{mTTC | money}} MAD</span>
 						<!-- <i class="remixicon-pencil-fill"></i> -->
 					</div>
 				</div>

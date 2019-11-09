@@ -1,5 +1,6 @@
 import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { BillsService } from '../../dashboard/services/bills.service';
+import { TauxValuesService } from '../../services/taux-values.service';
 
 @Component({
   selector: 'app-tva-table',
@@ -12,18 +13,11 @@ export class TvaTableComponent implements OnInit {
 	@Output() error = new EventEmitter<any>();
 	@Input() fileId:any;
 	@Input() month:any;
-	titles:any = {
-		'20' : "TVA récuperer 20%",
-		'14' : "TVA récuperer 14%",
-		'10' : "TVA récuperer 10%",
-		'7' : "TVA récuperer 7%",
-		'transport' : "TVA récupérable sur tranport",
-		'bank' : "TVA récupérable sur services bancaires"
-	};
-	data:any;
+	loading:boolean = true;
+	data:any = [];
 	totalTVA:number = 0;
 
-	constructor(private billsService:BillsService) { }
+	constructor(private billsService:BillsService, private tauxService:TauxValuesService) {}
 
 	ngOnInit() {
 		this.billsService.getTable(this.fileId, this.month).subscribe(
@@ -33,6 +27,7 @@ export class TvaTableComponent implements OnInit {
 				}else {
 					this.data = response;
 					this.calculateTotal();
+					this.loading = false;
 				}
 			},
 			err => {
@@ -41,11 +36,22 @@ export class TvaTableComponent implements OnInit {
 		);
 	}
 
+	getTauxName(code, taux) {
+		console.log(code, taux);
+		var out;
+		this.tauxService.tauxTypes['T'+taux].forEach(type => {
+			if (code == type.value) {
+				out = type.name;
+			}
+		});
+		return out;
+	}
+
 	calculateTotal() {
 		var total = 0;
-		for (let key in this.data) {
-			total += this.data[key];
-		}
+		this.data.forEach(item => {
+			total += item.tva;
+		});
 		this.totalTVA = total;
 	}
 

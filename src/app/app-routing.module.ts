@@ -21,6 +21,7 @@ import { OverviewComponent } from './dashboard/components/overview/overview.comp
 import { AuthGuard } from './guards/auth.guard';
 import { ReverseAuthGuard } from './guards/reverse-auth.guard';
 import { PaymentGuard } from './guards/payment.guard';
+import { UserGuard } from './guards/user-guard.guard';
 
 const routes: Routes = [
 	{
@@ -67,28 +68,30 @@ const routes: Routes = [
 		component : DashboardComponent,
 		children : [
 			{
-				'path' : '',
-				'component' : OverviewComponent
+				path : '',
+				component : OverviewComponent
 			},
 			{
-				'path' : 'overview',
-				'component' : OverviewComponent
+				path : 'overview',
+				component : OverviewComponent
 			},
 			{
-				'path' : 'files',
-				'component' : FilesComponent
+				path : 'files',
+				component : FilesComponent
 			},
 			{
-				'path' : 'users',
-				'component' : UsersComponent
+				path : 'users',
+				component : UsersComponent,
+				canActivate : [UserGuard]
 			},
 			{
-				'path' : 'bills/:file/:month',
-				'component' : BillsComponent
+				path : 'bills/:file/:month',
+				component : BillsComponent
 			},
 			{
-				'path' : 'settings',
-				'component' : SettingsComponent
+				path : 'settings',
+				component : SettingsComponent,
+				canActivate : [UserGuard]
 			}
 		],
 		canActivate : [AuthGuard]

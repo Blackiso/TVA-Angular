@@ -409,6 +409,11 @@ button:active:after {
 	display: flex;
 }
 
+.double-inp-in-grp > .db11-select {
+    width: 80%;
+}
+
+.double-inp-in-grp > .taux-select,
 .double-inp-in-grp > input:nth-of-type(1) {
 	margin-right: 10px;
 }
@@ -642,6 +647,7 @@ _:-ms-fullscreen, :root .loading-input:after {
 	padding: 15px 30px;
 	min-height: 150px;
 	box-sizing: border-box;
+	position: relative;
 }
 
 .alert-content {
@@ -852,16 +858,16 @@ input[type="date"]::-webkit-calendar-picker-indicator { display: none; }
 }
 
 .tva-table-popup {
-	width: 500px;
+	width: 800px;
 }
 
 .tva-table {
 	margin: 10px 0;
 	flex-direction: column;
+	position: relative;
 }
 
 .tva-table-head {
-	background-color: red;
 	font-size: 13px;
 	padding: 5px 10px;
 	border-radius: 3px;
@@ -871,59 +877,57 @@ input[type="date"]::-webkit-calendar-picker-indicator { display: none; }
 	color: #3F5977;
 }
 
-.tva-table-body > div > span:nth-of-type(1),
-.tva-table-head > span:nth-of-type(1) {
-	flex: 2;
-	position: relative;
+.t-b-type,
+.t-h-type {
+	width: 60%
 }
 
-.tva-table-body {
-	position: relative;
-}
-
-.tva-table-head > span:nth-of-type(1):after {
-	content: '';
-	width: 1px;
-	height: 90%;
-	background-color: #cccbcb;
-	display: block;
-	position: absolute;
-	right: 0;
-	top: 0;
-}
-
-.tva-table-body:after {
-	content: '';
-	width: 1px;
-	height: 80%;
-	background-color: #cccbcb;
-	display: block;
-	position: absolute;
-	left: 65.7%;
-	top: 0;
-	bottom: 0;
-	margin: auto;
-}
-
-.tva-table-body > div > span:nth-of-type(2),
-.tva-table-head > span:nth-of-type(2) {
-	flex: 1;
+.t-b-taux,
+.t-h-total,
+.t-h-taux {
+	width: 20%;
 	text-align: center;
 }
 
-.table-foot > span:nth-of-type(2),
-.tva-table-body > div > span:nth-of-type(2) {
+.t-b-total {
+	width: 20%;
 	text-align: right;
 }
 
-.tva-table-body > div > span:nth-of-type(2) {
-	color: #3F5977;
+.tva-table-head > span {
+	border-right: 1px solid #bdbdc1;
+}
+
+.tva-table-head > span:last-of-type {
+	border-right: none;
 }
 
 .tva-table-body {
-	padding: 15px 5px;
+	padding: 15px 10px;
 	flex-direction: column;
 	font-size: 13px;
+	position: relative;
+}
+
+.tva-table-body:after,
+.tva-table-body:before {
+	content: '';
+	position: absolute;
+	height: 89%;
+	width: 1px;
+	background: #bdbdc1;
+	top: 0;
+	bottom: 0;
+	margin: auto;
+	display: block;
+}
+
+.tva-table-body:after {
+	left: 59.6%;
+}
+
+.tva-table-body:before {
+	left: 79%;
 }
 
 .tva-table-body > div {
@@ -939,8 +943,42 @@ input[type="date"]::-webkit-calendar-picker-indicator { display: none; }
 	margin-bottom: 0;
 }
 
-.bill-type {
-	width: 100px;
+.t-f-type {
+	width: 80%;
+}
+
+.t-f-total {
+	width: 20%;
+	text-align: right;
+}
+
+.empty-tva-table {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	left: 0;
+	right: 0;
+	background: white;
+	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flex;
+	display: -o-flex;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 100;
+}
+
+.t-loading {
+	z-index: 200;
+}
+
+.t-loading > img {
+	width: 40px;
+}
+
+.empty-tva-table > span {
+	color: #8597ab;
 }
 
 .choice-buttons {

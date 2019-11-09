@@ -9,7 +9,7 @@
 	<div class="notification noti-on">
 		<i class="remixicon-notification-3-line" [tooltip]="'Notifications'"></i>
 	</div>
-	<button *ngIf="!isVerified" (click)="verifyEmail()" class="email-activate-alert flex">
+	<button *ngIf="!isVerified && userType !== 'user'" (click)="verifyEmail()" class="email-activate-alert flex">
 		<i class="remixicon-alert-line"></i>
 		Vérifiez votre e-mail
 	</button>

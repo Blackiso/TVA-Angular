@@ -5,19 +5,27 @@
 		</div>
 		<div class="alert-body">
 			<div class="tva-table flex">
+				<div *ngIf="loading" class="empty-tva-table t-loading">
+					<img src="/tva-assets/loading.svg" alt="">
+				</div>
+				<div *ngIf="data.length == 0" class="empty-tva-table">
+					<span>Saisie une nouvelle facture pour commencer!</span>
+				</div>
 				<div class="tva-table-head flex">
-					<span>Type de la TVA</span>
-					<span>Totale</span>
+					<span class="t-h-type">Type de la TVA</span>
+					<span class="t-h-taux">Taux de la TVA</span>
+					<span class="t-h-total">Totale</span>
 				</div>
 				<div class="tva-table-body flex">
-					<div *ngFor="let item of data | keyvalue">
-						<span>{{titles[item.key]}}</span>
-						<span>{{item.value.toFixed(2) | money}}</span>
+					<div *ngFor="let item of data">
+						<span class="t-b-type">{{getTauxName(item.code, item.tau)}}</span>
+						<span class="t-b-taux">{{item.tau+'%'}}</span>
+						<span class="t-b-total">{{item.tva.toFixed(2) | money}}</span>
 					</div>
 				</div>
 				<div class="tva-table-head table-foot flex">
-					<span>Totale de TVA</span>
-					<span>{{totalTVA.toFixed(2) | money}}</span>
+					<span class="t-f-type">Totale de TVA</span>
+					<span class="t-f-total">{{totalTVA.toFixed(2) | money}}</span>
 				</div>
 			</div>
 			<div class="alert-buttons">

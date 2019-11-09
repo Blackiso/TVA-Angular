@@ -1,5 +1,6 @@
 import { Component, OnInit, Output, EventEmitter, Input, ChangeDetectorRef } from '@angular/core';
 import { BillsService } from '../../dashboard/services/bills.service';
+import { TauxValuesService } from '../../services/taux-values.service';
 import { HelperModule } from '../../modules/helper.module';
 import { BillsBasedComponent } from '../../abstract/bills-based/bills-based.component';
 import { DatePipe } from '@angular/common';
@@ -17,11 +18,11 @@ export class AddBillsComponent extends BillsBasedComponent {
 
 	suppliers:any = [];
 	suggestion:boolean = false;
+	suggestionDBS:boolean = false;
 	lockedInputs:any = [];
 	selectedndf:string = null;
 	selectediff:string = null;
 	selectedice:string = null;
-	selecteddbs:string = null;
 	error:boolean = false;
 	form:any;
 	allInputs:any = [];
@@ -45,20 +46,36 @@ export class AddBillsComponent extends BillsBasedComponent {
 	};
 	ddf:any = null;
 	ddp:any = null;
-	db11:any = {
-		transport : 'TRANSPORT',
-		bank : 'SERVICES BANCAIRES',
-		other : ''
-	};
-	// selecteddbs:string | null = null; 
-	dbsSelectValue:string = 'other';
 
-	constructor(private helper:HelperModule, private billsService:BillsService, private changes:ChangeDetectorRef) {
+	typesOfTaux:any;
+	SelectedTypeOfTaux:any;
+	autoDb11:any = 140;
+	autoTaux:any = 20;
+	dbsList:any;
+	selectedDbs:any = null;
+
+	constructor(
+		private helper:HelperModule, 
+		private billsService:BillsService, 
+		private changes:ChangeDetectorRef,
+		private tauxServices:TauxValuesService
+	) {
 		super();
+		this.typesOfTaux = this.tauxServices.tauxTypes;
+		this.SelectedTypeOfTaux = this.typesOfTaux.T20;
+		this.tTVA = 20;
+	}
+
+	tauxChange(value) {
+		console.log('changing to', value);
+		this.SelectedTypeOfTaux = this.typesOfTaux['T'+value];
+		this.autoTaux = value;
+		this.tTVA = value;
+		this.calculate();
 	}
 
 	lockInput(e, name) {
-		var linkedSupplier = ['ndf', 'iff', 'ice', 'dbs'];
+		var linkedSupplier = ['ndf', 'iff', 'ice'];
 		var removeIndexes = [];
 
 		if (this.lockedInputs.includes(name)) {	
@@ -123,19 +140,36 @@ export class AddBillsComponent extends BillsBasedComponent {
 		}
 	}
 
+	searchDbs(val) {
+		if (val.length > 1) {
+			this.getDbs(val);
+		}else {
+			this.suggestionDBS = false;
+		}
+	}
+
 	setSupplier(e) {
 		var target = e.currentTarget;
 		this.selectedndf = null;
 		this.selectediff = null;
 		this.selectedice = null;
-		this.selecteddbs = null;
 		this.changes.detectChanges();
 		this.selectedndf = target.dataset.ndf;
 		this.selectediff = target.dataset.iff;
 		this.selectedice = target.dataset.ice;
-		this.selecteddbs = target.dataset.dbs;
 		this.suggestion = false;
-		this.inputDBS({currentTarget : { value : target.dataset.dbs }});
+	}
+
+	setDbs(e) {
+		var target = e.currentTarget;
+		this.selectedDbs = null;
+		this.autoDb11 = null;
+		this.selectedDbs = null;
+		this.changes.detectChanges();
+		this.tauxChange(target.dataset.tau);
+		this.autoDb11 = target.dataset.code;
+		this.selectedDbs = target.dataset.dbs;
+		this.suggestionDBS = false;
 	}
 
 	getSuppliers(keyword) {
@@ -143,6 +177,15 @@ export class AddBillsComponent extends BillsBasedComponent {
 			response => {
 				this.suppliers = response;
 				this.suggestion = true;
+			}
+		);
+	}
+
+	getDbs(keyword) {
+		this.billsService.getDbs(keyword).subscribe(
+			response => {
+				this.dbsList = response;
+				this.suggestionDBS = true;
 			}
 		);
 	}
@@ -182,7 +225,7 @@ export class AddBillsComponent extends BillsBasedComponent {
  		}
 
  		if (isNaN(this.form.pro) || this.form.pro == '' || this.form.pro > 100) {
- 			this.form.pro = 100;
+ 			this.form.pro = "100";
  		}
  		this.form.mht = parseFloat(this.form.mht).toFixed(2);
  		this.form.tau = parseFloat(this.form.tau).toFixed(2);
@@ -192,44 +235,17 @@ export class AddBillsComponent extends BillsBasedComponent {
 		this.clearInputs(e);
 	}
 
-	setDBS(e) {
-		this.selecteddbs = this.db11[e.currentTarget.value];
-		if (e.currentTarget.value == 'other') {
-			this.tTVA = null;
-		}else {
-			this.setTau(e.currentTarget.value);
-		}
-	}
-
 	inputDBS(e) {
-		console.log(e);
-		var keywords = {
-			transport : ['transport', 'TRANSPORT'],
-			bank : ['banque', 'bancaire', 'bancaires', 'bank', 'commissions', 'COMMISSIONS', 'BANCAIRE', 'BANCAIRES', 'BANK', 'BANQUE']
-		};
+		var keywords = this.tauxServices.keywords;
+		var outputs = this.tauxServices.outputs;
+
 		for (var key in keywords) {
-			console.log('X');
 			if (keywords[key].some(function(v) { return e.currentTarget.value.indexOf(v) >= 0; })) {
-				console.log('Y');
-			    this.selecteddbs = this.db11[key];
-			    this.dbsSelectValue = key;
-			    this.setTau(key);
+			    this.tauxChange(outputs[key].taux);
+				this.autoDb11 = outputs[key].db11;
 			    break;
-			}else {
-				console.log('Z');
-				this.dbsSelectValue = 'other';
-				this.tTVA = null;
 			}
 		}
-	}
-
-	setTau(type) {
-		var types = {
-			transport : 14.00,
-			bank : 10.00
-		};
-		this.tTVA = types[type];
-		console.log(this.tTVA, type, types[type]);
 	}
 
 	parseDate(e) {
@@ -303,7 +319,7 @@ export class AddBillsComponent extends BillsBasedComponent {
 	}
 
 	clearInputs(e) {
-		var supplier = ['ndf', 'ice', 'iff', 'dbs'];
+		var supplier = ['ndf', 'ice', 'iff'];
 		if (this.allInputs.length == 0) this.setupInputs(e);
 		
 		this.allInputs.forEach(input => {
@@ -313,7 +329,6 @@ export class AddBillsComponent extends BillsBasedComponent {
 					this.selectedndf = null;
 					this.selectedice = null;
 					this.selectediff = null;
-					this.selecteddbs = null;
 				}
 				if (input.name == 'ddp') this.ddp = null;
 				if (input.name == 'ddf') this.ddf = null;

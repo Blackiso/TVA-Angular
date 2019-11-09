@@ -50,3 +50,6 @@
 		</button>
 	</form>
 </div>
+<ng-container *ngIf="alertPopup">
+	<app-alert [alertType]="alertType" (answerEvent)="alertAnswer($event)"></app-alert>
+</ng-container>

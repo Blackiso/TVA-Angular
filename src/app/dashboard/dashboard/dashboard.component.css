@@ -25,6 +25,40 @@
 	.top-bar {
 		width: calc(100% - 200px) !important;
 	}
+
+	.logo-container > img {
+		width: 160px;
+		margin-left: 10px !important;
+	}
+
+	.menu > li > .name > span:first-of-type {
+		font-size: 12px !important;
+	}
+
+	.user-info > .wlcm-name {
+		font-size: 13px !important;
+	}
+
+	.logout-container > span {
+		font-size: 12px !important;
+	}
+
+	.menu {
+	    padding: 0 10px !important;
+	}
+
+	.logout-container {
+		padding: 0 10px !important;
+	}
+
+	.user-info {
+	    padding: 40px 10px !important;
+	}
+
+	.menu > li:before {
+		width: 200px !important;
+		left: -10px !important;
+	}
 }
 
 .top-bar {
@@ -59,7 +93,7 @@
 }
 
 .logo-container > img {
-	width: 160px;
+	/*width: 160px;*/
 	margin-left: 25px;
 }
 
@@ -104,13 +138,6 @@
 	z-index: -1;
 	opacity: 0;
 	transition: .3s;
-}
-
-@media only screen and (max-width: 1024px) {
-	.menu > li:before {
-		width: 200px;
-		left: -20;
-	}
 }
 
 .menu > li:hover:before {

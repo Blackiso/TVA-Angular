@@ -48,17 +48,33 @@
 					</div>
 				</div>
 				<div class="input-grp">
-					<div class="double-inp-in-grp">
-						<input type="text" (blur)="inputDBS($event)" name="dbs" [value]="selecteddbs" placeholder="Designation de bien et service">
-						<select name="bill_type" [value]="dbsSelectValue" (change)="setDBS($event)">
-							<option value="other">Autres</option>
-							<option value="transport">Transport</option>
-							<option value="bank">Services bancaire</option>
-						</select>
-					</div>
+					<input type="text" (blur)="inputDBS($event)" [value]="selectedDbs" (keyup)="searchDbs($event.target.value)" name="dbs" placeholder="Designation de bien et service" autocomplete="off">
 					<div>
 						<span>Designation de bien et service</span>
 						<i (click)="lockInput($event, 'dbs')" [class.locked]="lockedInputs.indexOf('dbs') > -1" class="lock remixicon-lock-fill"></i>
+					</div>
+					<div *ngIf="suggestionDBS" class="inp-suggestion trigger-btn" (clickAway)="suggestionDBS = false">
+						<div *ngFor="let sup of dbsList" [attr.data-dbs]="sup.dbs" [attr.data-tau]="sup.tau" [attr.data-code]="sup.code" [attr.data-dbs]="sup.dbs"  (click)="setDbs($event)">
+							<span><b>{{sup.dbs}}</b></span>
+						</div>
+					</div>
+				</div>
+				<div class="input-grp" [class.input-error]="errorInput.indexOf('tau') > -1">
+					<div class="double-inp-in-grp">
+						<!-- <input type="text" [value]="tTVA" (keyup)="calculate()" (input)="tTVA = $event.target.value" name="tau" placeholder="Taux TVA"> -->
+						<select class="taux-select" name="tau" [value]="autoTaux" (change)="tauxChange($event.target.value)">
+							<option value="20">20%</option>
+							<option value="14">14%</option>
+							<option value="10">10%</option>
+							<option value="7">7%</option>
+						</select>
+						<select class="db11-select" name="code" [value]="autoDb11">
+							<option *ngFor="let type of SelectedTypeOfTaux" [value]="type.value">{{type.name}}</option>
+						</select>
+					</div>
+					<div>
+						<span>Taux TVA</span>
+						<!-- <i (click)="lockInput($event, 'tau')" [class.locked]="lockedInputs.indexOf('tau') > -1" class="lock remixicon-lock-fill"></i> -->
 					</div>
 				</div>
 				<div class="input-grp" [class.input-error]="errorInput.indexOf('mht') > -1">
@@ -66,13 +82,6 @@
 					<div>
 						<span>Montant HT</span>
 						<i (click)="lockInput($event, 'mht')" [class.locked]="lockedInputs.indexOf('mht') > -1" class="lock remixicon-lock-fill"></i>
-					</div>
-				</div>
-				<div class="input-grp" [class.input-error]="errorInput.indexOf('tau') > -1">
-					<input type="text" [value]="tTVA" (keyup)="calculate()" (input)="tTVA = $event.target.value" name="tau" placeholder="Taux TVA">
-					<div>
-						<span>Taux TVA</span>
-						<i (click)="lockInput($event, 'tau')" [class.locked]="lockedInputs.indexOf('tau') > -1" class="lock remixicon-lock-fill"></i>
 					</div>
 				</div>
 				<div class="input-grp" [class.input-error]="errorInput.indexOf('tva') > -1">
